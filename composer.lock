@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d153f419d02f0d29a4733104132e5d47",
+    "content-hash": "ec9d1ab60f5bb19a3061b94d70124b02",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -2391,16 +2391,16 @@
         },
         {
             "name": "livewire/livewire",
-            "version": "v2.12.2",
+            "version": "v2.12.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/livewire/livewire.git",
-                "reference": "ea2a3099f0b5d0017316cb5197bc5b97c7164785"
+                "reference": "019b1e69d8cd8c7e749eba7a38e4fa69ecbc8f74"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/livewire/livewire/zipball/ea2a3099f0b5d0017316cb5197bc5b97c7164785",
-                "reference": "ea2a3099f0b5d0017316cb5197bc5b97c7164785",
+                "url": "https://api.github.com/repos/livewire/livewire/zipball/019b1e69d8cd8c7e749eba7a38e4fa69ecbc8f74",
+                "reference": "019b1e69d8cd8c7e749eba7a38e4fa69ecbc8f74",
                 "shasum": ""
             },
             "require": {
@@ -2452,7 +2452,7 @@
             "description": "A front-end framework for Laravel.",
             "support": {
                 "issues": "https://github.com/livewire/livewire/issues",
-                "source": "https://github.com/livewire/livewire/tree/v2.12.2"
+                "source": "https://github.com/livewire/livewire/tree/v2.12.3"
             },
             "funding": [
                 {
@@ -2460,7 +2460,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-02-28T15:56:02+00:00"
+            "time": "2023-03-03T20:12:38+00:00"
         },
         {
             "name": "maatwebsite/excel",
@@ -3806,16 +3806,16 @@
         },
         {
             "name": "power-components/livewire-powergrid",
-            "version": "v3.7.2",
+            "version": "v3.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Power-Components/livewire-powergrid.git",
-                "reference": "b98c7a71398de03a45f799a178d33a9311866956"
+                "reference": "14d2e753faf231d73e3e7d59bf8154fea6ea46f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Power-Components/livewire-powergrid/zipball/b98c7a71398de03a45f799a178d33a9311866956",
-                "reference": "b98c7a71398de03a45f799a178d33a9311866956",
+                "url": "https://api.github.com/repos/Power-Components/livewire-powergrid/zipball/14d2e753faf231d73e3e7d59bf8154fea6ea46f2",
+                "reference": "14d2e753faf231d73e3e7d59bf8154fea6ea46f2",
                 "shasum": ""
             },
             "require": {
@@ -3867,7 +3867,7 @@
             "homepage": "https://github.com/power-components/livewire-powergrid",
             "support": {
                 "issues": "https://github.com/Power-Components/livewire-powergrid/issues",
-                "source": "https://github.com/Power-Components/livewire-powergrid/tree/v3.7.2"
+                "source": "https://github.com/Power-Components/livewire-powergrid/tree/v3.7.3"
             },
             "funding": [
                 {
@@ -3875,7 +3875,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-01-21T18:48:45+00:00"
+            "time": "2023-03-03T17:05:26+00:00"
         },
         {
             "name": "psr/cache",

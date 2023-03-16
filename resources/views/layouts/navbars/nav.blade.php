@@ -8,9 +8,9 @@
                         style="letter-spacing: 1px;">Feedmill System</a></li>
                 <li class="breadcrumb-item text-sm text-dark active text-capitalize" aria-current="page"
                     style="letter-spacing: 2spx;">
-                    {{ str_replace('_', ' ', Request::path()) }}</li>
+                    @yield('title')</li>
             </ol>
-            <h6 class="font-weight-bolder mb-0 text-capitalize">{{ str_replace('_', ' ', Request::path()) }}</h6>
+            <h6 class="font-weight-bolder mb-0 text-capitalize">@yield('title')</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4 d-flex justify-content-end" id="navbar">
             {{-- <div class="nav-item d-flex align-self-end">

@@ -27,7 +27,7 @@ class AuthenticationController extends Controller
     		if(Auth::loginUsingId($user->id)) {
                 // Login Success
                 // Sessions For Current Users
-    			return redirect()->route('dash');
+    			return redirect()->route('dashboard');
     		}
     		else {
                 // Login Error

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
+
+use App\Models\RawMaterial;
 
 class ContentController extends Controller
 {
@@ -56,9 +59,10 @@ class ContentController extends Controller
         return view('production_management.premixes');
     }
 
-    public function feeds_information()
+    public function raw_materials()
     {
-        return view('production_management.feeds_information');
+        $raw_material_data = RawMaterial::where("active_status", 1)->get();
+        return view('production_management.raw_material')->with('raw_materials',$raw_material_data);
     }
 
     public function accounting_bills()

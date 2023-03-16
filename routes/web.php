@@ -7,14 +7,16 @@ use App\Http\Controllers\ContentController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
-
+use App\Http\Livewire\AddDivision;
+use App\Http\Livewire\AddRawMaterial;
+use App\Http\Livewire\UpdateRawMaterial;
 use App\Utilities\GenericUtilities as GU;
 use App\Services\GenericServices as GS;
 
 // Fixed Route for all new application that will use Auth
 Route::get('/app-login/{id}', [AuthenticationController::class, 'app_login'])->name('app.login');
 // Login Route
-// Route::get('/login', [LoginController::class, 'login'])->name('login');
+Route::get('/login', [LoginController::class, 'login'])->name('login');
 // Auth Middleware Group
 Route::middleware('auth')->group(function () {
     // Main Session Check for Authetication
@@ -34,7 +36,14 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/production_order', [ContentController::class, 'production_order'])->name('production_order');
     Route::get('/premixes', [ContentController::class, 'premixes'])->name('premixes');
-    Route::get('/feeds_information', [ContentController::class, 'feeds_information'])->name('feeds_information');
+    Route::get('/raw_materials', [ContentController::class, 'raw_materials'])->name('raw_materials');
+    Route::get('/raw_materials/create', [AddRawMaterial::class, 'go_to_create'])->name('raw_materials.create');
+    Route::get('/raw_materials/{id}', [UpdateRawMaterial::class, 'show_to_be_updated'])->name('raw_materials.show');
+    Route::get('/raw_materials/update', [UpdateRawMaterial::class, 'update'])->name('raw_materials.update');
+    Route::get('/raw_materials/remove/{id}', [UpdateRawMaterial::class, 'remove'])->name('raw_materials.remove');
+
+
+
 
     Route::get('/accounting_bills', [ContentController::class, 'accounting_bills'])->name('accounting_bills');
     Route::get('/accounting_payrolls', [ContentController::class, 'accounting_payrolls'])->name('accounting_payrolls');

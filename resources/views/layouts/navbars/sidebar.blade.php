@@ -312,8 +312,8 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('feeds_information') ? 'active' : '' }}"
-                    href="{{ url('feeds_information') }}">
+                <a class="nav-link {{ Request::is('raw_materials') ? 'active' : '' }}"
+                    href="{{ url('raw_materials') }}">
                     <div
                         class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center P-2">
                         <svg aria-hidden="true" focusable="false" data-prefix="fa-duotone"
@@ -336,7 +336,7 @@
                             </g>
                         </svg>
                     </div>
-                    <span class="nav-link-text ms-1">Feeds Information</span>
+                    <span class="nav-link-text ms-1">Raw Materials</span>
                 </a>
             </li>
 

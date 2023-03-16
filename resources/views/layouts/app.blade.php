@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="author" content="justine">
 
-    <link rel="icon" type="image/png" href="../assets/img/icons/bgc.png">
+    <link rel="icon" type="image/png" href="{{ asset('assets/img/icons/bgc.png') }}">
     <title>@yield('title') - {{ config('app.name', 'Laravel') }}</title>
 
     {{-- Fonts --}}
@@ -15,35 +15,27 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
     <!-- Nucleo Icons -->
-    <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
-    <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+    <link href="{{ asset('assets/css/nucleo-icons.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/nucleo-svg.css') }}" rel="stylesheet" />
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{{ asset('assets/css/fontawesome.css') }}">
-    <script src="{{ asset('assets/css/fontawesome.css') }}"></script>
     {{-- <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script> --}}
 
     {{-- Styles --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <link id="pagestyle" href="../assets/css/bootstrap.css" rel="stylesheet" />
+        integrity="sha384-xJtAgP/9X8pBpgR+Gv1ptJUMjeMhjN3aNqZRQ2N/c63lLbiS2C1b07zCA5pi5OIb" crossorigin="anonymous">
+    <link id="pagestyle" href="{{ asset('assets/css/bootstrap.css') }}" rel="stylesheet" />
+
     @yield('styles')
     @livewireStyles
-
-    {{-- Scripts --}}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
-        integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous">
-    </script>
-    <script src="../assets/js/core/popper.min.js"></script>
-    <script src="../assets/js/core/bootstrap.min.js"></script>
-    @yield('scripts')
+    @powerGridStyles
 </head>
 
 <body class="font-sans antialiased g-sidenav-show  bg-gray-100">
     {{-- @yield('content') --}}
-    @livewireScripts
 
     @include('layouts.navbars.sidebar')
     <main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg">
@@ -53,19 +45,37 @@
             @include('layouts.footers.footer')
         </div>
     </main>
-</body>
 
-<script>
-    $.ajax({
-        type: "GET",
-        url: "{{ config('app.root_domain') . config('app.user_details_slug') . \Crypt::encryptString(Auth::user()->id) }}",
-        dataType: 'json',
-        success: function(response) {
-            document.getElementById('fullname').innerHTML = response['first_name'] + " " + response[
-                'last_name'];
-            document.getElementById('email').innerHTML = response['email'];
-        }
-    });
-</script>
+    {{-- Scripts --}}
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/js/core/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-g4JiBdOa04KjCz/Pt+Bgxh0fXvbQKbY3qHlLjoGsURgIVf61QnGQHsPvKjzNSfTG" crossorigin="anonymous">
+    </script> --}}
+    {{-- <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous">
+    </script> --}}
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <script src="{{ asset('assets/js/fontawesome.js') }}"></script>
+    <script>
+        $.ajax({
+            type: "GET",
+            url: "{{ config('app.root_domain') . config('app.user_details_slug') . \Crypt::encryptString(Auth::user()->id) }}",
+            dataType: 'json',
+            success: function(response) {
+                document.getElementById('fullname').innerHTML = response['first_name'] + " " + response[
+                    'last_name'];
+                document.getElementById('email').innerHTML = response['email'];
+            }
+        });
+    </script>
+
+    @yield('scripts')
+    @livewireScripts
+    @powerGridScripts
+</body>
 
 </html>
