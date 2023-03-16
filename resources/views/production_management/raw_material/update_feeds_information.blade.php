@@ -5,10 +5,7 @@
 @endsection
 
 @section('content')
-    {{-- <h3>Raw Ingredients</h3> --}}
     @livewire("update-raw-material", ['id' => $id])
-    {{-- {{ $raw_material }} --}}
-    {{-- {{ $array['id'] }} --}}
 @endsection
 
 @section('scripts')

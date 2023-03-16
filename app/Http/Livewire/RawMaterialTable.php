@@ -168,11 +168,11 @@ final class RawMaterialTable extends PowerGridComponent
     {
        return [
            Button::make('edit', 'Edit')
-               ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+               ->class('btn btn-primary cursor-pointer px-3 py-2 m-1 rounded text-sm')
                ->route('raw_materials.show', ['id' => Crypt::encryptString('id')]),
 
            Button::make('destroy', 'Delete')
-               ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
+               ->class('btn btn-secondary cursor-pointer px-3 py-2 m-1 rounded text-sm')
                ->route('raw_materials.remove', ['id' => 'id'])
                ->method('delete')
         ];
