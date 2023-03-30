@@ -29,10 +29,11 @@ class UpdateRawMaterial extends Component
 
     /**
      * To Assign Null Value For The Following Fields.
-     * @param no parameter
-     * @return raw_material_name = null
-     * @return standard_days = null
-     * @return category = null
+     * @param id
+     * @return mat_id = id
+     * @return raw_material_name = raw_material_name
+     * @return standard_days = standard_days
+     * @return selectedCategory = category
      */
     public function mount($id)
     {
@@ -42,12 +43,11 @@ class UpdateRawMaterial extends Component
             $this->raw_material_name,
             $this->standard_days,
             $this->selectedCategory
-        ] = [$this->raw_material->raw_material_name, $this->raw_material->standard_days, $this->raw_material->category];
-        // $this->mat_id = $id;
-        // $this->raw_material = RawMaterial::findorfail($id);
-        // $this->raw_material_name = $this->raw_material->raw_material_name;
-        // $this->standard_days = $this->raw_material->standard_days;
-        // $this->selectedCategory = $this->raw_material->category;
+        ] = [
+            $this->raw_material->raw_material_name,
+            $this->raw_material->standard_days,
+            $this->raw_material->category
+        ];
     }
 
     /**
@@ -89,19 +89,6 @@ class UpdateRawMaterial extends Component
         }
 
         return false;
-        // $get_all_raw_materials = RawMaterial::where('active_status', 1)->get();
-        // $val = "";
-        // $bool_val = false;
-
-        // foreach ($get_all_raw_materials as $num => $raw_material_name) {
-        //     $sim_val = similar_text(strtoupper($test_val), strtoupper($raw_material_name->raw_material_name), $perc);
-        //     if ($perc > 95) {
-        //         $bool_val = true;
-        //         break;
-        //     }
-        // }
-
-        // return $bool_val;
     }
 
     /**
@@ -134,40 +121,22 @@ class UpdateRawMaterial extends Component
     //     }
     // }
 
+
+    /**
+     * To return selected category
+     * @param category
+     * @return selectedCategory
+     */
     public function categorySelected($category)
     {
         return $this->selectedCategory = $category;
     }
 
-    public function show_to_be_updated($id)
-    {
-        // $raw_material_data = RawMaterial::findorfail();
-        // $raw = $raw_material_data->toArray();
-        return view('production_management.raw_material.update_feeds_information')->with('id', Crypt::decryptString($id));
-    }
-
-    public function remove($id)
-    {
-        $to_remove = RawMaterial::findorfail(Crypt::decryptString($id));
-        $to_remove->active_status = 0;
-
-        if ($to_remove->save()) {
-            return redirect('/raw_materials');
-        }
-
-        return redirect('/error');
-        // $to_remove = RawMaterial::findorfail(Crypt::decryptString($id));
-        // $to_remove->active_status = 0;
-
-        // if ($to_remove->save()) {
-        //     return redirect('/raw_materials');
-        //     // return redirect('/raw_materials')->with('success_message', 'Task Has Been Succesfully Removed!');
-        // } else {
-        //     // return redirect('/raw_materials')->with('danger_message', 'DATABASED ERROR!');
-        //     return redirect('/error');
-        // }
-    }
-
+    /**
+     * To update a record
+     * @param nul
+     * @return null
+     */
     public function update()
     {
         if (!$this->validate()) {
@@ -181,40 +150,41 @@ class UpdateRawMaterial extends Component
         $raw_Materials->active_status = 1;
 
         // if ($this->test_similarity($this->raw_material_name)) {
-        //     return redirect('/raw_materials')->with('danger_message', 'Invalid Input, Duplicate Data Found!');
+        //     return redirect('/raw')->with('danger_message', 'Invalid Input, Duplicate Data Found!');
         // }
 
         $to_remove = RawMaterial::findorfail($this->mat_id);
         $to_remove->active_status = 0;
 
         if ($to_remove->save() && $raw_Materials->save()) {
-            return redirect('/raw_materials');
+            return redirect('/raw')->with('success_message', 'Task Has Been Succesfully Updated!');
         } else {
-            return redirect('/error');
+            return redirect('/raw')->with('danger_message', 'Error in Database!');
         }
 
-        //     if ($this->validate()) {
-        //         $raw_Materials = new RawMaterial();
-        //         $raw_Materials->raw_material_name = $this->raw_material_name;
-        //         $raw_Materials->standard_days = $this->standard_days;
-        //         $raw_Materials->category = $this->selectedCategory;
-        //         $raw_Materials->active_status = 1;
+        /*    if ($this->validate()) {
+                $raw_Materials = new RawMaterial();
+                $raw_Materials->raw_material_name = $this->raw_material_name;
+                $raw_Materials->standard_days = $this->standard_days;
+                $raw_Materials->category = $this->selectedCategory;
+                $raw_Materials->active_status = 1;
 
-        //         if ($this->test_similarity($this->raw_material_name) == true) {
-        //             return redirect('/raw_materials')->with('danger_message', 'Invalid Input, Duplicate Data Found!');
-        //             return redirect('/dashboard');
-        //         } else {
-        //             $to_remove = RawMaterial::findorfail($this->mat_id);
-        //             $to_remove->active_status = 0;
+                if ($this->test_similarity($this->raw_material_name) == true) {
+                    return redirect('/raw')->with('danger_message', 'Invalid Input, Duplicate Data Found!');
+                    return redirect('/dashboard');
+                } else {
+                    $to_remove = RawMaterial::findorfail($this->mat_id);
+                    $to_remove->active_status = 0;
 
-        //             if ($to_remove->save() && $raw_Materials->save()) {
-        //                 return redirect('/raw_materials');
-        //             } else {
-        //                 return redirect('/error');
-        //             }
-        //         }
-        //     } else {
-        //         return redirect('/dashboard');
-        //     }
+                    if ($to_remove->save() && $raw_Materials->save()) {
+                        return redirect('/raw');
+                    } else {
+                        return redirect('/error');
+                    }
+                }
+            } else {
+                return redirect('/dashboard');
+            }
+        */
     }
 }

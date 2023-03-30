@@ -97,7 +97,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button data-bs-dismiss="modal" class="btn btn-warning">{{ __('No') }}</button>
-                                <a href="{{ route('raw_materials.remove', ['id' => $raw_mats::encryptString($mat_id)]) }}"
+                                <a href="{{ route('raw.remove', ['id' => $raw_mats::encryptString($mat_id)]) }}"
                                     class="btn btn-danger">
                                     Remove
                                 </a>

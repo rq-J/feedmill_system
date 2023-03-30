@@ -51,6 +51,7 @@
     <script src="{{ asset('assets/js/core/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
     <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('assets/js/fontawesome.js') }}"></script>
     <script>
         $.ajax({

@@ -102,27 +102,25 @@ class AddRawMaterial extends Component
             $raw_Materials->active_status = 1;
 
             if ($this->test_similarity($this->raw_material_name) == true) {
-                // return redirect('/dashboard')->with('danger_message', 'Invalid Input, Duplicate Data Found!');
-                return redirect('/dashboard');
+                return redirect('/raw')->with('danger_message', 'Invalid Input, Duplicate Data Found!');
             } else {
                 if ($raw_Materials->save()) {
-                    // return redirect('/home')->with('success_message', 'Task Has Been Succesfully Created!');
-                    return redirect('/macro');
+                    return redirect('/raw')->with('success_message', 'Task Has Been Succesfully Created!');
                 } else {
-                    // return redirect('/home')->with('danger_message', 'DATABASED ERROR!');
-                    return redirect('/micro');
+                    return redirect('/raw')->with('danger_message', 'DATABASED ERROR!');
                 }
             }
         }
     }
 
+
+    /**
+     * To return selected catergory
+     * @param category
+     * @return selectedCatergory
+     */
     public function categorySelected($category)
     {
         return $this->selectedCategory = $category;
-    }
-
-    public function go_to_create()
-    {
-
     }
 }

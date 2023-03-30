@@ -136,8 +136,8 @@
                 </h6>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('feed_request') ? 'active' : '' }} "
-                    href="{{ url('feed_request') }}">
+                <a class="nav-link {{ Request::is('feed') ? 'active' : '' }} "
+                    href="{{ url('feed') }}">
                     <div
                         class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center p-2">
                         <svg aria-hidden="true" focusable="false" data-prefix="fa-duotone" data-icon="note-sticky"
@@ -164,8 +164,8 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('farm_information') ? 'active' : '' }}"
-                    href="{{ url('farm_information') }}">
+                <a class="nav-link {{ Request::is('farm') ? 'active' : '' }}"
+                    href="{{ url('farm') }}">
                     <div
                         class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center p-2">
                         <svg aria-hidden="true" focusable="false" data-prefix="fa-duotone" data-icon="circle-info"
@@ -196,8 +196,8 @@
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Forecasting</h6>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('inventory_levels') ? 'active' : '' }}"
-                    href="{{ url('inventory_levels') }}">
+                <a class="nav-link {{ Request::is('inventory') ? 'active' : '' }}"
+                    href="{{ url('inventory') }}">
                     <div
                         class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center p-2">
                         <svg aria-hidden="true" focusable="false" data-prefix="fa-duotone" data-icon="eye"
@@ -224,8 +224,8 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('message_slack') ? 'active' : '' }}"
-                    href="{{ url('message_slack') }}">
+                <a class="nav-link {{ Request::is('slack') ? 'active' : '' }}"
+                    href="{{ url('slack') }}">
                     <div
                         class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center p-2">
                         <svg aria-hidden="true" focusable="false" data-prefix="fa-duotone"
@@ -256,8 +256,8 @@
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Production Management</h6>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('production_order') ? 'active' : '' }} "
-                    href="{{ url('production_order') }}">
+                <a class="nav-link {{ Request::is('order') ? 'active' : '' }} "
+                    href="{{ url('order') }}">
                     <div
                         class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center p-2">
                         <svg aria-hidden="true" focusable="false" data-prefix="fa-duotone" data-icon="gears"
@@ -312,8 +312,8 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('raw_materials') ? 'active' : '' }}"
-                    href="{{ url('raw_materials') }}">
+                <a class="nav-link {{ Request::is('raw') ? 'active' : '' }}"
+                    href="{{ url('raw') }}">
                     <div
                         class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center P-2">
                         <svg aria-hidden="true" focusable="false" data-prefix="fa-duotone"
@@ -344,8 +344,8 @@
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Reports</h6>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('accounting_bills') ? 'active' : '' }} "
-                    href="{{ url('accounting_bills') }}">
+                <a class="nav-link {{ Request::is('bills') ? 'active' : '' }} "
+                    href="{{ url('bills') }}">
                     <div
                         class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center p-2">
                         <svg aria-hidden="true" focusable="false" data-prefix="fa-duotone" data-icon="newspaper"
@@ -373,8 +373,8 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('accounting_payrolls') ? 'active' : '' }}"
-                    href="{{ url('accounting_payrolls') }}">
+                <a class="nav-link {{ Request::is('payrolls') ? 'active' : '' }}"
+                    href="{{ url('payrolls') }}">
                     <div
                         class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center p-2">
                         <svg aria-hidden="true" focusable="false" data-prefix="fa-duotone"
@@ -401,8 +401,8 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('audit_logs') ? 'active' : '' }}"
-                    href="{{ url('audit_logs') }}">
+                <a class="nav-link {{ Request::is('audit') ? 'active' : '' }}"
+                    href="{{ url('audit') }}">
                     <div
                         class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center p-2">
                         <svg aria-hidden="true" focusable="false" data-prefix="fa-duotone" data-icon="typewriter"
@@ -429,8 +429,8 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('pivot_logs') ? 'active' : '' }}"
-                    href="{{ url('pivot_logs') }}">
+                <a class="nav-link {{ Request::is('pivot') ? 'active' : '' }}"
+                    href="{{ url('pivot') }}">
                     <div
                         class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center p-2">
                         <svg aria-hidden="true" focusable="false" data-prefix="fa-duotone" data-icon="scroll"

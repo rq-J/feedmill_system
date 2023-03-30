@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('raw_materials', function (Blueprint $table) {
+        Schema::create('farms', function (Blueprint $table) {
             $table->id();
-            $table->string('raw_material_name', 255);
-            $table->integer('standard_days');
-            $table->string('category', 30);
-            $table->boolean('active_status')->default(1);
+            $table->string('farm_name', 255);
+            $table->boolean('active_status')->default(1);;
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('raw_materials');
+        Schema::dropIfExists('farm');
     }
 };

@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\AccountingBillsController;
+use App\Http\Controllers\AccountingPayrollsController;
+use App\Http\Controllers\AccountsController;
+use App\Http\Controllers\AuditController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthenticationController;
@@ -7,9 +11,27 @@ use App\Http\Controllers\ContentController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FarmInformationController;
+use App\Http\Controllers\FeedRequestController;
+use App\Http\Controllers\InventoryLevelsController;
+use App\Http\Controllers\MacroController;
+use App\Http\Controllers\MedicineController;
+use App\Http\Controllers\MessageSlackController;
+use App\Http\Controllers\MicroController;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PivotController;
+use App\Http\Controllers\PremixesController;
+use App\Http\Controllers\ProductionOrderController;
+use App\Http\Controllers\RawMaterialsController;
 use App\Http\Livewire\AddDivision;
+use App\Http\Livewire\AddFarm;
+use App\Http\Livewire\AddLocation;
 use App\Http\Livewire\AddRawMaterial;
+use App\Http\Livewire\UpdateFarm;
+use App\Http\Livewire\UpdateFarmLocation;
 use App\Http\Livewire\UpdateRawMaterial;
+use App\Models\Audit;
+use App\Models\RawMaterial;
 use App\Utilities\GenericUtilities as GU;
 use App\Services\GenericServices as GS;
 
@@ -20,7 +42,7 @@ Route::get('/login', [LoginController::class, 'login'])->name('login');
 // Auth Middleware Group
 Route::middleware('auth')->group(function () {
     // Main Session Check for Authetication
-    // Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+    Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
     // Dash/Dashboard
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
@@ -30,31 +52,43 @@ Route::middleware('auth')->group(function () {
      * DO NOT ALTER ABOVE CODE
      */
 
-     Route::get('/macro', [ContentController::class, 'macro'])->name('macro');
-     Route::get('/micro', [ContentController::class, 'micro'])->name('micro');
-     Route::get('/medicine', [ContentController::class, 'medicine'])->name('medicine');
+    //Ingredient Storage
+    Route::get('/macro', [MacroController::class, 'index'])->name('macro');
+    Route::get('/micro', [MicroController::class, 'index'])->name('micro');
+    Route::get('/medicine', [MedicineController::class, 'index'])->name('medicine');
 
-     Route::get('/feed_request', [ContentController::class, 'feed_request'])->name('feed_request');
-     Route::get('/farm_information', [ContentController::class, 'farm_information'])->name('farm_information');
+    //Feed Request
+    Route::get('/feed', [FeedRequestController::class, 'index'])->name('feed');
 
-     Route::get('/inventory_levels', [ContentController::class, 'inventory_levels'])->name('inventory_levels');
-     Route::get('/message_slack', [ContentController::class, 'message_slack'])->name('message_slack');
+    // Farm
+    Route::get('/farm', [FarmInformationController::class, 'index'])->name('farm');
+    Route::get('/farm/farm', [FarmInformationController::class, 'f_add'])->name('farm.f'); //Farm
+    Route::get('/farm/farm/{id?}', [FarmInformationController::class, 'f_show'])->name('farm.f.show');
+    Route::get('/farm/farm/remove/{id?}', [FarmInformationController::class, 'f_remove'])->name('farm.f.remove');
+    Route::get('/farm/location', [FarmInformationController::class, 'l_add'])->name('farm.l'); // Location
+    Route::get('/farm/location/{id?}', [FarmInformationController::class, 'l_show'])->name('farm.l.show');
+    Route::get('/farm/location/remove/{id?}', [FarmInformationController::class, 'l_remove'])->name('farm.l.remove');
 
-     Route::get('/production_order', [ContentController::class, 'production_order'])->name('production_order');
-     Route::get('/premixes', [ContentController::class, 'premixes'])->name('premixes');
-     Route::get('/raw_materials', [ContentController::class, 'raw_materials'])->name('raw_materials');
-     Route::get('/raw_materials/create', [AddRawMaterial::class, 'go_to_create'])->name('raw_materials.create');
-     Route::get('/raw_materials/{id}', [UpdateRawMaterial::class, 'show_to_be_updated'])->name('raw_materials.show');
-     Route::get('/raw_materials/update', [UpdateRawMaterial::class, 'update'])->name('raw_materials.update');
-     Route::get('/raw_materials/remove/{id}', [UpdateRawMaterial::class, 'remove'])->name('raw_materials.remove');
+    //Forecasting
+    Route::get('/inventory', [InventoryLevelsController::class, 'index'])->name('inventory');
+    Route::get('/slack', [MessageSlackController::class, 'index'])->name('slack');
 
-     Route::get('/accounting_bills', [ContentController::class, 'accounting_bills'])->name('accounting_bills');
-     Route::get('/accounting_payrolls', [ContentController::class, 'accounting_payrolls'])->name('accounting_payrolls');
-     Route::get('/audit_logs', [ContentController::class, 'audit_logs'])->name('audit_logs');
-     Route::get('/pivot_logs', [ContentController::class, 'pivot_logs'])->name('pivot_logs');
+    //Production Management
+    Route::get('/order', [ProductionOrderController::class, 'index'])->name('order');
+    Route::get('/premixes', [PremixesController::class, 'index'])->name('premixes');
+    Route::get('/raw', [RawMaterialsController::class, 'index'])->name('raw');
+    Route::get('/raw/{id?}', [RawMaterialsController::class, 'show'])->name('raw.show');
+    Route::post('/raw/remove/{id}', [RawMaterialsController::class, 'remove'])->name('raw.remove');
 
-     Route::get('/accounts', [ContentController::class, 'accounts'])->name('accounts');
-     Route::get('/permissions', [ContentController::class, 'permissions'])->name('permissions');
+    //Reports
+    Route::get('/bills', [AccountingBillsController::class, 'index'])->name('bills');
+    Route::get('/payrolls', [AccountingPayrollsController::class, 'index'])->name('payrolls');
+    Route::get('/audit', [AuditController::class, 'index'])->name('audit');
+    Route::get('/pivot', [PivotController::class, 'index'])->name('pivot');
+
+    //Users
+    Route::get('/accounts', [AccountsController::class, 'index'])->name('accounts');
+    Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions');
 });
 
 Route::get('/gs', function () {

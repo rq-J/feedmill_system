@@ -2,18 +2,20 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\RawMaterial;
-use Doctrine\DBAL\Schema\Column as SchemaColumn;
+use App\Models\Farm;
+use App\Models\FarmLocation;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Crypt;
 use PowerComponents\LivewirePowerGrid\Rules\{Rule, RuleActions};
 use PowerComponents\LivewirePowerGrid\Traits\ActionButton;
 use PowerComponents\LivewirePowerGrid\{Button, Column, Exportable, Footer, Header, PowerGrid, PowerGridComponent, PowerGridEloquent};
 
-final class RawMaterialTable extends PowerGridComponent
+final class FarmLocationTable extends PowerGridComponent
 {
     use ActionButton;
+    public $farm_array = [];
+    public $farm_name;
+    public $f_id;
 
     /*
     |--------------------------------------------------------------------------
@@ -46,13 +48,13 @@ final class RawMaterialTable extends PowerGridComponent
     */
 
     /**
-    * PowerGrid datasource.
-    *
-    * @return Builder<\App\Models\RawMaterial>
-    */
+     * PowerGrid datasource.
+     *
+     * @return Builder<\App\Models\FarmLocation>
+     */
     public function datasource(): Builder
     {
-        return RawMaterial::query()->where('active_status', "1");
+        return FarmLocation::query()->where('active_status', "1");
     }
 
     /*
@@ -87,18 +89,18 @@ final class RawMaterialTable extends PowerGridComponent
     public function addColumns(): PowerGridEloquent
     {
         return PowerGrid::eloquent()
-            // ->addColumn('id')
-            ->addColumn('raw_material_name')
+            ->addColumn('id')
+            ->addColumn('farm_location')
+            ->addColumn('farm_id')
+            ->addColumn('farm_name');
 
-           /** Example of custom column using a closure **/
-            ->addColumn('raw_material_name_lower', function (RawMaterial $model) {
-                return strtolower(e($model->raw_material_name));
-            })
+        /** Example of custom column using a closure **/
+        // ->addColumn('farm_location_lower', function (FarmLocation $model) {
+        //     return strtolower(e($model->farm_location));
+        // });
 
-            ->addColumn('standard_days')
-            ->addColumn('category');
-            // ->addColumn('created_at_formatted', fn (RawMaterial $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'))
-            // ->addColumn('updated_at_formatted', fn (RawMaterial $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i:s'));
+        // ->addColumn('created_at_formatted', fn (FarmLocation $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'))
+        // ->addColumn('updated_at_formatted', fn (FarmLocation $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i:s'));
     }
 
     /*
@@ -110,30 +112,38 @@ final class RawMaterialTable extends PowerGridComponent
     |
     */
 
-     /**
+    /**
      * PowerGrid Columns.
      *
      * @return array<int, Column>
      */
     public function columns(): array
     {
+        $f_id = 'id';
+        // $this->farm_name = Farm::findorfail($f_id);
+        $this->farm_array = Farm::findorfail($f_id);
+        [
+            $this->farm_name,
+        ] = [
+            $this->farm_array->farm_name
+        ];
+
         return [
             // Column::make('ID', 'id')
             //     ->makeInputRange(),
 
-            Column::make('RAW MATERIAL NAME', 'raw_material_name')
+            Column::make('FARM LOCATION', 'farm_location')
                 ->sortable()
                 ->searchable(),
-                // ->makeInputText(),
+            // ->makeInputText(),
 
-            Column::make('STANDARD DAYS', 'standard_days')
+            Column::make('FARM', 'farm_id')
+                ->sortable()
+                ->searchable(),
+            // ->makeInputText(),
+
+            Column::make('FARM NAME', $f_id)
                 ->sortable(),
-                // ->makeInputRange(),
-
-            Column::make('CATEGORY', 'category')
-                ->sortable()
-                ->searchable(),
-                // ->makeInputText(),
 
             // Column::make('CREATED AT', 'created_at_formatted', 'created_at')
             //     ->searchable()
@@ -145,8 +155,7 @@ final class RawMaterialTable extends PowerGridComponent
             //     ->sortable()
             //     ->makeInputDatePicker(),
 
-        ]
-;
+        ];
     }
 
     /*
@@ -157,8 +166,8 @@ final class RawMaterialTable extends PowerGridComponent
     |
     */
 
-     /**
-     * PowerGrid RawMaterial Action Buttons.
+    /**
+     * PowerGrid FarmLocation Action Buttons.
      *
      * @return array<int, Button>
      */
@@ -166,15 +175,15 @@ final class RawMaterialTable extends PowerGridComponent
 
     public function actions(): array
     {
-       return [
-           Button::make('edit', 'Edit')
-               ->class('btn btn-primary cursor-pointer px-3 py-2 m-1 rounded text-sm')
-               ->route('raw.show', ['id' => 'id']),
+        return [
+            Button::make('edit', 'Edit')
+                ->class('btn btn-primary cursor-pointer px-3 py-2 m-1 rounded text-sm')
+                ->route('farm.l.show', ['id' => 'id']),
 
-           Button::make('remove', 'Delete')
-               ->class('btn btn-secondary cursor-pointer px-3 py-2 m-1 rounded text-sm')
-               ->route('raw.remove', ['id' => 'id'])
-               ->method('post')
+            Button::make('remove', 'Delete')
+                ->class('btn btn-secondary cursor-pointer px-3 py-2 m-1 rounded text-sm')
+                ->route('farm.l.remove', ['id' => 'id'])
+                ->method('get')
         ];
     }
 
@@ -187,8 +196,8 @@ final class RawMaterialTable extends PowerGridComponent
     |
     */
 
-     /**
-     * PowerGrid RawMaterial Action Rules.
+    /**
+     * PowerGrid FarmLocation Action Rules.
      *
      * @return array<int, RuleActions>
      */
@@ -200,7 +209,7 @@ final class RawMaterialTable extends PowerGridComponent
 
            //Hide button edit for ID 1
             Rule::button('edit')
-                ->when(fn($raw-material) => $raw-material->id === 1)
+                ->when(fn($farm-location) => $farm-location->id === 1)
                 ->hide(),
         ];
     }

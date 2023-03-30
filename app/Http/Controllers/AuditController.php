@@ -10,26 +10,31 @@ use App\Models\User;
 
 class AuditController extends Controller
 {
+    public function index()
+    {
+        return view('reports.audit_logs');
+    }
+
     public static function logEntry($data)
     {
-    	$log = new Audit();
-    	$log->action = $data[0];
-    	$log->table = $data[1];
-    	$log->old_value = $data[2];
-    	$log->new_value = $data[3];
-    	$log->user_id = Auth::user()->id;
-    	$log->save();
+        $log = new Audit();
+        $log->action = $data[0];
+        $log->table = $data[1];
+        $log->old_value = $data[2];
+        $log->new_value = $data[3];
+        $log->user_id = Auth::user()->id;
+        $log->save();
     }
 
 
     public function trail(Request $request)
     {
-        if($request->ajax()) {
+        if ($request->ajax()) {
             $audits = Audit::all();
- 
+
             $data = collect();
-            if($audits->count() > 0) {
-                foreach($audits as $a) {
+            if ($audits->count() > 0) {
+                foreach ($audits as $a) {
                     $data->push([
                         'id' => $a->id,
                         'user' => $a->user_id,
@@ -42,8 +47,8 @@ class AuditController extends Controller
                 }
             }
             return DataTables::of($data)
-                    ->rawColumns(['view'])
-                    ->make(true);
+                ->rawColumns(['view'])
+                ->make(true);
         }
         return view('audits');
     }
