@@ -25,13 +25,15 @@
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script> --}}
 
     {{-- Styles --}}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-        integrity="sha384-xJtAgP/9X8pBpgR+Gv1ptJUMjeMhjN3aNqZRQ2N/c63lLbiS2C1b07zCA5pi5OIb" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+
+
     <link id="pagestyle" href="{{ asset('assets/css/bootstrap.css') }}" rel="stylesheet" />
 
-    @yield('styles')
     @livewireStyles
-    @powerGridStyles
+    @yield('styles')
 </head>
 
 <body class="font-sans antialiased g-sidenav-show  bg-gray-100">
@@ -47,29 +49,30 @@
     </main>
 
     {{-- Scripts --}}
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    {{-- <script src="{{ asset('js/jquery.min.js') }}"></script> --}}
+    <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+        crossorigin="anonymous"></script>
     <script src="{{ asset('assets/js/core/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
-    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    {{-- <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('assets/js/fontawesome.js') }}"></script>
+    {{-- <script src="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"></script> --}}
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <script>
         $.ajax({
             type: "GET",
             url: "{{ config('app.root_domain') . config('app.user_details_slug') . \Crypt::encryptString(Auth::user()->id) }}",
             dataType: 'json',
             success: function(response) {
-                document.getElementById('fullname').innerHTML = response['first_name'] + " " + response[
-                    'last_name'];
-                document.getElementById('email').innerHTML = response['email'];
+                // document.getElementById('fullname').innerHTML = response['first_name'] + " " + response['last_name'];
+                // document.getElementById('email').innerHTML = response['email'];
             }
         });
     </script>
 
-
-    @yield('scripts')
     @livewireScripts
-    @powerGridScripts
+    @yield('scripts')
 </body>
 
 </html>

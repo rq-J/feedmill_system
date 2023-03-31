@@ -18,7 +18,8 @@
             @livewire('add-raw-material')
         </div>
         <div class="container" id="table">
-            <livewire:raw-material-table />
+            {{-- <livewire:raw-material-table /> --}}
+            {{-- TODO : insert data table here --}}
         </div>
     @endif
 
