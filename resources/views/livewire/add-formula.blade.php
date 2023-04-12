@@ -19,8 +19,8 @@
 
             <br>
 
-            <label for="myMedSelect" class="col-form-label">Medicine</label>
-            <select name="" id="myMedSelect" class="form-control">
+            <label for="myMedicineSelect" class="col-form-label">Medicine</label>
+            <select name="" id="myMedicineSelect" class="form-control">
                 @foreach ($arrMedicine as $medicine)
                 <option value="{{ $medicine->raw_material_name }}">{{ $medicine->raw_material_name }}</option>
                 @endforeach
@@ -29,8 +29,14 @@
         <div class="col-6">
             <div class="container">
                 <h5>Ingredients</h5>
-                <ul id="myList"></ul>
-                <button id="undoButton" class="btn btn-primary" style="float:right;">Reset</button>
+                <label for="myMacroList" class="col-form-label">Macro</label>
+                <ul id="myMacroList"></ul>
+                <label for="myMicroList" class="col-form-label">Micro</label>
+                <ul id="myMicroList"></ul>
+                <label for="myMedicineList" class="col-form-label">Medicine</label>
+                <ul id="myMedicineList"></ul>
+                <button id="addButton" class="btn btn-primary" style="float:right;">Add</button>
+                <button id="undoButton" class="btn btn-danger" style="float:right;">Reset</button>
             </div>
         </div>
     </div>
@@ -39,13 +45,18 @@
 @section('scripts')
   <script>
   $(document).ready(function() {
+
+    $('#myMacroSelect').val('');
+    $('#myMicroSelect').val('');
+    $('#myMedicineSelect').val('');
+
     // Hide the selected option from the select element
     $('#myMacroSelect').on('change', function() {
       var selectedOption = $(this).val();
       $(this).find('option[value="' + selectedOption + '"]').hide();
 
       // Show the selected option in the ul list
-      $('<li>').text(selectedOption).appendTo('#myList');
+      $('<li>').text(selectedOption).appendTo('#myMacroList');
     });
 
     // Hide the selected option from the select element
@@ -54,16 +65,16 @@
       $(this).find('option[value="' + selectedOption + '"]').hide();
 
       // Show the selected option in the ul list
-      $('<li>').text(selectedOption).appendTo('#myList');
+      $('<li>').text(selectedOption).appendTo('#myMicroList');
     });
 
     // Hide the selected option from the select element
-    $('#myMedSelect').on('change', function() {
+    $('#myMedicineSelect').on('change', function() {
       var selectedOption = $(this).val();
       $(this).find('option[value="' + selectedOption + '"]').hide();
 
       // Show the selected option in the ul list
-      $('<li>').text(selectedOption).appendTo('#myList');
+      $('<li>').text(selectedOption).appendTo('#myMedicineList');
     });
 
     // Handle undo button click
