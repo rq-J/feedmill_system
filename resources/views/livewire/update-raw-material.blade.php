@@ -1,6 +1,6 @@
 @inject('raw_mats', 'Illuminate\Support\Facades\Crypt')
 <div class="container">
-    <form wire:submit.prevent="update" method="POST">
+    <form wire:submit.prevent="update({{ $mat_id }})" method="POST">
         @csrf
         @php
             $upCaseField = 'style="text-transform:uppercase;"';

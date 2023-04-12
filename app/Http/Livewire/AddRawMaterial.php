@@ -39,7 +39,7 @@ class AddRawMaterial extends Component
     {
         $this->raw_material_name = null;
         $this->standard_days = null;
-        $this->selectedCategory = null;
+        $this->selectedCategory = 'micro';
     }
 
     /**
@@ -77,7 +77,7 @@ class AddRawMaterial extends Component
 
         foreach ($get_all_raw_materials as $num => $raw_material_name) {
             $sim_val = similar_text(strtoupper($test_val), strtoupper($raw_material_name->raw_material_name), $perc);
-            if ($perc > 90) {
+            if ($perc > 95) {
                 $bool_val = true;
                 break;
             }
@@ -98,7 +98,7 @@ class AddRawMaterial extends Component
             $raw_Materials = new RawMaterial();
             $raw_Materials->raw_material_name = $this->raw_material_name;
             $raw_Materials->standard_days = $this->standard_days;
-            $raw_Materials->category = $this->selectedCategory;
+            $raw_Materials->category = strtoupper($this->selectedCategory);
             $raw_Materials->active_status = 1;
 
             if ($this->test_similarity($this->raw_material_name) == true) {

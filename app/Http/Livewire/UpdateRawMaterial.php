@@ -6,6 +6,7 @@ use Livewire\Component;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\RawMaterial;
+use Illuminate\Validation\Rule;
 
 
 class UpdateRawMaterial extends Component
@@ -68,7 +69,8 @@ class UpdateRawMaterial extends Component
      * @return validated Data
      */
     protected $rules = [
-        'raw_material_name' => 'required|string|min:5|max:255|unique:raw_materials,raw_material_name',
+        'raw_material_name' => 'required|string|min:5|max:255',
+        // 'raw_material_name' => 'required|string|min:5|max:255|unique:raw_materials,raw_material_name',
         'standard_days' => 'required|integer|min:1|max:180'
     ];
 
@@ -137,10 +139,16 @@ class UpdateRawMaterial extends Component
      * @param nul
      * @return null
      */
-    public function update()
+    public function update($id)
     {
-        if (!$this->validate()) {
-            return redirect('/dashboard');
+        if (!$this->validate([
+            'raw_material_name' => [
+                'required',
+                Rule::unique('raw_materials')->ignore($id),
+            ],
+            'standard_days' => 'required|numeric',
+        ])) {
+            return redirect('/raw')->with('danger_message', 'Please try again!');
         }
 
         $raw_Materials = new RawMaterial();

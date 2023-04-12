@@ -103,9 +103,11 @@ class UpdateFarm extends Component
         $to_remove->active_status = 0;
 
         if ($to_remove->save() && $Farm->save()) {
-            return redirect('/farm')->with('success_message', 'Task Has Been Succesfully Updated!');
+            return redirect('/farm')
+                ->with('success_message', 'Task Has Been Succesfully Updated!');
         } else {
-            return redirect('/farm')->with('danger_message', 'Error in Database!');
+            return redirect('/farm')
+                ->with('danger_message', 'Error in Database!');
         }
     }
 }

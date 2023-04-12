@@ -25,11 +25,155 @@
                 </g>
             </svg></a>&nbsp;Create Farm Location
     </h3>
-    @livewire('add-location', ['farms' => $farms])
+
+    <div class="pull-right">
+        <button id="myButton" class="btn btn-primary"></button>
+        <button id="refresh" class="btn btn-secondary"></button>
+    </div>
+
+    @php
+        $isHidden = true;
+    @endphp
+    @if ($isHidden)
+        <div id="create" style="display: none">
+            @livewire('add-location', ['farms' => $farms])
+        </div>
+        <div class="container" id="table">
+            {{-- TODO : insert data table here --}}
+            <table id="location" class="table table-bordered table-hover text-nowrap" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th class="text-center">Farm Location</th>
+                        <th class="text-center">Farm Name</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    @endif
 @endsection
 
-@section('scripts')
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
+@section('alt-scripts')
+  <script>
+    $(document).ready(function() {
+      let location = $('#location').DataTable({
+        processing: true,
+        serverSide: true,
+        scrollX: true,
+        columnDefs: [{  className: "dt-center", targets: [0, 1, 2, 3] }],
+
+        ajax: "{{ route('farm.l') }}",
+        columns: [
+            { data: 'farm_location', name: 'farm_location' },
+            { data: 'farm_name', name: 'farm_name' },
+            { data: 'status', name: 'status' },
+            { data: 'action', name: 'action'}
+        ],
+        pagingType: 'full_numbers',
+        language: {
+            "emptyTable": "No Farm Locations available."
+        },
+        searching: true,
+      });
+    });
+
+    $(document).on('click', '#refresh', function(e) {
+      var location = $('#location').DataTable();
+      location.ajax.reload();
+    });
+
+    $(document).on('click', '#update', function (e) {
+      e.preventDefault();
+      var id = $(this).data('id');
+      var name = $(this).data('name');
+      var title = "Update Farm Location?";
+      var html_text = "<p>Are you sure you want to update <b>" + name + "</b>?</p>";
+      Swal.fire({
+        title: title,
+        html: html_text,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Continue'
+      }).then((result) => {
+        if (result.value) {
+          var update_url = "{{ route('farm.l.show') }}"
+          window.location.replace(update_url + "/" + id);
+        }
+        else {
+          Swal.fire({
+            title: 'Action Cancelled',
+            text: "",
+            icon: 'info',
+            showCancelButton: false,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Close'
+          });
+        }
+      });
+    });
+
+    $(document).on('click', '#remove', function (e) {
+      e.preventDefault();
+      var id = $(this).data('id');
+      var title = "Remove Farm Location?";
+      var name = $(this).data('name');
+      var html_text = "<p>Are you sure you want to remove <b>" + name + "</b>?</p>";
+      Swal.fire({
+        title: title,
+        html: html_text,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Continue'
+      }).then((result) => {
+        if (result.value) {
+          var update_url = "{{ route('farm.l.remove') }}"
+          window.location.replace(update_url + "/" + id);
+        }
+        else {
+          Swal.fire({
+            title: 'Action Cancelled',
+            text: "",
+            icon: 'info',
+            showCancelButton: false,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Close'
+          });
+        }
+      });
+    });
+
+
+    const button = document.getElementById("myButton");
+    const create = document.getElementById("create");
+    const table = document.getElementById("table");
+    let isVisible = true;
+    table.style.display = "block";
+    button.innerText = "Create New";
+    refresh.innerText = "Refresh";
+
+    button.addEventListener("click", function() {
+        if (isVisible) {
+            create.style.display = "block";
+            table.style.display = "none";
+            refresh.style.display = "none";
+            button.innerText = "Show Table";
+            isVisible = false;
+        } else {
+            create.style.display = "none";
+            table.style.display = "block";
+            refresh.style.display = "inline";
+            button.innerText = "Create New";
+            isVisible = true;
+        }
+    });
+  </script>
     <script>
         @if (session('success_message'))
             Swal.fire({

@@ -120,7 +120,7 @@ class AddFarm extends Component
         // [action, table, old_value, new_value]
         $log_entry = [
             'new',
-            'systems',
+            'farm',
             '',
             $farm,
         ];
@@ -132,5 +132,4 @@ class AddFarm extends Component
                 strtoupper($this->farm_name) . ' has been Successfully Created!'
             );
     }
-
 }

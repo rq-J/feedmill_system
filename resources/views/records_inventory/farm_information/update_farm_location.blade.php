@@ -28,8 +28,7 @@
     @livewire('update-farm-location', ['id' => $id])
 @endsection
 
-@section('scripts')
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
+@section('alt-scripts')
     <script>
         @if(session('success_message'))
             Swal.fire({

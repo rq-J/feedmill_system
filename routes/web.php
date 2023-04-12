@@ -13,7 +13,9 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FarmInformationController;
 use App\Http\Controllers\FeedRequestController;
+use App\Http\Controllers\FormulaController;
 use App\Http\Controllers\InventoryLevelsController;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\MacroController;
 use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\MessageSlackController;
@@ -75,10 +77,12 @@ Route::middleware('auth')->group(function () {
 
     //Production Management
     Route::get('/order', [ProductionOrderController::class, 'index'])->name('order');
+    Route::get('/formula', [FormulaController::class, 'index'])->name('formula');
     Route::get('/premixes', [PremixesController::class, 'index'])->name('premixes');
+    Route::get('/item', [ItemController::class, 'index'])->name('item');
     Route::get('/raw', [RawMaterialsController::class, 'index'])->name('raw');
-    Route::get('/raw/{id?}', [RawMaterialsController::class, 'show'])->name('raw.show');
-    Route::post('/raw/remove/{id}', [RawMaterialsController::class, 'remove'])->name('raw.remove');
+    Route::get('/raw/{id?}', [RawMaterialsController::class, 'update'])->name('raw.update');
+    Route::get('/raw/remove/{id?}', [RawMaterialsController::class, 'remove'])->name('raw.remove');
 
     //Reports
     Route::get('/bills', [AccountingBillsController::class, 'index'])->name('bills');

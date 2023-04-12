@@ -8,15 +8,13 @@ use App\Models\Farm;
 
 class UpdateFarmLocation extends Component
 {
+    public $farm_location_id;
+    public $farm_location_array = [];
     public $farm_location;
     public $selectedCategory;
     public $farm_name;
-    public $farms;
-
-    public function mount($farms)
-    {
-        $this->farms = $farms;
-    }
+    public $farms = [];
+    public $farm;
 
     /**
      * To Render Component To The Views.
@@ -26,6 +24,19 @@ class UpdateFarmLocation extends Component
     public function render()
     {
         return view('livewire.update-farm-location');
+    }
+
+    /**
+     * To Assign Null Value For The Following Fields.
+     * @param id
+     * @return farm_id = id
+     */
+    public function mount($id)
+    {
+        $this->farm_location_id = $id;
+        $this->farm_location_array = FarmLocation::findorfail($id);
+        $this->farm_location = $this->farm_location_array['farm_location'];
+        $this->farm_name = $this->farm_location_array['farm_name'];
     }
 
     /**

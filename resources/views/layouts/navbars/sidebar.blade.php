@@ -284,6 +284,34 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link {{ Request::is('formula') ? 'active' : '' }}"
+                    href="{{ url('formula') }}">
+                    <div
+                        class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center p-2">
+                        <svg aria-hidden="true" focusable="false" data-prefix="fa-duotone" data-icon="mortar-pestle"
+                            class="svg-inline--fa fa-mortar-pestle fa-w-16" role="img"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                            <defs>
+                                <style>
+                                    .fa-secondary {
+                                        opacity: .4
+                                    }
+                                </style>
+                            </defs>
+                            <g class="fa-group">
+                                <path
+                                    d="M402.375 160H251L454.75 7.125C465.625 -1 480 -2.25 492.125 3.75C513.875 14.625 518.625 43.75 501.375 60.875L402.375 160Z"
+                                    class="fa-secondary" fill="currentColor" />
+                                <path
+                                    d="M496 192H16C7.125 192 0 199.125 0 208V240C0 248.875 7.125 256 16 256H32C32 337 82.25 406.125 153.125 434.375C140.375 451.25 131.375 471.125 128.125 493C126.75 502.875 134.25 512 144.25 512H367.75C377.75 512 385.25 502.875 383.875 493C380.625 471.125 371.625 451.25 358.875 434.375C429.75 406.125 480 337 480 256H496C504.875 256 512 248.875 512 240V208C512 199.125 504.875 192 496 192Z"
+                                    class="fa-primary" fill="currentColor" />
+                            </g>
+                        </svg>
+                    </div>
+                    <span class="nav-link-text ms-1">Formula</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link {{ Request::is('premixes') ? 'active' : '' }}"
                     href="{{ url('premixes') }}">
                     <div
@@ -309,6 +337,34 @@
                         </svg>
                     </div>
                     <span class="nav-link-text ms-1">Premixes</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ Request::is('item') ? 'active' : '' }}"
+                    href="{{ url('item') }}">
+                    <div
+                        class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center p-2">
+                        <svg aria-hidden="true" focusable="false" data-prefix="fa-duotone" data-icon="mortar-pestle"
+                            class="svg-inline--fa fa-mortar-pestle fa-w-16" role="img"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                            <defs>
+                                <style>
+                                    .fa-secondary {
+                                        opacity: .4
+                                    }
+                                </style>
+                            </defs>
+                            <g class="fa-group">
+                                <path
+                                    d="M402.375 160H251L454.75 7.125C465.625 -1 480 -2.25 492.125 3.75C513.875 14.625 518.625 43.75 501.375 60.875L402.375 160Z"
+                                    class="fa-secondary" fill="currentColor" />
+                                <path
+                                    d="M496 192H16C7.125 192 0 199.125 0 208V240C0 248.875 7.125 256 16 256H32C32 337 82.25 406.125 153.125 434.375C140.375 451.25 131.375 471.125 128.125 493C126.75 502.875 134.25 512 144.25 512H367.75C377.75 512 385.25 502.875 383.875 493C380.625 471.125 371.625 451.25 358.875 434.375C429.75 406.125 480 337 480 256H496C504.875 256 512 248.875 512 240V208C512 199.125 504.875 192 496 192Z"
+                                    class="fa-primary" fill="currentColor" />
+                            </g>
+                        </svg>
+                    </div>
+                    <span class="nav-link-text ms-1">Item</span>
                 </a>
             </li>
             <li class="nav-item">

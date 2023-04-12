@@ -7,8 +7,8 @@
 @section('content')
     <h3>Raw Material</h3>
     <div class="pull-right">
-        <button id="myButton" class="btn btn-primary">Show/Hide Div</button>
-
+        <button id="myButton" class="btn btn-primary"></button>
+        <button id="refresh" class="btn btn-secondary"></button>
     </div>
     @php
         $isHidden = true;
@@ -20,6 +20,16 @@
         <div class="container" id="table">
             {{-- <livewire:raw-material-table /> --}}
             {{-- TODO : insert data table here --}}
+            <table id="raw_table" class="table table-bordered table-hover text-nowrap" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th class="text-center">Raw Material Name</th>
+                        <th class="text-center">Standard Days</th>
+                        <th class="text-center">Category</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+            </table>
         </div>
     @endif
 
@@ -54,26 +64,125 @@
     </div> --}}
 @endsection
 
-@section('scripts')
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
-    <script type="text/javascript">
-        const button = document.getElementById("myButton");
-        const create = document.getElementById("create");
-        const table = document.getElementById("table");
-        let isVisible = true;
-        table.style.display = "block";
+@section('alt-scripts')
+  <script>
+    $(document).ready(function() {
+      let farms = $('#raw_table').DataTable({
+        processing: true,
+        serverSide: true,
+        scrollX: true,
+        columnDefs: [{  className: "dt-center", targets: [0, 1, 2, 3] }],
 
-        button.addEventListener("click", function() {
-            if (isVisible) {
-                create.style.display = "block";
-                table.style.display = "none";
-                isVisible = false;
-            } else {
-                create.style.display = "none";
-                table.style.display = "block";
-                isVisible = true;
-            }
-        });
+        ajax: "{{ route('raw') }}",
+        columns: [
+            { data: 'raw_material_name', name: 'raw_material_name' },
+            { data: 'standard_days', name: 'standard_days' },
+            { data: 'category', name: 'category'},
+            { data: 'action', name: 'action'}
+        ],
+        pagingType: 'full_numbers',
+        language: {
+            "emptyTable": "No Raw Material records."
+        },
+        searching: true,
+      });
+    });
+
+    $(document).on('click', '#refresh', function(e) {
+      var farms = $('#raw_table').DataTable();
+      farms.ajax.reload();
+    });
+
+    $(document).on('click', '#update', function (e) {
+      e.preventDefault();
+      var id = $(this).data('id');
+      var name = $(this).data('name');
+      var title = "Update Department?";
+      var html_text = "<p>Are you sure you want to update <b>" + name + "</b>?</p>";
+      Swal.fire({
+        title: title,
+        html: html_text,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Continue'
+      }).then((result) => {
+        if (result.value) {
+          var update_url = "{{ route('raw.update') }}"
+          window.location.replace(update_url + "/" + id);
+        }
+        else {
+          Swal.fire({
+            title: 'Action Cancelled',
+            text: "",
+            icon: 'info',
+            showCancelButton: false,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Close'
+          });
+        }
+      });
+    });
+
+    $(document).on('click', '#remove', function (e) {
+      e.preventDefault();
+      var id = $(this).data('id');
+      var title = "Remove Raw Material?";
+      var name = $(this).data('name');
+      var html_text = "<p>Are you sure you want to remove <b>" + name + "</b>?</p>";
+      Swal.fire({
+        title: title,
+        html: html_text,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Continue'
+      }).then((result) => {
+        if (result.value) {
+          var update_url = "{{ route('raw.remove') }}"
+          window.location.replace(update_url + "/" + id);
+        }
+        else {
+          Swal.fire({
+            title: 'Action Cancelled',
+            text: "",
+            icon: 'info',
+            showCancelButton: false,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Close'
+          });
+        }
+      });
+    });
+
+
+    const button = document.getElementById("myButton");
+    const create = document.getElementById("create");
+    const table = document.getElementById("table");
+    let isVisible = true;
+    table.style.display = "block";
+    button.innerText = "Create New";
+    refresh.innerText = "Refresh";
+
+    button.addEventListener("click", function() {
+        if (isVisible) {
+            create.style.display = "block";
+            table.style.display = "none";
+            refresh.style.display = "none";
+            button.innerText = "Show Table";
+            isVisible = false;
+        } else {
+            create.style.display = "none";
+            table.style.display = "block";
+            refresh.style.display = "inline";
+            button.innerText = "Create New";
+            isVisible = true;
+        }
+    });
 
         @if(session('success_message'))
             Swal.fire({

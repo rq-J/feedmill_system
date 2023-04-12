@@ -5,39 +5,23 @@
             $upCaseField = 'style="text-transform:uppercase;"';
         @endphp
         <div class="row mb-3">
-            <label for="farm_location" class="col-md-3 col-form-label text-md">{{ __('Farm Location') }}<span
+            <label for="item_name" class="col-md-3 col-form-label text-md">{{ __('Farm Name') }}<span
                     class="text-danger">*</span></label>
 
             <div class="col-md-12">
-                <input id="farm_location" type="text" wire:model="farm_location" wire:keyup="valOnly"
-                    class="form-control @error('farm_location') is-invalid @enderror" name="farm_location"
-                    value="{{ old('farm_location') }}" placeholder="e.g: FARM LOCATION" autocomplete="farm_location" autofocus
+                <input id="item_name" type="text" wire:model="item_name" wire:keyup="valOnly"
+                    class="form-control @error('item_name') is-invalid @enderror" name="item_name"
+                    value="{{ old('item_name') }}" placeholder="e.g: FARM" autocomplete="item_name" autofocus
                     {!! $upCaseField !!}>
 
-                @error('farm_location')
+                @error('item_name')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror
-                {{ strtoupper($farm_location) }}
+                {{ strtoupper($item_name) }}
             </div>
         </div>
-
-        <div class="row mb-3">
-            <label for="selectedCategory" class="col-md-2 col-form-label text-md">{{ __('Farm') }}</label>
-
-            <div class="col-md-12">
-                <select wire:model="selectedCategory" class="form-control">
-                    @foreach ($farms as $key => $value)
-                        <option value="{{ $value->id }}">{{ ucfirst($value->farm_name ) }}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
-
-
-        {{ strtoupper($selectedCategory) }}
-
 
         <div class="row">
             <div class="col-md-12">
@@ -93,9 +77,69 @@
             </div>
         </div>
     </form>
-    <script>
-        Livewire.on('categorySelected', (option) => {
-            console.log('Selected option:', option);
-        });
-    </script>
 </div>
+
+@section('scripts')
+    {{-- <script>
+        window.addEventListener('danger_message', event => {
+            Swal.fire({
+                title: event.detail.title,
+                text: event.detail.text,
+                icon: event.detail.icon,
+                timer: 3000,
+                showCancelButton: false,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Close'
+            });
+        });
+    </script> --}}
+    <script>
+        @if (session('success_message'))
+            Swal.fire({
+                title: 'Done!',
+                text: '{{ session('success_message') }}',
+                icon: 'success',
+                timer: 3000,
+                showCancelButton: false,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Close'
+            });
+        @elseif (session('danger_message'))
+            Swal.fire({
+                title: 'Danger!',
+                text: '{{ session('danger_message') }}',
+                icon: 'error',
+                timer: 3000,
+                showCancelButton: false,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+            });
+        @endif
+
+        @error('task')
+            Swal.fire({
+                title: 'Invalid Input!',
+                text: '',
+                icon: 'error',
+                timer: 3000,
+                showCancelButton: false,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+            });
+        @enderror
+
+        @if (isset($_GET['action']) && $_GET['action'] == 'cancelled')
+            Swal.fire({
+                title: 'Action Cancelled!',
+                text: '',
+                icon: 'error',
+                timer: 3000,
+                showCancelButton: false,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+            });
+        @endif
+    </script>
+@endsection

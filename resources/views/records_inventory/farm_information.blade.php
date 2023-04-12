@@ -7,29 +7,19 @@
 @section('content')
     <h3>Farm Information</h3>
     <div class="row">
-        <div class="col-6">
+        <div class="col-12">
             <div class="row">
                 <h4 class="col-8">Farm</h4>
-                <a href="{{ route('farm.f') }}" class="btn btn-primary col-4">Create</a>
+                <a href="{{ route('farm.f') }}" class="btn btn-primary col-4">Select</a>
             </div>
             {{-- <livewire:farm-table /> --}}
             {{-- TODO : insert data table here --}}
-            <table id="farm" class="table table-bordered table-hover text-nowrap" style="width: 100%;">
-                <thead>
-                    <tr>
-                        <th class="text-center">Farm Name</th>
-                        <th class="text-center">Status</th>
-                        {{-- <th class="text-center">Action</th> --}}
-                    </tr>
-                </thead>
-            </table>
-
 
         </div>
-        <div class="col-6">
+        <div class="col-12">
             <div class="row">
                 <h4 class="col-8">Farm Location</h4>
-                <a href="{{ route('farm.l') }}" class="btn btn-primary col-4">Create</a>
+                <a href="{{ route('farm.l') }}" class="btn btn-primary col-4">Select</a>
             </div>
             {{-- <livewire:farm-location-table /> --}}
             {{-- TODO : insert data table here --}}
@@ -40,26 +30,6 @@
 
 @section('scripts')
   <script>
-    $(document).ready(function() {
-      let users = $('#farm').DataTable({
-        processing: true,
-        serverSide: true,
-        scrollX: true,
-        columnDefs: [{  className: "dt-center", targets: [0, 1] }],
-
-        ajax: "{{ route('farm') }}",
-        columns: [
-            { data: 'farm_name', name: 'farm_name' },
-            { data: 'status', name: 'status' },
-        ],
-        pagingType: 'full_numbers',
-        language: {
-            "emptyTable": "No Users available."
-        },
-        searching: true,
-      });
-    });
-
     @if (session('success_message'))
       Swal.fire({
         title: 'Done!',
