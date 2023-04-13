@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-	<h3>Formula</h3>
+	<h3>Update Formula</h3>
 	<div class="pull-right">
         <button id="myButton" class="btn btn-primary"></button>
         <button id="refresh" class="btn btn-secondary"></button>
@@ -41,7 +41,7 @@
         scrollX: true,
         columnDefs: [{  className: "dt-center", targets: [0, 1] }],
 
-        ajax: "{{ route('formula') }}",
+        ajax: "{{ route('item') }}",
         columns: [
             { data: 'item_name', name: 'item_name' },
             { data: 'action', name: 'action'}

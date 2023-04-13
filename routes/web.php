@@ -78,6 +78,7 @@ Route::middleware('auth')->group(function () {
     //Production Management
     Route::get('/order', [ProductionOrderController::class, 'index'])->name('order');
     Route::get('/formula', [FormulaController::class, 'index'])->name('formula');
+    Route::get('/formula/{id}', [FormulaController::class, 'update'])->name('formula.update');
     Route::get('/premixes', [PremixesController::class, 'index'])->name('premixes');
     Route::get('/item', [ItemController::class, 'index'])->name('item');
     Route::get('/raw', [RawMaterialsController::class, 'index'])->name('raw');

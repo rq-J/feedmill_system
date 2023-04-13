@@ -11,4 +11,8 @@ class Item extends Model
 
     protected $fillable = ['item_name'];
 
+    public function item_formula()
+    {
+        return $this->hasMany(ItemFormula::class);
+    }
 }

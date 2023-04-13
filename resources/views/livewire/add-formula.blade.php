@@ -1,6 +1,6 @@
 <div>
     <div class="row">
-        <div class="col-6">
+        <div class="col-4">
             <label for="myMacroSelect" class="col-form-label">Macro</label>
             <select name="" id="myMacroSelect" class="form-control">
                 @foreach ($arrMacro as $macro)
@@ -26,7 +26,7 @@
                 @endforeach
             </select>
         </div>
-        <div class="col-6">
+        <div class="col-8">
             <div class="container">
                 <h5>Ingredients</h5>
                 {{-- <label for="myMacroList" class="col-form-label">Macro</label>
@@ -39,8 +39,8 @@
                 <table id="myTable" class="table table-hover table-bordered text-center">
                     <thead>
                       <tr>
-                        <th>Option Name</th>
-                        <th>Input Textbox</th>
+                        <th>Raw Material Name</th>
+                        <th>Standard</th>
                       </tr>
                     </thead>
                     <tbody></tbody>
