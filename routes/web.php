@@ -63,13 +63,21 @@ Route::middleware('auth')->group(function () {
     Route::get('/feed', [FeedRequestController::class, 'index'])->name('feed');
 
     // Farm
-    Route::get('/farm', [FarmInformationController::class, 'index'])->name('farm');
-    Route::get('/farm/farm', [FarmInformationController::class, 'f_add'])->name('farm.f'); //Farm
-    Route::get('/farm/farm/{id?}', [FarmInformationController::class, 'f_show'])->name('farm.f.show');
-    Route::get('/farm/farm/remove/{id?}', [FarmInformationController::class, 'f_remove'])->name('farm.f.remove');
-    Route::get('/farm/location', [FarmInformationController::class, 'l_add'])->name('farm.l'); // Location
-    Route::get('/farm/location/{id?}', [FarmInformationController::class, 'l_show'])->name('farm.l.show');
-    Route::get('/farm/location/remove/{id?}', [FarmInformationController::class, 'l_remove'])->name('farm.l.remove');
+    Route::prefix('/farm')->group(function () {
+        Route::get('/', [FarmInformationController::class, 'index'])->name('farm');
+        Route::prefix('/farm')->group(function () {  //Farm
+            Route::get('/', [FarmInformationController::class, 'f_add'])->name('farm.f');
+            Route::get('/{id?}', [FarmInformationController::class, 'f_show'])->name('farm.f.show');
+            Route::get('/remove/{id?}', [FarmInformationController::class, 'f_remove'])->name('farm.f.remove');
+        });
+        Route::prefix('/location')->group(function () {  // Location
+            Route::get('/', [FarmInformationController::class, 'l_add'])->name('farm.l');
+            Route::get('/{id?}', [FarmInformationController::class, 'l_show'])->name('farm.l.show');
+            Route::get('/remove/{id?}', [FarmInformationController::class, 'l_remove'])->name('farm.l.remove');
+        });
+    });
+
+
 
     //Forecasting
     Route::get('/inventory', [InventoryLevelsController::class, 'index'])->name('inventory');
@@ -77,13 +85,17 @@ Route::middleware('auth')->group(function () {
 
     //Production Management
     Route::get('/order', [ProductionOrderController::class, 'index'])->name('order');
-    Route::get('/formula', [FormulaController::class, 'index'])->name('formula');
-    Route::get('/formula/{id}', [FormulaController::class, 'update'])->name('formula.update');
+    Route::prefix('/formula')->group(function () {
+        Route::get('/', [FormulaController::class, 'index'])->name('formula');
+        Route::get('/{id?}', [FormulaController::class, 'update'])->name('formula.update');
+    });
     Route::get('/premixes', [PremixesController::class, 'index'])->name('premixes');
     Route::get('/item', [ItemController::class, 'index'])->name('item');
-    Route::get('/raw', [RawMaterialsController::class, 'index'])->name('raw');
-    Route::get('/raw/{id?}', [RawMaterialsController::class, 'update'])->name('raw.update');
-    Route::get('/raw/remove/{id?}', [RawMaterialsController::class, 'remove'])->name('raw.remove');
+    Route::prefix('/raw')->group(function () {
+        Route::get('/', [RawMaterialsController::class, 'index'])->name('raw');
+        Route::get('/{id?}', [RawMaterialsController::class, 'update'])->name('raw.update');
+        Route::get('/remove/{id?}', [RawMaterialsController::class, 'remove'])->name('raw.remove');
+    });
 
     //Reports
     Route::get('/bills', [AccountingBillsController::class, 'index'])->name('bills');

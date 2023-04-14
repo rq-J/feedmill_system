@@ -15,14 +15,14 @@ class FormulaController extends Controller
         if ($request->ajax()) {
             $items = Item::where('active_status', 1)->get();
             $formula = ItemFormula::where('active_status', 1)->get();
-            $commonElements = array_intersect($items, $formula);
-            return $commonElements;
+            // $existsInModelB = Item::where('id', $itemId)->exists();
+
             $data = collect();
             if ($items->count() > 0) {
                 foreach ($items as $i) {
                     $data->push([
                         'item_name' => $i->item_name,
-                        'action' => $i->active_status == 1 ? '<button id="update" data-id="' . Crypt::encryptString($i->id) . '" data-name="'  . $i->item_name . '" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button> <button id="remove" data-id="' . Crypt::encryptString($i->id) . '" data-name="'  . $i->item_name . '" class="btn btn-danger btn-sm"><i class="fa fa-user-lock"></i></button>' : '<button id="enable" data-id="' . Crypt::encryptString($i->id) . '" data-name="'  . $i->item_name . '" class="btn btn-success btn-sm"><i class="fa fa-user-check"></i></button>'
+                        'action' => $existsInModelB = ItemFormula::where('item_id', $i->id)->where('active_status', 1)->exists()  ? '<button id="remove" data-id="' . Crypt::encryptString($i->id) . '" data-name="'  . $i->item_name . '" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></button>' : '<button id="create" data-id="' . Crypt::encryptString($i->id) . '" data-name="'  . $i->item_name . '" class="btn btn-success btn-sm"><i class="fa-solid fa-plus"></i></button>'
                     ]);
                 }
             }
@@ -31,57 +31,26 @@ class FormulaController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        $items = (Item::where('active_status', 1)->get())->toArray();
-        $formulas = ItemFormula::where('active_status', 1)->get();
-        // Convert the array to a collection
-        // $formulasCollection = collect($formulas);
-        // Loop through each animal and replace farm_id with farm_name
-        $arrFormula = $formulas->map(function ($formula) {
-            return [
-                'item_id' => $formula->item->item_name, // Access the related farm's name
-            ];
-        })->toArray(); // Convert the collection to an array
-        print_r($arrFormula);
-        echo "<br>";
-        print_r($items);
-        echo '</pre>';
-        echo "<br>";
-        // print_r(array_intersect($this->serialize_array_values($items), $this->serialize_array_values($arrFormula)));
-        print_r($this->array_deep_diff($arrFormula, $items));
-        // return view('production_management.formula');
+        return view('production_management.formula');
     }
 
-    //Low level seach item array
-    function serialize_array_values($arr)
+
+    function getSimilarItems($array1, $array2, $key1, $key2)
     {
-        foreach ($arr as $key => $val) {
-            sort($val);
-            $arr[$key] = serialize($val);
-        }
+        $similarItems = [];
 
-        return $arr;
-    }
-
-    //High level search item(sub-array)
-    function array_deep_diff($array1, $array2) {
-        $diff = array();
-
-        foreach ($array1 as $key => $value1) {
-            $value2 = $array2[$key] ?? null;
-
-            if (is_array($value1) && is_array($value2)) {
-                $subDiff = $this->array_deep_diff($value1, $value2);
-
-                if (!empty($subDiff)) {
-                    $diff[$key] = $subDiff;
+        foreach ($array1 as $item1) {
+            foreach ($array2 as $item2) {
+                if ($item1[$key1] === $item2[$key2]) { // Compare key1's value from array1 with key2's value from array2
+                    $similarItems[] = $item1[$key1]; // Add to similarItems array if similar
+                    break; // Break out of inner loop once similarity is found
                 }
-            } else if ($value1 !== $value2) {
-                $diff[$key] = $value1;
             }
         }
 
-        return $diff;
+        return $similarItems;
     }
+
 
 
     /**
@@ -93,7 +62,7 @@ class FormulaController extends Controller
     {
         $idFormula = Crypt::decryptString($id);
 
-        return view('production_management.production_management.update_formula', ['action' => 'Update'])
+        return view('production_management.formula.update_formula', ['action' => 'Update'])
             ->with('id', $idFormula);
     }
 }

@@ -13,6 +13,7 @@ class ItemFormula extends Model
     {
     	return $this->belongsTo('App\Models\Item');
     }
+
     public function raw_material()
     {
     	return $this->belongsTo('App\Models\RawMaterial');
