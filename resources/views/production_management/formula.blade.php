@@ -7,15 +7,7 @@
 @section('content')
 	<h3>Formula</h3>
 	<div class="pull-right">
-        <button id="myButton" class="btn btn-primary"></button>
-        <button id="refresh" class="btn btn-secondary"></button>
-    </div>
-    @php
-        $isHidden = true;
-    @endphp
-    @if ($isHidden)
-    <div id="create" style="display: none">
-        @livewire('add-formula')
+        <button id="refresh" class="btn btn-secondary">Refresh</button>
     </div>
     <div class="container" id="table">
         {{-- <livewire:raw-material-table /> --}}
@@ -29,7 +21,7 @@
             </thead>
         </table>
     </div>
-@endif
+  </div>
 @endsection
 
 @section('alt-scripts')
@@ -108,7 +100,7 @@
         confirmButtonText: 'Continue'
       }).then((result) => {
         if (result.value) {
-          var update_url = "{{ route('farm.f.remove') }}"
+          var update_url = "{{ route('formula.remove') }}"
           window.location.replace(update_url + "/" + id);
         }
         else {
@@ -123,31 +115,6 @@
           });
         }
       });
-    });
-
-
-    const button = document.getElementById("myButton");
-    const create = document.getElementById("create");
-    const table = document.getElementById("table");
-    let isVisible = true;
-    table.style.display = "block";
-    button.innerText = "Create New";
-    refresh.innerText = "Refresh";
-
-    button.addEventListener("click", function() {
-        if (isVisible) {
-            create.style.display = "block";
-            table.style.display = "none";
-            refresh.style.display = "none";
-            button.innerText = "Show Table";
-            isVisible = false;
-        } else {
-            create.style.display = "none";
-            table.style.display = "block";
-            refresh.style.display = "inline";
-            button.innerText = "Create New";
-            isVisible = true;
-        }
     });
 
     @if(session('success_message'))

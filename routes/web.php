@@ -88,6 +88,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('/formula')->group(function () {
         Route::get('/', [FormulaController::class, 'index'])->name('formula');
         Route::get('/{id?}', [FormulaController::class, 'update'])->name('formula.update');
+        Route::get('/remove/{id?}', [FormulaController::class, 'remove'])->name('formula.remove');
     });
     Route::get('/premixes', [PremixesController::class, 'index'])->name('premixes');
     Route::get('/item', [ItemController::class, 'index'])->name('item');

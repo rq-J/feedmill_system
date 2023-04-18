@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Crypt;
 use App\Models\Item;
 use App\Models\ItemFormula;
 use DataTables;
+use App\Http\Controllers\AuditController as AC;
 
 class FormulaController extends Controller
 {
@@ -64,5 +65,54 @@ class FormulaController extends Controller
 
         return view('production_management.formula.update_formula', ['action' => 'Update'])
             ->with('id', $idFormula);
+    }
+
+
+    public function remove($id = null)
+    {
+        // $idFormula = Crypt::decryptString($id);
+
+        // return view('production_management.formula.update_formula', ['action' => 'Update'])
+        //     ->with('id', $idFormula);
+
+
+        try {
+            $id = Crypt::decryptString($id);
+        } catch (\Throwable $e) {
+            return $e;
+        }
+
+        // $formula = ItemFormula::where('item_id', $id)->where('active_status', 1)->update(['active_status' => 0]);
+        // $formula_old = ItemFormula::where('item_id', $id)->where('active_status', 1);
+        // dd(strval($$formula_old));
+
+        // Retrieve items with active_status = 1
+        $itemFormulas = ItemFormula::where('item_id', $id)->where('active_status', 1)->get()->toArray();
+
+        // Loop through each item
+        foreach ($itemFormulas as &$item) {
+            // Update active_status to 0
+            $item['active_status'] = 0;
+
+            // Log the changes
+            $log_entry = [
+                'remove formula',
+                'item_formula',
+                json_encode($item),
+                '',
+            ];
+            AC::logEntry($log_entry);
+        }
+
+        // Save the updated items
+        $f = ItemFormula::where('item_id', $id)->where('active_status', 1)->update(['active_status' => 0]);
+
+
+        if ($f) {
+            return redirect('/formula')
+                ->with('success_message', 'Task Has Been Succesfully Deleted!');
+        }
+        return redirect('/formula')
+            ->with('danger_message', 'Error in Database!');
     }
 }
