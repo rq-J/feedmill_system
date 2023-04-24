@@ -10,7 +10,6 @@
         <button id="refresh" class="btn btn-secondary">Refresh</button>
     </div>
     <div class="container" id="table">
-        {{-- <livewire:raw-material-table /> --}}
         {{-- TODO : insert data table here --}}
         <table id="farms" class="table table-bordered table-hover text-nowrap" style="width: 100%;">
             <thead>

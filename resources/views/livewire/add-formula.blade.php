@@ -47,7 +47,7 @@
                     <tbody></tbody>
                 </table>
                 <button id="addButton" class="btn btn-primary" style="float:right;">Add</button>
-                <button id="undoButton" class="btn btn-danger" style="float:right;">Reset</button>
+                <button id="undoButton" class="btn btn-danger" style="float:right;">Remove Last Item</button>
 
             </div>
         </div>

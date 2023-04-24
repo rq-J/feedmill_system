@@ -27,3 +27,17 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+
+        //FOR EACH EVERY ITEM_IDS and GET THE DETAILS OF RAW MATERIAL NAME, STANDARD
+        var $row = $('<tr>');
+        $('<td style="display:;">').text(selectedOption).appendTo($row);
+        $('<td>').text(selectedOptionName).appendTo($row);
+        $('<td>').append($('<input class="form-control">').attr('type', 'number').appendTo($row)).appendTo(
+        $row);
+        $row.appendTo('#myTable tbody');
+
+    });
+</script>
