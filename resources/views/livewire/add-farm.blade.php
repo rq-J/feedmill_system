@@ -27,7 +27,7 @@
             <div class="col-md-12">
 
                 <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
-                    data-bs-target="#createModal">
+                    data-bs-target="#createModal" {{ ! $errors->has('farm_name') ? '' : 'disabled' }}>
                     <div class="icon icon-sm text-center me-0 align-items-center justify-content-center p-2">
                         <svg aria-hidden="true" focusable="false" data-bs-prefix="fa-duotone" data-bs-icon="plus"
                             class="svg-inline--fa fa-plus fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg"

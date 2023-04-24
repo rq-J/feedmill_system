@@ -5,13 +5,13 @@
             $upCaseField = 'style="text-transform:uppercase;"';
         @endphp
         <div class="row mb-3">
-            <label for="item_name" class="col-md-3 col-form-label text-md">{{ __('Farm Name') }}<span
+            <label for="item_name" class="col-md-3 col-form-label text-md">{{ __('Item') }}<span
                     class="text-danger">*</span></label>
 
             <div class="col-md-12">
                 <input id="item_name" type="text" wire:model="item_name" wire:keyup="valOnly"
                     class="form-control @error('item_name') is-invalid @enderror" name="item_name"
-                    value="{{ old('item_name') }}" placeholder="e.g: FARM" autocomplete="item_name" autofocus
+                    value="{{ old('item_name') }}" placeholder="e.g: ITEM" autocomplete="item_name" autofocus
                     {!! $upCaseField !!}>
 
                 @error('item_name')

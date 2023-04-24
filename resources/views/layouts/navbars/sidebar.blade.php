@@ -47,7 +47,7 @@
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Ingredient Storage</h6>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('macro') ? 'active' : '' }} " href="{{ url('macro') }}">
+                <a class="nav-link {{ Request::is('item_daily') ? 'active' : '' }} " href="{{ url('item_daily') }}">
                     <div
                         class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center p-2">
                         <svg aria-hidden="true" focusable="false" data-prefix="fa-duotone" data-icon="wheat"
@@ -70,63 +70,7 @@
                             </g>
                         </svg>
                     </div>
-                    <span class="nav-link-text ms-1">Macro</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {{ Request::is('micro') ? 'active' : '' }}"
-                    href="{{ url('micro') }}">
-                    <div
-                        class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center p-2">
-                        <svg aria-hidden="true" focusable="false" data-prefix="fa-duotone"
-                            data-icon="flask-round-potion" class="svg-inline--fa fa-flask-round-potion fa-w-14"
-                            role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                            <defs>
-                                <style>
-                                    .fa-secondary {
-                                        opacity: .4
-                                    }
-                                </style>
-                            </defs>
-                            <g class="fa-group">
-                                <path
-                                    d="M319.965 169V64H327.961C341.219 64 351.961 53.254 351.961 40V24C351.961 10.742 341.219 0 327.961 0H119.992C106.734 0 95.992 10.742 95.992 24V40C95.992 53.254 106.734 64 119.992 64H127.984V168.125C61.617 202.875 16 271.875 16 352C16 405.75 36.375 454.75 69.992 491.75C81.867 504.875 99.117 512 116.988 512H330.961C348.961 512 366.461 504.5 378.461 491.125C410.703 455.375 430.703 408.375 431.953 356.625C433.703 276.75 387.207 205.125 319.965 169ZM330.961 448L117.359 448.711C93.27 422.195 80 387.848 80 352C80 266.026 140.643 233.742 191.984 206.855V64H255.965V207.27C293.043 227.188 370.018 261.811 367.973 355.078C367.137 389.613 353.984 422.703 330.961 448Z"
-                                    class="fa-secondary" fill="currentColor" />
-                                <path
-                                    d="M367.879 352C367.875 353.055 367.996 354.012 367.973 355.078C367.137 389.613 353.984 422.703 330.961 448L117.359 448.711C93.27 422.195 80 387.848 80 352C80 345.762 80.961 340.383 81.57 334.691C147.164 302.625 208.672 304.594 262.742 331.5C307.891 353.961 344.258 352.008 367.879 352Z"
-                                    class="fa-primary" fill="currentColor" />
-                            </g>
-                        </svg>
-                    </div>
-                    <span class="nav-link-text ms-1">Micro</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {{ Request::is('medicine') ? 'active' : '' }}"
-                    href="{{ url('medicine') }}">
-                    <div
-                        class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center p-2">
-                        <svg aria-hidden="true" focusable="false" data-prefix="fa-duotone" data-icon="pills"
-                            class="svg-inline--fa fa-pills fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 576 512">
-                            <defs>
-                                <style>
-                                    .fa-secondary {
-                                        opacity: .4
-                                    }
-                                </style>
-                            </defs>
-                            <g class="fa-group">
-                                <path
-                                    d="M299.755 226.25C296.255 222.75 290.255 223.25 287.38 227.125C242.129 289.625 247.004 377.25 303.255 433.5C359.631 489.75 447.257 494.75 509.758 449.375C513.758 446.5 514.008 440.625 510.508 437.125L299.755 226.25ZM529.509 207.25C473.258 151 385.631 146.125 323.13 191.375C319.13 194.25 318.755 200.25 322.255 203.75L533.134 414.5C536.634 418.001 542.509 417.625 545.384 413.75C590.76 351.125 585.885 263.625 529.509 207.25ZM112.002 32C50.126 32 0 82.125 0 144V256H224.004V144C224.004 82.125 173.878 32 112.002 32Z"
-                                    class="fa-secondary" fill="currentColor" />
-                                <path
-                                    d="M224.004 256V368C224.004 429.875 173.878 480 112.002 480S0 429.875 0 368V256H224.004Z"
-                                    class="fa-primary" fill="currentColor" />
-                            </g>
-                        </svg>
-                    </div>
-                    <span class="nav-link-text ms-1">Medicine</span>
+                    <span class="nav-link-text ms-1">Item Daily</span>
                 </a>
             </li>
 

@@ -1,25 +1,25 @@
 <div class="container">
-    <form wire:submit.prevent="update" method="POST">
+    <form wire:submit.prevent="update({{ $item_id }})" method="POST">
         @csrf
         @php
             $upCaseField = 'style="text-transform:uppercase;"';
         @endphp
         <div class="row mb-3">
-            <label for="farm_name" class="col-md-3 col-form-label text-md">{{ __('Farm Name') }}<span
+            <label for="item_name" class="col-md-3 col-form-label text-md">{{ __('Item') }}<span
                     class="text-danger">*</span></label>
 
             <div class="col-md-12">
-                <input id="farm_name" type="text" wire:model="farm_name" wire:keyup="valOnly"
-                    class="form-control @error('farm_name') is-invalid @enderror" name="farm_name"
-                    value="{{ old('farm_name') }}" placeholder="e.g: FARM" autocomplete="farm_name" autofocus
+                <input id="item_name" type="text" wire:model="item_name" wire:keyup="valOnly"
+                    class="form-control @error('item_name') is-invalid @enderror" name="item_name"
+                    value="{{ old('item_name') }}" placeholder="e.g: ITEM" autocomplete="item_name" autofocus
                     {!! $upCaseField !!}>
 
-                @error('farm_name')
+                @error('item_name')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror
-                {{ strtoupper($farm_name) }}
+                {{ strtoupper($item_name) }}
             </div>
         </div>
 
@@ -27,7 +27,7 @@
             <div class="col-md-12">
 
                 <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
-                    data-bs-target="#createModal" {{ ! $errors->has('farm_name') ? '' : 'disabled' }}>
+                    data-bs-target="#createModal">
                     <div class="icon icon-sm text-center me-0 align-items-center justify-content-center p-2">
                         <svg aria-hidden="true" focusable="false" data-bs-prefix="fa-duotone" data-bs-icon="plus"
                             class="svg-inline--fa fa-plus fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg"
@@ -56,16 +56,17 @@
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle">Create New Raw Material?</h5>
+                                <h5 class="modal-title" id="exampleModalLongTitle">Update Item?</h5>
                                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                Are You Sure You Want To Create New Raw Material?
+                                Are You Sure You Want To Update Item?
                             </div>
                             <div class="modal-footer">
-                                <button type="button" data-bs-dismiss="modal" class="btn btn-secondary">{{ __('No') }}</button>
+                                <button wire:click="redirect_back_with_action"
+                                    class="btn btn-secondary">{{ __('No') }}</button>
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fas fa-save"></i> {{ __('Yes') }}
                                 </button>
@@ -77,3 +78,68 @@
         </div>
     </form>
 </div>
+
+@section('scripts')
+    {{-- <script>
+        window.addEventListener('danger_message', event => {
+            Swal.fire({
+                title: event.detail.title,
+                text: event.detail.text,
+                icon: event.detail.icon,
+                timer: 3000,
+                showCancelButton: false,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Close'
+            });
+        });
+    </script> --}}
+    <script>
+        @if (session('success_message'))
+            Swal.fire({
+                title: 'Done!',
+                text: '{{ session('success_message') }}',
+                icon: 'success',
+                timer: 3000,
+                showCancelButton: false,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Close'
+            });
+        @elseif (session('danger_message'))
+            Swal.fire({
+                title: 'Danger!',
+                text: '{{ session('danger_message') }}',
+                icon: 'error',
+                timer: 3000,
+                showCancelButton: false,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+            });
+        @endif
+
+        @error('task')
+            Swal.fire({
+                title: 'Invalid Input!',
+                text: '',
+                icon: 'error',
+                timer: 3000,
+                showCancelButton: false,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+            });
+        @enderror
+
+        @if (isset($_GET['action']) && $_GET['action'] == 'cancelled')
+            Swal.fire({
+                title: 'Action Cancelled!',
+                text: '',
+                icon: 'error',
+                timer: 3000,
+                showCancelButton: false,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+            });
+        @endif
+    </script>
+@endsection

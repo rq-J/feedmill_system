@@ -80,7 +80,7 @@ class FarmInformationController extends Controller
             // [action, table, old_value, new_value]
             $log_entry = [
                 'remove farm',
-                'raw_materials',
+                'farms',
                 $farm_old,
                 '',
             ];
@@ -123,7 +123,7 @@ class FarmInformationController extends Controller
                         'farm_location' => $l->farm_location,
                         'farm_name' => $l->farm->farm_name,
                         'status' => $l->active_status == 1 ? '<span class="badge bg-success">Enabled</span>' : '<span class="badge bg-danger">Disabled</span>',
-                        'action' => $l->active_status == 1 ? '<button id="update" data-id="' . Crypt::encryptString($l->id) . '" data-name="'  . $l->farm_location . '" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button> <button id="disable" data-id="' . Crypt::encryptString($l->id) . '" data-name="'  . $l->farm_location . '" class="btn btn-danger btn-sm"><i class="fa fa-user-lock"></i></button>' : '<button id="enable" data-id="' . Crypt::encryptString($l->id) . '" data-name="'  . $l->farm_location . '" class="btn btn-success btn-sm"><i class="fa fa-user-check"></i></button>'
+                        'action' => $l->active_status == 1 ? '<button id="update" data-id="' . Crypt::encryptString($l->id) . '" data-name="'  . $l->farm_location . '" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button> <button id="remove" data-id="' . Crypt::encryptString($l->id) . '" data-name="'  . $l->farm_location . '" class="btn btn-danger btn-sm"><i class="fa fa-user-lock"></i></button>' : '<button id="enable" data-id="' . Crypt::encryptString($l->id) . '" data-name="'  . $l->farm_location . '" class="btn btn-success btn-sm"><i class="fa fa-user-check"></i></button>'
                     ]);
                 }
             }
@@ -154,6 +154,33 @@ class FarmInformationController extends Controller
      */
     public function l_remove($id)
     {
+        try {
+            $id = Crypt::decryptString($id);
+        } catch (\Throwable $e) {
+            return $e;
+        }
+
+        $farm_location = FarmLocation::findorfail($id);
+        $farm_location_old = $farm_location;
+        $farm_location->active_status = 0;
+        if ($farm_location->save()) {
+
+            // [action, table, old_value, new_value]
+            $log_entry = [
+                'remove farm location',
+                'farm_locations',
+                $farm_location_old,
+                '',
+            ];
+            AC::logEntry($log_entry);
+
+            return redirect('/farm/location')
+                ->with('success_message', 'Task Has Been Succesfully Deleted!');
+        }
+        return redirect('/farm/location')
+            ->with('danger_message', 'Error in Database!');
+
+
         // $to_remove = Farm::findorfail($id);
         // $to_remove->active_status = 0;
 

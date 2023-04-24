@@ -97,7 +97,7 @@
       e.preventDefault();
       var id = $(this).data('id');
       var name = $(this).data('name');
-      var title = "Update Department?";
+      var title = "Update Raw Material?";
       var html_text = "<p>Are you sure you want to update <b>" + name + "</b>?</p>";
       Swal.fire({
         title: title,

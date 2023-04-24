@@ -18,8 +18,6 @@
         @livewire('add-item')
     </div>
     <div class="container" id="table">
-        {{-- <livewire:raw-material-table /> --}}
-        {{-- TODO : insert data table here --}}
         <table id="farms" class="table table-bordered table-hover text-nowrap" style="width: 100%;">
             <thead>
                 <tr>
@@ -62,7 +60,7 @@
       e.preventDefault();
       var id = $(this).data('id');
       var name = $(this).data('name');
-      var title = "Update Department?";
+      var title = "Update Item?";
       var html_text = "<p>Are you sure you want to update <b>" + name + "</b>?</p>";
       Swal.fire({
         title: title,
@@ -74,7 +72,7 @@
         confirmButtonText: 'Continue'
       }).then((result) => {
         if (result.value) {
-          var update_url = "{{ route('farm.f.show') }}"
+          var update_url = "{{ route('item.update') }}"
           window.location.replace(update_url + "/" + id);
         }
         else {
@@ -94,7 +92,7 @@
     $(document).on('click', '#remove', function (e) {
       e.preventDefault();
       var id = $(this).data('id');
-      var title = "Remove Raw Material?";
+      var title = "Remove Item?";
       var name = $(this).data('name');
       var html_text = "<p>Are you sure you want to remove <b>" + name + "</b>?</p>";
       Swal.fire({
@@ -107,7 +105,7 @@
         confirmButtonText: 'Continue'
       }).then((result) => {
         if (result.value) {
-          var update_url = "{{ route('farm.f.remove') }}"
+          var update_url = "{{ route('item.remove') }}"
           window.location.replace(update_url + "/" + id);
         }
         else {

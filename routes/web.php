@@ -16,6 +16,7 @@ use App\Http\Controllers\FeedRequestController;
 use App\Http\Controllers\FormulaController;
 use App\Http\Controllers\InventoryLevelsController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\ItemDailyController;
 use App\Http\Controllers\MacroController;
 use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\MessageSlackController;
@@ -55,9 +56,10 @@ Route::middleware('auth')->group(function () {
      */
 
     //Ingredient Storage
-    Route::get('/macro', [MacroController::class, 'index'])->name('macro');
-    Route::get('/micro', [MicroController::class, 'index'])->name('micro');
-    Route::get('/medicine', [MedicineController::class, 'index'])->name('medicine');
+    // Route::get('/macro', [MacroController::class, 'index'])->name('macro');
+    // Route::get('/micro', [MicroController::class, 'index'])->name('micro');
+    // Route::get('/medicine', [MedicineController::class, 'index'])->name('medicine');
+    Route::get('/item_daily', [ItemDailyController::class, 'index'])->name('item_daily');
 
     //Feed Request
     Route::get('/feed', [FeedRequestController::class, 'index'])->name('feed');
@@ -91,7 +93,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/remove/{id?}', [FormulaController::class, 'remove'])->name('formula.remove');
     });
     Route::get('/premixes', [PremixesController::class, 'index'])->name('premixes');
-    Route::get('/item', [ItemController::class, 'index'])->name('item');
+    // Route::get('/item', [ItemController::class, 'index'])->name('item');
+    Route::prefix('/item')->group(function () {
+        Route::get('/', [ItemController::class, 'index'])->name('item');
+        Route::get('/{id?}', [ItemController::class, 'update'])->name('item.update');
+        Route::get('/remove/{id?}', [ItemController::class, 'remove'])->name('item.remove');
+    });
     Route::prefix('/raw')->group(function () {
         Route::get('/', [RawMaterialsController::class, 'index'])->name('raw');
         Route::get('/{id?}', [RawMaterialsController::class, 'update'])->name('raw.update');

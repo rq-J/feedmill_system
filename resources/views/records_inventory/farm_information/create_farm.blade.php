@@ -85,7 +85,7 @@
       e.preventDefault();
       var id = $(this).data('id');
       var name = $(this).data('name');
-      var title = "Update Department?";
+      var title = "Update Farm?";
       var html_text = "<p>Are you sure you want to update <b>" + name + "</b>?</p>";
       Swal.fire({
         title: title,
@@ -117,7 +117,7 @@
     $(document).on('click', '#remove', function (e) {
       e.preventDefault();
       var id = $(this).data('id');
-      var title = "Remove Raw Material?";
+      var title = "Remove Farm?";
       var name = $(this).data('name');
       var html_text = "<p>Are you sure you want to remove <b>" + name + "</b>?</p>";
       Swal.fire({

@@ -32,4 +32,51 @@ class ItemController extends Controller
 
         return view('production_management.item');
     }
+
+    /**
+     * Show to be updated
+     * @param id
+     * @return view and decrypted id
+     */
+    public function update($id = null)
+    {
+        $id_item = Crypt::decryptString($id);
+
+        return view('production_management.item.update_item', ['action' => 'Update'])
+            ->with('id', $id_item);
+    }
+
+    /**
+     * To remove a record(active status = o)
+     * @param id
+     * @return null
+     */
+    public function remove($id = null)
+    {
+        try {
+            $id = Crypt::decryptString($id);
+        } catch (\Throwable $e) {
+            return $e;
+        }
+
+        $item = Item::findorfail($id);
+        $item_old = $item;
+        $item->active_status = 0;
+        if ($item->save()) {
+
+            // [action, table, old_value, new_value]
+            $log_entry = [
+                'remove item',
+                'items',
+                $item_old,
+                '',
+            ];
+            AC::logEntry($log_entry);
+
+            return redirect('/item')
+                ->with('success_message', 'Task Has Been Succesfully Deleted!');
+        }
+        return redirect('/item')
+            ->with('danger_message', 'Error in Database!');
+    }
 }
