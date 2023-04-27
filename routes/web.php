@@ -56,9 +56,6 @@ Route::middleware('auth')->group(function () {
      */
 
     //Ingredient Storage
-    // Route::get('/macro', [MacroController::class, 'index'])->name('macro');
-    // Route::get('/micro', [MicroController::class, 'index'])->name('micro');
-    // Route::get('/medicine', [MedicineController::class, 'index'])->name('medicine');
     Route::get('/item_daily', [ItemDailyController::class, 'index'])->name('item_daily');
 
     //Feed Request

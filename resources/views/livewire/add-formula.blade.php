@@ -29,13 +29,6 @@
         <div class="col-8">
             <div class="container">
                 <h5>Ingredients</h5>
-                {{-- <label for="myMacroList" class="col-form-label">Macro</label>
-                <ul id="myMacroList"></ul>
-                <label for="myMicroList" class="col-form-label">Micro</label>
-                <ul id="myMicroList"></ul>
-                <label for="myMedicineList" class="col-form-label">Medicine</label>
-                <ul id="myMedicineList"></ul> --}}
-
                 <table id="myTable" class="table table-hover table-bordered text-center">
                     <thead>
                       <tr>
@@ -148,21 +141,6 @@
         // Remove the corresponding table row
         $('#myTable tbody tr:last-child').remove();
       }
-    //   if (selectedOption) {
-    //     // Show the hidden option in the select element
-    //     $('#myMacroSelect').find('option[value="' + selectedOption + '"]').show();
-    //     $('#myMicroSelect').find('option[value="' + selectedOption + '"]').show();
-    //     $('#myMedSelect').find('option[value="' + selectedOption + '"]').show();
-
-    //     // Remove the corresponding li element from the ul list
-    //     $('#myList li').filter(function() {
-    //       return $(this).text() === selectedOption;
-    //     }).remove();
-
-    //     selectedOption = null;
-    //     selectedOptionName = null;
-    //     selectedOptions = null;
-    //   }
     });
 
     // Handle collect button click
@@ -182,23 +160,11 @@
           rowData['standard'] = 'No input';
         }
         rowData['active_status'] = "1";
+        // BUG: no date and time for "created_at" in database
         tableData.push(rowData);
       });
       console.log(tableData);
       Livewire.emit('dataSaved', tableData);
-
-      // Send the extracted data to Laravel endpoint using Ajax
-    //   $.ajax({
-    //     url: '/save-data', // Update this URL to your Laravel endpoint
-    //     type: 'POST', // Update the HTTP method as needed
-    //     data: {tableData: tableData}, // Pass the extracted data as JSON object
-    //     success: function(response) {
-    //       console.log('Data saved successfully:', response);
-    //     },
-    //     error: function(xhr, status, error) {
-    //       console.error('Error saving data:', error);
-    //     }
-    //   });
     });
   });
   </script>

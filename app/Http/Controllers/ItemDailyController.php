@@ -11,4 +11,6 @@ class ItemDailyController extends Controller
     {
         return view('ingredient_storage.item_daily');
     }
+
+
 }
