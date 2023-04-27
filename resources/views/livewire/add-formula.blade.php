@@ -145,7 +145,10 @@
 
     // Handle collect button click
     $('#addButton').on('click', function() {
-    //   console.log(selectedOptions); // Array of selected option names
+
+      // Make the date same as phpmyadmin
+      var date = new Date();
+      var formattedDateTime = `${date.getFullYear()}-${(date.getMonth()+1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
       // Extract text and input values from the table
       var tableData = [];
       $('#myTable tbody tr').each(function() {
@@ -160,7 +163,9 @@
           rowData['standard'] = 'No input';
         }
         rowData['active_status'] = "1";
-        // BUG: no date and time for "created_at" in database
+        // [x]: no date and time for "created_at" in database
+        rowData['created_at'] = formattedDateTime;
+        rowData['updated_at'] = formattedDateTime;
         tableData.push(rowData);
       });
       console.log(tableData);

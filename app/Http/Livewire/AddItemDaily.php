@@ -131,6 +131,8 @@ class AddItemDaily extends Component
             $batch = 0;
             $total_batch = 0;
             $adjustment = 0;
+            $created_at = '';
+            $updated_at = '';
 
             // Loop through the second array
             foreach ($inputArray as $input) {
@@ -151,6 +153,12 @@ class AddItemDaily extends Component
 
                     // Add the usage to the batch variable
                     $batch += $usage;
+
+                    // Add 'create_at' to database
+                    $create_at = $input['created_at'];
+
+                    // Add 'updated_at' to database
+                    $updated_at = $input['updated_at'];
                 }
             }
 
@@ -163,6 +171,9 @@ class AddItemDaily extends Component
                 'total_batch' => $total_batch,
                 'adjustment' => $adjustment,
                 'usage' => $batch + $adjustment,
+                // [x]: created_at & updated_at to database
+                'created_at' => $create_at,
+                'updated_at' => $updated_at
             ));
         }
 

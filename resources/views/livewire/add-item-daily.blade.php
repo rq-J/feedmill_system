@@ -15,13 +15,13 @@
                 <h5 style="margin-bottom: 0;">Medicine</h5>
             </a>
         </li>
-        {{-- //FIXME: align this to left --}}
-        {{-- //BUG: should be disabled once used, once a day only --}}
+        {{-- #FIXME: align this to left --}}
+        {{-- #BUG: should be disabled once used, once a day only --}}
         <button class="btn btn-primary d-block" id="saveButton">Save for today</button>
     </ul>
     <div class="tab-content">
         <div id="macro" class="tab-pane fade show active" style="margin-top:6px;">
-            {{-- // NOTE: right now, the table is not dynamic; in the future, the farm will request an item and the requested item will only appear here --}}
+            {{-- # NOTE: right now, the table is not dynamic; in the future, the farm will request an item and the requested item will only appear here --}}
             <table id="macroTable" class="table table-hover table-bordered text-center">
                 <thead>
                     {{-- <h5 class="text-center">Item</h5> --}}
@@ -37,7 +37,7 @@
                     <tr>
                         <td style="display:;">{{ $item_id['item_id'] }}</td>
                         <td>{{ $item_id['item_name'] }}</td>
-                        {{-- // BUG: the user can input letter , there is server-side validation though--}}
+                        {{-- #BUG: the user can input letter , there is server-side validation though--}}
                         <td><input class="form-control" type="number" name="batch"></td>
                         <td><input class="form-control" type="number" name="adjustment"></td>
                     </tr>
@@ -101,13 +101,17 @@
   <script>
     $(document).ready(function() {
 
-      //TODO: get all the input(like formula.blade.php) then pass it onto the controller via .emit
+      //[x]: get all the input(like formula.blade.php) then pass it onto the controller via .emit
       $('#saveButton').on('click', function() {
       //   console.log(selectedOptions); // Array of selected option names
         // Extract text and input values from the table
         var arrMacro = [];
         var arrMicro = [];
         var arrMedicine = [];
+
+        // Make the date same as phpmyadmin
+        var date = new Date();
+        var formattedDateTime = `${date.getFullYear()}-${(date.getMonth()+1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
         $('#macroTable tbody tr').each(function() {
           var rowData = {};
           rowData['ID'] = $(this).find('td:eq(0)').text();
@@ -116,6 +120,8 @@
           // var inputValue = $(this).find('input').val();
           var input1 = $(this).find('input[name="batch"]').val();
           var input2 = $(this).find('input[name="adjustment"]').val();
+          rowData['created_at'] = formattedDateTime;
+          rowData['updated_at'] = formattedDateTime;
           if (input1.trim() !== '') {
             rowData['batch'] = input1;
           } else {
@@ -137,6 +143,8 @@
           // var inputValue = $(this).find('input').val();
           var input1 = $(this).find('input[name="batch"]').val();
           var input2 = $(this).find('input[name="adjustment"]').val();
+          rowData['created_at'] = formattedDateTime;
+          rowData['updated_at'] = formattedDateTime;
           if (input1.trim() !== '') {
             rowData['batch'] = input1;
           } else {
@@ -158,6 +166,8 @@
           // var inputValue = $(this).find('input').val();
           var input1 = $(this).find('input[name="batch"]').val();
           var input2 = $(this).find('input[name="adjustment"]').val();
+          rowData['created_at'] = formattedDateTime;
+          rowData['updated_at'] = formattedDateTime;
           if (input1.trim() !== '') {
             rowData['batch'] = input1;
           } else {
