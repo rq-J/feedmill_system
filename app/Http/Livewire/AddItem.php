@@ -5,6 +5,8 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\Item;
 use App\Models\Farm;
+use App\Models\RawMaterial;
+use App\Models\ItemFormula;
 use App\Http\Controllers\AuditController as AC;
 
 class AddItem extends Component
@@ -12,6 +14,17 @@ class AddItem extends Component
     public $item_name;
     public $farms;
     public $selectedFarm;
+
+    public $items;
+    public $item_id;
+
+    public $arrMacro = [];
+    public $arrMicro = [];
+    public $arrMedicine = [];
+
+    public $tableData = [];
+
+    protected $listeners = ['dataSaved' => 'saveData'];
 
     /**
      * To Render Component To The Views.
@@ -26,6 +39,10 @@ class AddItem extends Component
     public function mount()
     {
         $this->farms = Farm::where('active_status', 1)->get();
+
+        $this->arrMacro =  RawMaterial::where('active_status', 1)->where('category', 'MACRO')->select('id', 'raw_material_name')->get();
+        $this->arrMicro =  RawMaterial::where('active_status', 1)->where('category', 'MICRO')->select('id', 'raw_material_name')->get();
+        $this->arrMedicine =  RawMaterial::where('active_status', 1)->where('category', 'MEDICINE')->select('id', 'raw_material_name')->get();
     }
 
 
@@ -88,17 +105,6 @@ class AddItem extends Component
      */
     public function create()
     {
-        if (!$this->validate()) {
-            return;
-        }
-
-        if ($this->test_similarity($this->item_name)) {
-            return redirect('/item')
-                ->with(
-                    'danger_message',
-                    'Invalid Input, Duplicate Data Found!'
-                );
-        }
 
         $item = item::create([
             'item_name' => strtoupper($this->item_name),
@@ -120,5 +126,107 @@ class AddItem extends Component
                 'success_message',
                 strtoupper($this->item_name) . ' has been Successfully Created!'
             );
+    }
+
+    public function saveData($data)
+    {
+        if (!$this->validate()) {
+            return redirect('/item')
+                ->with(
+                    'danger_message',
+                    'Invalid Input!'
+                );
+        }
+
+        if ($this->test_similarity($this->item_name)) {
+            return redirect('/item')
+                ->with(
+                    'danger_message',
+                    'Invalid Input, Duplicate Data Found!'
+                );
+        }
+
+        if(!$this->validateArray($data))
+        {
+            return redirect('/item')
+                ->with(
+                    'danger_message',
+                    'Invalid Input, Double Check Inputs!'
+                );
+        }
+
+
+        //[ ]: validate everything first, then insert item, get id of the item
+
+        $item = item::create([
+            'item_name' => strtoupper($this->item_name),
+            'farm_id' => $this->selectedFarm,
+            'active_status' => 1,
+        ]);
+
+        // [action, table, old_value, new_value]
+        $log_entry = [
+            'new',
+            'item',
+            '',
+            $item,
+        ];
+        AC::logEntry($log_entry);
+
+        // dd($item->id);
+        $this->item_id = $item->id;
+        $data = array_map(function($d){
+            $d['item_id'] = $this->item_id;
+            $d['created_at'] = now();
+            return $d;
+        }, $data);
+
+
+        //[ ]: loop to everything insert item_id, created_at (like sir Adam)
+        $this->tableData = $data;
+        ItemFormula::insert($data);
+
+        // Loop through each item
+        foreach ($this->tableData as &$item) {
+            // Update active_status to 0
+            $item['active_status'] = 1;
+
+            // Log the changes
+            $log_entry = [
+                'add formula',
+                'item_formula',
+                '',
+                json_encode($item),
+
+            ];
+            AC::logEntry($log_entry);
+        }
+        // dd($data);
+        // Save the extracted data to your desired data storage (e.g., database)
+        // You can access the 'Raw Material Name' and 'Standard' values as $this->tableData[$index]['Raw Material Name'] and $this->tableData[$index]['Standard'] respectively
+
+        // Emit an event indicating the data was saved successfully
+        // $this->emit('dataSavedSuccessfully', 'Data saved successfully');
+        return redirect('/item')
+            ->with(
+                'success_message',
+                // strtoupper($this->tableData) . ' has been Successfully Created!'
+                'Formula has been Successfully Created!'
+            );
+    }
+
+    //[x]: function, check the array for validations("", "letters", "scripts")
+    public function validateArray(array $data)
+    {
+        $valid = true;
+        foreach ($data as $row) {
+            foreach ($data as $row) {
+                if (!is_numeric($row['standard'])) {
+                    $valid = false;
+                    break 2;
+                }
+            }
+        }
+        return $valid;
     }
 }

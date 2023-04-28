@@ -123,7 +123,6 @@ class AddItemDaily extends Component
         foreach ($macroArray as $macro) {
 
             // Initialize variables to hold category and macro id
-            $category = $macro['category'];
             $item_id = $macro['item_id'];
 
             // Initialize variables to hold item_formula_id, batch, total batch, and adjustment
@@ -131,8 +130,6 @@ class AddItemDaily extends Component
             $batch = 0;
             $total_batch = 0;
             $adjustment = 0;
-            $created_at = '';
-            $updated_at = '';
 
             // Loop through the second array
             foreach ($inputArray as $input) {
@@ -153,27 +150,16 @@ class AddItemDaily extends Component
 
                     // Add the usage to the batch variable
                     $batch += $usage;
-
-                    // Add 'create_at' to database
-                    // $create_at = $input['created_at'];
-
-                    // Add 'updated_at' to database
-                    // $updated_at = $input['updated_at'];
                 }
             }
 
             // Push the category-by-item with batch, total batch, adjustment, and usage to the results array
             array_push($results, array(
                 'item_formula_id' => $item_formula_id,
-                // 'item_id' => $item_id,
-                // 'category' => $category,
                 'batch' => $batch,
                 'total_batch' => $total_batch,
                 'adjustment' => $adjustment,
                 'usage' => $batch + $adjustment,
-                // [x]: created_at & updated_at to database
-                // 'created_at' => $create_at,
-                // 'updated_at' => $updated_at
             ));
         }
 
@@ -193,7 +179,6 @@ class AddItemDaily extends Component
             $item['updated_at'] = now();
             return $item;
         }, $data);
-        // dd($data);
         $this->tableData = $data;
         ItemDaily::insert($data);
 

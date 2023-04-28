@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('title')
-	Item
+	Item - Formula
 @endsection
 
 @section('content')
-	<h3>Item</h3>
+	<h3>Item - Formula</h3>
 	<div class="pull-right">
         <button id="myButton" class="btn btn-primary"></button>
         <button id="refresh" class="btn btn-secondary"></button>
