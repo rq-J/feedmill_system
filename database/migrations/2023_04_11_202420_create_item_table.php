@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('items', function (Blueprint $table) {
             $table->id();
             $table->string('item_name');
+            $table->unsignedBigInteger('farm_id')->unsigned()->nullable();
+            $table->foreign('farm_id')->references('id')->on('farms');
             $table->boolean('active_status')->default(1);
             $table->timestamps();
         });

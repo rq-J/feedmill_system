@@ -35,7 +35,7 @@
         </div>
     </div>
 
-    {{-- {{ strtoupper($selectedFarm) }} --}}
+    {{ strtoupper($selectedFarm) }}
 
     <div class="row">
         <div class="col-md-12">
@@ -45,13 +45,13 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Create New Raw Material?</h5>
+                            <h5 class="modal-title" id="exampleModalLongTitle">Create New Item - Formula?</h5>
                             <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            Are You Sure You Want To Create New Raw Material?
+                            Are You Sure You Want To Item - Formula?
                         </div>
                         <div class="modal-footer">
                             <button data-bs-dismiss="modal" aria-label="Close"
@@ -193,7 +193,7 @@
             });
 
             // Handle undo button click
-            #BUG: the remove button only removes and shows the first item in the selection
+            // #BUG: the remove button only removes and shows the first item in the selection
             $('#undoButton').on('click', function() {
                 if (selectedOptions.length > 0) {
                     var selectedOptionName = $('#myList li:last-child').text();
@@ -210,7 +210,7 @@
                     $('#myMedicineSelect').find('option[value="' + selectedOption + '"]').show();
 
                     // Remove the corresponding li element from the ul list
-                    // $('#myList li:last-child').remove();
+                    $('#myList li:last-child').remove();
 
                     // Remove selected option from the array
                     var index = selectedOptions.indexOf(selectedOptionName);

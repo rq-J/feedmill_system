@@ -1,3 +1,4 @@
+{{-- #[ ]: try to make it livewire then validate each input to number only --}}
 <div>
     <ul class="nav nav-tabs">
         <li class="nav-item">
@@ -24,7 +25,6 @@
             {{-- # NOTE: right now, the table is not dynamic; in the future, the farm will request an item and the requested item will only appear here --}}
             @if (session('danger_message'))
                 <p>{{ session('danger_message') }}</p>
-
             @endif
             <table id="macroTable" class="table table-hover table-bordered text-center">
                 <thead>
@@ -32,21 +32,27 @@
                     <tr>
                         <th style="display:;">ID</th>
                         <th>Item Name</th>
+                        <th>Farm Name</th>
                         <th>Batch</th>
                         <th>Adjustment</th>
                     </tr>
                 </thead>
                 <tbody>
-                  @foreach ($unique_item_ids as $item_id)
+                @foreach ($arrMacro as $macro)
+                @foreach ($unique_item_ids as $unique_id)
+                    @if ($macro->item_id == $unique_id->item_id)
                     <tr>
-                        <td style="display:;">{{ $item_id['item_id'] }}</td>
-                        <td>{{ $item_id['item_name'] }}</td>
-                        {{-- #BUG: the user can input letter , there is server-side validation though--}}
+                        {{-- #[ ] another foreach for unique item-rawmaterial? --}}
+                        <td style="display:;">{{ $macro['item_id'] }}</td>
+                        <td>{{ $macro['item_name'] }}</td>
+                        <td> {{ $macro['farm_name'] }}</td>
+                        {{-- #BUG: the user can input letter, there is server-side validation though --}}
                         <td><input class="form-control" type="number" name="batch"></td>
                         <td><input class="form-control" type="number" name="adjustment"></td>
                     </tr>
-                  @endforeach
-
+                    @endif
+                @endforeach
+                @endforeach
                 </tbody>
             </table>
         </div>
@@ -57,20 +63,27 @@
                     <tr>
                         <th style="display:;">ID</th>
                         <th>Item Name</th>
+                        <th>Farm Name</th>
                         <th>Batch</th>
                         <th>Adjustment</th>
                     </tr>
                 </thead>
                 <tbody>
-                  @foreach ($unique_item_ids as $item_id)
+                @foreach ($arrMicro as $micro)
+                @foreach ($unique_item_ids as $unique_id)
+                    @if ($micro->item_id == $unique_id->item_id)
                     <tr>
-                        <td style="display:;">{{ $item_id['item_id'] }}</td>
-                        <td>{{ $item_id['item_name'] }}</td>
+                        {{-- #[ ] another foreach for unique item-rawmaterial? --}}
+                        <td style="display:;">{{ $micro['item_id'] }}</td>
+                        <td>{{ $micro['item_name'] }}</td>
+                        <td> {{ $micro['farm_name'] }}</td>
+                        {{-- #BUG: the user can input letter, there is server-side validation though --}}
                         <td><input class="form-control" type="number" name="batch"></td>
                         <td><input class="form-control" type="number" name="adjustment"></td>
                     </tr>
-                  @endforeach
-
+                    @endif
+                @endforeach
+                @endforeach
                 </tbody>
             </table>
         </div>
@@ -81,20 +94,27 @@
                     <tr>
                         <th style="display:;">ID</th>
                         <th>Item Name</th>
+                        <th>Farm Name</th>
                         <th>Batch</th>
                         <th>Adjustment</th>
                     </tr>
                 </thead>
                 <tbody>
-                  @foreach ($unique_item_ids as $item_id)
+                @foreach ($arrMedicine as $medicine)
+                @foreach ($unique_item_ids as $unique_id)
+                    @if ($medicine->item_id == $unique_id->item_id)
                     <tr>
-                        <td style="display:;">{{ $item_id['item_id'] }}</td>
-                        <td>{{ $item_id['item_name'] }}</td>
+                        {{-- #[ ] another foreach for unique item-rawmaterial? --}}
+                        <td style="display:;">{{ $medicine['item_id'] }}</td>
+                        <td>{{ $medicine['item_name'] }}</td>
+                        <td> {{ $medicine['farm_name'] }}</td>
+                        {{-- #BUG: the user can input letter, there is server-side validation though --}}
                         <td><input class="form-control" type="number" name="batch"></td>
                         <td><input class="form-control" type="number" name="adjustment"></td>
                     </tr>
-                  @endforeach
-
+                    @endif
+                @endforeach
+                @endforeach
                 </tbody>
             </table>
         </div>

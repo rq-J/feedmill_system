@@ -76,21 +76,13 @@ Route::middleware('auth')->group(function () {
         });
     });
 
-
-
     //Forecasting
     Route::get('/inventory', [InventoryLevelsController::class, 'index'])->name('inventory');
     Route::get('/slack', [MessageSlackController::class, 'index'])->name('slack');
 
     //Production Management
     Route::get('/order', [ProductionOrderController::class, 'index'])->name('order');
-    Route::prefix('/formula')->group(function () {
-        Route::get('/', [FormulaController::class, 'index'])->name('formula');
-        Route::get('/{id?}', [FormulaController::class, 'update'])->name('formula.update');
-        Route::get('/remove/{id?}', [FormulaController::class, 'remove'])->name('formula.remove');
-    });
     Route::get('/premixes', [PremixesController::class, 'index'])->name('premixes');
-    // Route::get('/item', [ItemController::class, 'index'])->name('item');
     Route::prefix('/item')->group(function () {
         Route::get('/', [ItemController::class, 'index'])->name('item');
         Route::get('/{id?}', [ItemController::class, 'update'])->name('item.update');

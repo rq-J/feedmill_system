@@ -15,6 +15,7 @@ class AddItemDaily extends Component
     public $arrMedicine = [];
 
     public $unique_item_ids = [];
+    public $unique_farm_ids = [];
     public $item_ids = [];
 
     protected $listeners = ['saveData' => 'create'];
@@ -29,17 +30,25 @@ class AddItemDaily extends Component
 
     public function mount()
     {
-        $this->arrMacro = ItemFormula::select('raw_materials.*', 'item_formulas.*')
+        $this->arrMacro = ItemFormula::select('items.item_name', 'farms.farm_name', 'raw_materials.category', 'item_formulas.*')
             ->where('item_formulas.active_status', 1)
             ->join('raw_materials', 'item_formulas.raw_material_id', '=', 'raw_materials.id')
+            ->join('items', 'item_formulas.item_id', '=', 'items.id')
+            ->join('farms', 'items.farm_id', '=', 'farms.id')
             ->where('raw_materials.category', '=', 'MACRO')
             ->get();
-        $this->arrMicro = ItemFormula::where('item_formulas.active_status', 1)
+        $this->arrMicro = ItemFormula::select('items.item_name', 'farms.farm_name', 'raw_materials.category', 'item_formulas.*')
+            ->where('item_formulas.active_status', 1)
             ->join('raw_materials', 'item_formulas.raw_material_id', '=', 'raw_materials.id')
+            ->join('items', 'item_formulas.item_id', '=', 'items.id')
+            ->join('farms', 'items.farm_id', '=', 'farms.id')
             ->where('raw_materials.category', '=', 'MICRO')
             ->get();
-        $this->arrMedicine = ItemFormula::where('item_formulas.active_status', 1)
+        $this->arrMedicine = ItemFormula::select('items.item_name', 'farms.farm_name', 'raw_materials.category', 'item_formulas.*')
+            ->where('item_formulas.active_status', 1)
             ->join('raw_materials', 'item_formulas.raw_material_id', '=', 'raw_materials.id')
+            ->join('items', 'item_formulas.item_id', '=', 'items.id')
+            ->join('farms', 'items.farm_id', '=', 'farms.id')
             ->where('raw_materials.category', '=', 'MEDICINE')
             ->get();
 
@@ -48,6 +57,30 @@ class AddItemDaily extends Component
             ->select('item_formulas.item_id', 'items.item_name') //Get id
             ->distinct() //Get unique id
             ->get();
+
+        $this->unique_farm_ids = ItemFormula::where('item_formulas.active_status', 1)
+            ->join('items', 'item_formulas.item_id', '=', 'items.id')
+            ->join('farms', 'items.farm_id', '=', 'farms.id')
+            ->select('items.farm_id', 'farms.farm_name') //Get id
+            ->distinct() //Get unique farm id
+            ->get();
+        // dd($this->unique_farm_ids);
+    }
+
+    function hasUniqueItems($arrMacro, $unique_item_ids)
+    {
+        // dd($arrMacro, $unique_item_ids);
+        $comparison = collect([]);
+        foreach ($arrMacro as $macro) {
+            foreach ($unique_item_ids as $unique_id) {
+                if ($macro->item_id == $unique_id->item_id) {
+                    $comparison->push($macro->item_id, $unique_id->item_id);
+                    info($comparison);
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public function create($input)
@@ -174,7 +207,7 @@ class AddItemDaily extends Component
     //[x]: function, push the array to database
     public function pushToDatabase(array $data)
     {
-        $data = array_map(function($item){
+        $data = array_map(function ($item) {
             $item['created_at'] = now();
             $item['updated_at'] = now();
             return $item;

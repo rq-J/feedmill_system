@@ -98,36 +98,6 @@ class AddItem extends Component
         return false;
     }
 
-    /**
-     * To Create New Record (Description).
-     * @param no parameter
-     * @return sucess || unsuccess
-     */
-    public function create()
-    {
-
-        $item = item::create([
-            'item_name' => strtoupper($this->item_name),
-            'farm_id' => $this->selectedFarm,
-            'active_status' => 1,
-        ]);
-
-        // [action, table, old_value, new_value]
-        $log_entry = [
-            'new',
-            'item',
-            '',
-            $item,
-        ];
-        AC::logEntry($log_entry);
-
-        return redirect('/item')
-            ->with(
-                'success_message',
-                strtoupper($this->item_name) . ' has been Successfully Created!'
-            );
-    }
-
     public function saveData($data)
     {
         if (!$this->validate()) {
@@ -146,8 +116,7 @@ class AddItem extends Component
                 );
         }
 
-        if(!$this->validateArray($data))
-        {
+        if (!$this->validateArray($data)) {
             return redirect('/item')
                 ->with(
                     'danger_message',
@@ -156,13 +125,13 @@ class AddItem extends Component
         }
 
 
-        //[ ]: validate everything first, then insert item, get id of the item
-
-        $item = item::create([
-            'item_name' => strtoupper($this->item_name),
-            'farm_id' => $this->selectedFarm,
-            'active_status' => 1,
-        ]);
+        //[x]: validate everything first, then insert item, get id of the item
+        // dd($this->selectedFarm);
+        $item = new Item;
+        $item->item_name = strtoupper($this->item_name);
+        $item->farm_id = $this->selectedFarm;
+        $item->active_status = 1;
+        $item->save();
 
         // [action, table, old_value, new_value]
         $log_entry = [
@@ -175,14 +144,14 @@ class AddItem extends Component
 
         // dd($item->id);
         $this->item_id = $item->id;
-        $data = array_map(function($d){
+        $data = array_map(function ($d) {
             $d['item_id'] = $this->item_id;
             $d['created_at'] = now();
             return $d;
         }, $data);
 
 
-        //[ ]: loop to everything insert item_id, created_at (like sir Adam)
+        //[x]: loop to everything insert item_id, created_at (like sir Adam)
         $this->tableData = $data;
         ItemFormula::insert($data);
 
@@ -201,12 +170,7 @@ class AddItem extends Component
             ];
             AC::logEntry($log_entry);
         }
-        // dd($data);
-        // Save the extracted data to your desired data storage (e.g., database)
-        // You can access the 'Raw Material Name' and 'Standard' values as $this->tableData[$index]['Raw Material Name'] and $this->tableData[$index]['Standard'] respectively
 
-        // Emit an event indicating the data was saved successfully
-        // $this->emit('dataSavedSuccessfully', 'Data saved successfully');
         return redirect('/item')
             ->with(
                 'success_message',

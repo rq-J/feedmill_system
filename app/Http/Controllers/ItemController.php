@@ -20,7 +20,7 @@ class ItemController extends Controller
                 foreach ($items as $i) {
                     $data->push([
                         'item_name' => $i->item_name,
-                        'action' => $i->active_status == 1 ? '<button id="update" data-id="' . Crypt::encryptString($i->id) . '" data-name="'  . $i->item_name . '" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button> <button id="remove" data-id="' . Crypt::encryptString($i->id) . '" data-name="'  . $i->item_name . '" class="btn btn-danger btn-sm"><i class="fa fa-user-lock"></i></button>' : '<button id="enable" data-id="' . Crypt::encryptString($i->id) . '" data-name="'  . $i->item_name . '" class="btn btn-success btn-sm"><i class="fa fa-user-check"></i></button>'
+                        'action' => $i->active_status == 1 ? '<button id="remove" data-id="' . Crypt::encryptString($i->id) . '" data-name="'  . $i->item_name . '" class="btn btn-danger btn-sm"><i class="fa fa-user-lock"></i></button>' : '<button id="enable" data-id="' . Crypt::encryptString($i->id) . '" data-name="'  . $i->item_name . '" class="btn btn-success btn-sm"><i class="fa fa-user-check"></i></button>'
                     ]);
                 }
             }
@@ -42,6 +42,7 @@ class ItemController extends Controller
     {
         $id_item = Crypt::decryptString($id);
 
+        // [ ]: remove the update, NO UPDATE!
         return view('production_management.item.update_item', ['action' => 'Update'])
             ->with('id', $id_item);
     }
@@ -51,6 +52,7 @@ class ItemController extends Controller
      * @param id
      * @return null
      */
+    // [ ]: update the "remove", the function is only for item (missing - formula)
     public function remove($id = null)
     {
         try {
