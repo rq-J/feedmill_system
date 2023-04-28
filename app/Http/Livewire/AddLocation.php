@@ -114,15 +114,15 @@ class AddLocation extends Component
      * @param no param
      * @return options
      */
-    public function getFarmOptions()
-    {
-        $farms = Farm::all();
+    // public function getFarmOptions()
+    // {
+    //     $farms = Farm::all();
 
-        $options = '';
-        foreach ($farms as $farm) {
-            $options .= '<option value="' . $farm->id . '">' . $farm->name . '</option>';
-        }
+    //     $options = '';
+    //     foreach ($farms as $farm) {
+    //         $options .= '<option value="' . $farm->id . '">' . $farm->name . '</option>';
+    //     }
 
-        return $options;
-    }
+    //     return $options;
+    // }
 }

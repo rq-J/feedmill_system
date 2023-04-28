@@ -23,6 +23,20 @@
             </div>
         </div>
 
+        <div class="row mb-3">
+            <label for="selectedFarm" class="col-md-2 col-form-label text-md">{{ __('Farm') }}</label>
+
+            <div class="col-md-12">
+                <select wire:model="selectedFarm" class="form-control">
+                    @foreach ($farms as $key => $value)
+                        <option value="{{ $value->id }}">{{ ucfirst($value->farm_name) }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+
+        {{ strtoupper($selectedFarm) }}
+
         <div class="row">
             <div class="col-md-12">
 
@@ -95,6 +109,10 @@
         });
     </script> --}}
     <script>
+        Livewire.on('categoryFarm', (option) => {
+            console.log('Selected option:', option);
+        });
+
         @if (session('success_message'))
             Swal.fire({
                 title: 'Done!',

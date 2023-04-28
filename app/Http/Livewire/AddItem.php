@@ -4,11 +4,14 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Item;
+use App\Models\Farm;
 use App\Http\Controllers\AuditController as AC;
 
 class AddItem extends Component
 {
     public $item_name;
+    public $farms;
+    public $selectedFarm;
 
     /**
      * To Render Component To The Views.
@@ -20,13 +23,18 @@ class AddItem extends Component
         return view('livewire.add-item');
     }
 
+    public function mount()
+    {
+        $this->farms = Farm::where('active_status', 1)->get();
+    }
+
 
     /**
      * When Called It Will Create A Real-Time Validation.
      * @param no parameter
      * @return item_name = null
      * @return standard_days = null
-     * @return selectedCategory = null
+     * @return selectedFarm = null
      */
     public function valOnly()
     {
@@ -42,6 +50,16 @@ class AddItem extends Component
     protected $rules = [
         'item_name' => 'required|string|min:5|max:64|unique:items,item_name',
     ];
+
+    /**
+     * To return selected catergory
+     * @param category
+     * @return selectedCatergory
+     */
+    public function categorySelected($category)
+    {
+        return $this->selectedFarm = $category;
+    }
 
 
     /**
@@ -84,6 +102,7 @@ class AddItem extends Component
 
         $item = item::create([
             'item_name' => strtoupper($this->item_name),
+            'farm_id' => $this->selectedFarm,
             'active_status' => 1,
         ]);
 

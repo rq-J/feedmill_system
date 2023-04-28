@@ -125,12 +125,12 @@
           if (input1.trim() !== '') {
             rowData['batch'] = input1;
           } else {
-            rowData['batch'] = 'No input';
+            rowData['batch'] = '0';
           }
           if (input2.trim() !== '') {
             rowData['adjustment'] = input2;
           } else {
-            rowData['adjustment'] = 'No input';
+            rowData['adjustment'] = '0';
           }
           arrMacro.push(rowData);
         });
@@ -148,12 +148,12 @@
           if (input1.trim() !== '') {
             rowData['batch'] = input1;
           } else {
-            rowData['batch'] = 'No input';
+            rowData['batch'] = '0';
           }
           if (input2.trim() !== '') {
             rowData['adjustment'] = input2;
           } else {
-            rowData['adjustment'] = 'No input';
+            rowData['adjustment'] = '0';
           }
           arrMicro.push(rowData);
         });
@@ -171,12 +171,12 @@
           if (input1.trim() !== '') {
             rowData['batch'] = input1;
           } else {
-            rowData['batch'] = 'No input';
+            rowData['batch'] = '0';
           }
           if (input2.trim() !== '') {
             rowData['adjustment'] = input2;
           } else {
-            rowData['adjustment'] = 'No input';
+            rowData['adjustment'] = '0';
           }
           arrMedicine.push(rowData);
         });

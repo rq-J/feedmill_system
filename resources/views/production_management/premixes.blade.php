@@ -20,28 +20,12 @@
             </thead>
             <tbody>
                 <tr>
-                    <th scope="row">DummyData</th>
-                    <td>DummyData</td>
-                    <td>DummyData</td>
-                    <td>DummyData</td>
-                    <td>DummyData</td>
-                    <td><button type="button" class="btn btn-warning">Update</button></td>
-                </tr>
-                <tr>
-                    <th scope="row">DummyData</th>
-                    <td>DummyData</td>
-                    <td>DummyData</td>
-                    <td>DummyData</td>
-                    <td>DummyData</td>
-                    <td><button type="button" class="btn btn-warning">Update</button></td>
-                </tr>
-                <tr>
-                    <th scope="row">DummyData</th>
-                    <td>DummyData</td>
-                    <td>DummyData</td>
-                    <td>DummyData</td>
-                    <td>DummyData</td>
-                    <td><button type="button" class="btn btn-warning">Update</button></td>
+                    <th scope="row">0</th>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    {{-- <td><button type="button" class="btn btn-warning">Update</button></td> --}}
                 </tr>
             </tbody>
         </table>
