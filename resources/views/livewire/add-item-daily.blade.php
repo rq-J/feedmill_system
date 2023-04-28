@@ -22,6 +22,10 @@
     <div class="tab-content">
         <div id="macro" class="tab-pane fade show active" style="margin-top:6px;">
             {{-- # NOTE: right now, the table is not dynamic; in the future, the farm will request an item and the requested item will only appear here --}}
+            @if (session('danger_message'))
+                <p>{{ session('danger_message') }}</p>
+
+            @endif
             <table id="macroTable" class="table table-hover table-bordered text-center">
                 <thead>
                     {{-- <h5 class="text-center">Item</h5> --}}
@@ -120,8 +124,8 @@
           // var inputValue = $(this).find('input').val();
           var input1 = $(this).find('input[name="batch"]').val();
           var input2 = $(this).find('input[name="adjustment"]').val();
-          rowData['created_at'] = formattedDateTime;
-          rowData['updated_at'] = formattedDateTime;
+        //   rowData['created_at'] = formattedDateTime;
+        //   rowData['updated_at'] = formattedDateTime;
           if (input1.trim() !== '') {
             rowData['batch'] = input1;
           } else {
@@ -143,8 +147,8 @@
           // var inputValue = $(this).find('input').val();
           var input1 = $(this).find('input[name="batch"]').val();
           var input2 = $(this).find('input[name="adjustment"]').val();
-          rowData['created_at'] = formattedDateTime;
-          rowData['updated_at'] = formattedDateTime;
+        //   rowData['created_at'] = formattedDateTime;
+        //   rowData['updated_at'] = formattedDateTime;
           if (input1.trim() !== '') {
             rowData['batch'] = input1;
           } else {
@@ -166,8 +170,8 @@
           // var inputValue = $(this).find('input').val();
           var input1 = $(this).find('input[name="batch"]').val();
           var input2 = $(this).find('input[name="adjustment"]').val();
-          rowData['created_at'] = formattedDateTime;
-          rowData['updated_at'] = formattedDateTime;
+        //   rowData['created_at'] = formattedDateTime;
+        //   rowData['updated_at'] = formattedDateTime;
           if (input1.trim() !== '') {
             rowData['batch'] = input1;
           } else {

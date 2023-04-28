@@ -155,10 +155,10 @@ class AddItemDaily extends Component
                     $batch += $usage;
 
                     // Add 'create_at' to database
-                    $create_at = $input['created_at'];
+                    // $create_at = $input['created_at'];
 
                     // Add 'updated_at' to database
-                    $updated_at = $input['updated_at'];
+                    // $updated_at = $input['updated_at'];
                 }
             }
 
@@ -172,8 +172,8 @@ class AddItemDaily extends Component
                 'adjustment' => $adjustment,
                 'usage' => $batch + $adjustment,
                 // [x]: created_at & updated_at to database
-                'created_at' => $create_at,
-                'updated_at' => $updated_at
+                // 'created_at' => $create_at,
+                // 'updated_at' => $updated_at
             ));
         }
 
@@ -188,6 +188,12 @@ class AddItemDaily extends Component
     //[x]: function, push the array to database
     public function pushToDatabase(array $data)
     {
+        $data = array_map(function($item){
+            $item['created_at'] = now();
+            $item['updated_at'] = now();
+            return $item;
+        }, $data);
+        // dd($data);
         $this->tableData = $data;
         ItemDaily::insert($data);
 

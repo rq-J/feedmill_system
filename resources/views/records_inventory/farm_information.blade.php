@@ -18,7 +18,7 @@
         </div>
         <div class="col-12">
             <div class="row">
-                <h4 class="col-8">Farm Location</h4>
+                <h4 class="col-8">Location</h4>
                 <a href="{{ route('farm.l') }}" class="btn btn-primary col-4">Select</a>
             </div>
             {{-- <livewire:farm-location-table /> --}}
