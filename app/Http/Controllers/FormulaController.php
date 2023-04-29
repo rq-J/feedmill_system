@@ -81,12 +81,6 @@ class FormulaController extends Controller
         } catch (\Throwable $e) {
             return $e;
         }
-
-        // $formula = ItemFormula::where('item_id', $id)->where('active_status', 1)->update(['active_status' => 0]);
-        // $formula_old = ItemFormula::where('item_id', $id)->where('active_status', 1);
-        // dd(strval($$formula_old));
-
-        // Retrieve items with active_status = 1
         $itemFormulas = ItemFormula::where('item_id', $id)->where('active_status', 1)->get()->toArray();
 
         // Loop through each item

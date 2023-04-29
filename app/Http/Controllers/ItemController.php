@@ -7,6 +7,7 @@ use App\Models\Item;
 use Illuminate\Support\Facades\Crypt;
 use DataTables;
 use App\Http\Controllers\AuditController as AC;
+use App\Models\ItemFormula;
 
 
 class ItemController extends Controller
@@ -15,9 +16,9 @@ class ItemController extends Controller
     {
         if ($request->ajax()) {
             $items = Item::select('farms.farm_name', 'items.*')
-            ->where('items.active_status', 1)
-            ->join('farms', 'items.farm_id', '=', 'farms.id')
-            ->get();
+                ->where('items.active_status', 1)
+                ->join('farms', 'items.farm_id', '=', 'farms.id')
+                ->get();
             $data = collect();
             if ($items->count() > 0) {
                 foreach ($items as $i) {
@@ -38,20 +39,6 @@ class ItemController extends Controller
     }
 
     /**
-     * Show to be updated
-     * @param id
-     * @return view and decrypted id
-     */
-    public function update($id = null)
-    {
-        $id_item = Crypt::decryptString($id);
-
-        // [ ]: remove the update, NO UPDATE!
-        return view('production_management.item.update_item', ['action' => 'Update'])
-            ->with('id', $id_item);
-    }
-
-    /**
      * To remove a record(active status = o)
      * @param id
      * @return null
@@ -65,9 +52,11 @@ class ItemController extends Controller
             return $e;
         }
 
+        // Item, active_status = 0
         $item = Item::findorfail($id);
         $item_old = $item;
         $item->active_status = 0;
+
         if ($item->save()) {
 
             // [action, table, old_value, new_value]
@@ -79,9 +68,32 @@ class ItemController extends Controller
             ];
             AC::logEntry($log_entry);
 
+            // Formula, active_status = 0
+            $itemFormulas = ItemFormula::where('item_id', $id)
+                ->where('active_status', 1)
+                ->get()
+                ->toArray();
+
+            $itemsToUpdate = [];
+
+            foreach ($itemFormulas as $item) {
+                $itemsToUpdate[] = $item['id'];
+                $log_entry = [
+                    'remove formula',
+                    'item_formula',
+                    json_encode($item),
+                    '',
+                ];
+                AC::logEntry($log_entry);
+            }
+
+            ItemFormula::whereIn('id', $itemsToUpdate)
+                ->update(['active_status' => 0]);
+
             return redirect('/item')
                 ->with('success_message', 'Task Has Been Succesfully Deleted!');
         }
+
         return redirect('/item')
             ->with('danger_message', 'Error in Database!');
     }

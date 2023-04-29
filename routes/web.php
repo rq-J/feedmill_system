@@ -85,7 +85,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/premixes', [PremixesController::class, 'index'])->name('premixes');
     Route::prefix('/item')->group(function () {
         Route::get('/', [ItemController::class, 'index'])->name('item');
-        Route::get('/{id?}', [ItemController::class, 'update'])->name('item.update');
         Route::get('/remove/{id?}', [ItemController::class, 'remove'])->name('item.remove');
     });
     Route::prefix('/raw')->group(function () {
