@@ -14,12 +14,16 @@ class ItemController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $items = Item::where('active_status', 1)->get();
+            $items = Item::select('farms.farm_name', 'items.*')
+            ->where('items.active_status', 1)
+            ->join('farms', 'items.farm_id', '=', 'farms.id')
+            ->get();
             $data = collect();
             if ($items->count() > 0) {
                 foreach ($items as $i) {
                     $data->push([
                         'item_name' => $i->item_name,
+                        'farm_name' => $i->farm_name,
                         'action' => $i->active_status == 1 ? '<button id="remove" data-id="' . Crypt::encryptString($i->id) . '" data-name="'  . $i->item_name . '" class="btn btn-danger btn-sm"><i class="fa fa-user-lock"></i></button>' : '<button id="enable" data-id="' . Crypt::encryptString($i->id) . '" data-name="'  . $i->item_name . '" class="btn btn-success btn-sm"><i class="fa fa-user-check"></i></button>'
                     ]);
                 }

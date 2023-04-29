@@ -22,7 +22,6 @@
     </ul>
     <div class="tab-content">
         <div id="macro" class="tab-pane fade show active" style="margin-top:6px;">
-            {{-- # NOTE: right now, the table is not dynamic; in the future, the farm will request an item and the requested item will only appear here --}}
             @if (session('danger_message'))
                 <p>{{ session('danger_message') }}</p>
             @endif
@@ -42,7 +41,6 @@
                 @foreach ($unique_item_ids as $unique_id)
                     @if ($macro->item_id == $unique_id->item_id)
                     <tr>
-                        {{-- #[ ] another foreach for unique item-rawmaterial? --}}
                         <td style="display:;">{{ $macro['item_id'] }}</td>
                         <td>{{ $macro['item_name'] }}</td>
                         <td> {{ $macro['farm_name'] }}</td>
@@ -73,11 +71,9 @@
                 @foreach ($unique_item_ids as $unique_id)
                     @if ($micro->item_id == $unique_id->item_id)
                     <tr>
-                        {{-- #[ ] another foreach for unique item-rawmaterial? --}}
                         <td style="display:;">{{ $micro['item_id'] }}</td>
                         <td>{{ $micro['item_name'] }}</td>
                         <td> {{ $micro['farm_name'] }}</td>
-                        {{-- #BUG: the user can input letter, there is server-side validation though --}}
                         <td><input class="form-control" type="number" name="batch"></td>
                         <td><input class="form-control" type="number" name="adjustment"></td>
                     </tr>
@@ -104,11 +100,9 @@
                 @foreach ($unique_item_ids as $unique_id)
                     @if ($medicine->item_id == $unique_id->item_id)
                     <tr>
-                        {{-- #[ ] another foreach for unique item-rawmaterial? --}}
                         <td style="display:;">{{ $medicine['item_id'] }}</td>
                         <td>{{ $medicine['item_name'] }}</td>
                         <td> {{ $medicine['farm_name'] }}</td>
-                        {{-- #BUG: the user can input letter, there is server-side validation though --}}
                         <td><input class="form-control" type="number" name="batch"></td>
                         <td><input class="form-control" type="number" name="adjustment"></td>
                     </tr>

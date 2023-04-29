@@ -10,8 +10,29 @@ use App\Models\User;
 
 class AuditController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->ajax()) {
+            $audits = Audit::all();
+
+            $data = collect();
+            if ($audits->count() > 0) {
+                foreach ($audits as $a) {
+                    $data->push([
+                        'id' => $a->id,
+                        'user' => $a->user_id,
+                        'action' => strtoupper($a->action),
+                        'table' => strtoupper($a->table),
+                        'new_value' => $a->new_value,
+                        'old_value' => $a->old_value,
+                        'view' => '<button class="btn btn-success btn-sm">VIEW</button>'
+                    ]);
+                }
+            }
+            return DataTables::of($data)
+                ->rawColumns(['view'])
+                ->make(true);
+        }
         return view('reports.audit_logs');
     }
 

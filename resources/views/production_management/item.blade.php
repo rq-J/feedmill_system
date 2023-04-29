@@ -21,8 +21,9 @@
         <table id="farms" class="table table-bordered table-hover text-nowrap" style="width: 100%;">
             <thead>
                 <tr>
-                    {{-- #[ ]: add the farm later --}}
+                    {{-- #[x]: add the farm later --}}
                     <th class="text-center">Item Name</th>
+                    <th class="text-center">Farm</th>
                     <th class="text-center">Action</th>
                 </tr>
             </thead>
@@ -38,11 +39,12 @@
         processing: true,
         serverSide: true,
         scrollX: true,
-        columnDefs: [{  className: "dt-center", targets: [0, 1] }],
+        columnDefs: [{  className: "dt-center", targets: [0, 1, 2] }],
 
         ajax: "{{ route('item') }}",
         columns: [
             { data: 'item_name', name: 'item_name' },
+            { data: 'farm_name', name: 'farm_name' },
             { data: 'action', name: 'action'}
         ],
         pagingType: 'full_numbers',
