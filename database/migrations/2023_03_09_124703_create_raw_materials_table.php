@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('raw_materials', function (Blueprint $table) {
             $table->id();
             $table->string('raw_material_name', 255);
+            $table->integer('price_per_kgs');
+            $table->integer('inventory_cost');
+            $table->integer('kgs_per_bag');
             $table->integer('standard_days');
             $table->string('category', 30);
             $table->boolean('active_status')->default(1);

@@ -114,7 +114,7 @@ class AddItemDaily extends Component
         // dd($macro_input);
         // dd($this->validateArray($data));
         // dd($this->mergeArray($this->arrMacro, $data));
-        // [ ]:uncomment later, for premix testing
+        // [ ]: uncomment later, for premix testing
         // if ($this->validateArray($macro_input) || $this->validateArray($micro_input) || $this->validateArray($medicine_input)) {
         //     try {
         //         $this->pushToDatabase($this->mergeArray($this->arrMacro, $macro_input));
@@ -255,16 +255,15 @@ class AddItemDaily extends Component
                     $item_formula_id = $macro['id'];
 
                     // Add the batch to the total batch
+                    // BUG: batch yesterday should be included
+                    // maybe find yesterday's record using "whereDate = yesterday"
                     $total_batch += $input['batch'];
 
                     // Add the adjustment to the adjustment variable
                     $adjustment += $input['adjustment'];
 
                     // Calculate the usage based on the standard and the batch
-                    $usage = $macro['standard'] * $input['batch'];
-
-                    // Add the usage to the batch variable
-                    $batch += $usage;
+                    $usage = $macro['standard'] * $input['batch'] + $input['adjustment'];
                 }
             }
 
@@ -274,7 +273,7 @@ class AddItemDaily extends Component
                 'batch' => $batch,
                 'total_batch' => $total_batch,
                 'adjustment' => $adjustment,
-                'usage' => $batch + $adjustment,
+                'usage' => $usage,
             ));
         }
 
