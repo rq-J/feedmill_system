@@ -132,7 +132,7 @@
         var formattedDateTime = `${date.getFullYear()}-${(date.getMonth()+1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
         $('#macroTable tbody tr').each(function() {
           var rowData = {};
-          rowData['ID'] = $(this).find('td:eq(0)').text();
+          rowData['id'] = $(this).find('td:eq(0)').text();
         //   rowData['item_id'] = "asaaa";
           // rowData['raw_material_id'] = $(this).find('td:eq(0)').text();
           // var inputValue = $(this).find('input').val();
@@ -155,7 +155,7 @@
 
         $('#microTable tbody tr').each(function() {
           var rowData = {};
-          rowData['ID'] = $(this).find('td:eq(0)').text();
+          rowData['id'] = $(this).find('td:eq(0)').text();
         //   rowData['item_id'] = "asaaa";
           // rowData['raw_material_id'] = $(this).find('td:eq(0)').text();
           // var inputValue = $(this).find('input').val();
@@ -178,7 +178,7 @@
 
         $('#medicineTable tbody tr').each(function() {
           var rowData = {};
-          rowData['ID'] = $(this).find('td:eq(0)').text();
+          rowData['id'] = $(this).find('td:eq(0)').text();
         //   rowData['item_id'] = "asaaa";
           // rowData['raw_material_id'] = $(this).find('td:eq(0)').text();
           // var inputValue = $(this).find('input').val();

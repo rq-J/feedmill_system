@@ -10,12 +10,11 @@
         <table class="table table-hover table-bordered text-center">
             <thead>
                 <tr>
-                    <th scope="col">Item</th>
+                    <th scope="col">Items</th>
                     <th scope="col">Beginning</th>
                     <th scope="col">Micro</th>
                     <th scope="col">Macro</th>
                     <th scope="col">Ending</th>
-                    <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>

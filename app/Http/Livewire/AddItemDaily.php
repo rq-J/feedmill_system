@@ -6,7 +6,11 @@ use App\Models\ItemDaily;
 use App\Models\ItemFormula;
 use Livewire\Component;
 use App\Http\Controllers\AuditController as AC;
+use App\Models\Item;
+use App\Models\Premix;
+use Carbon\Carbon;
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 class AddItemDaily extends Component
 {
@@ -85,48 +89,126 @@ class AddItemDaily extends Component
 
     public function create($input)
     {
+        // Item Dailies
         $macro_input = $input[0];
         $micro_input = $input[1];
         $medicine_input = $input[2];
-        $this->arrMacro = ItemFormula::select('raw_materials.*', 'item_formulas.*')
-            ->where('item_formulas.active_status', 1)
-            ->join('raw_materials', 'item_formulas.raw_material_id', '=', 'raw_materials.id')
-            ->where('raw_materials.category', '=', 'MACRO')
-            ->get();
-        $this->arrMicro = ItemFormula::select('raw_materials.*', 'item_formulas.*')
-            ->where('item_formulas.active_status', 1)
-            ->join('raw_materials', 'item_formulas.raw_material_id', '=', 'raw_materials.id')
-            ->where('raw_materials.category', '=', 'MICRO')
-            ->get();
-        $this->arrMedicine = ItemFormula::select('raw_materials.*', 'item_formulas.*')
-            ->where('item_formulas.active_status', 1)
-            ->join('raw_materials', 'item_formulas.raw_material_id', '=', 'raw_materials.id')
-            ->where('raw_materials.category', '=', 'MEDICINE')
-            ->get();
+        // $this->arrMacro = ItemFormula::select('raw_materials.*', 'item_formulas.*')
+        //     ->where('item_formulas.active_status', 1)
+        //     ->join('raw_materials', 'item_formulas.raw_material_id', '=', 'raw_materials.id')
+        //     ->where('raw_materials.category', '=', 'MACRO')
+        //     ->get();
+        // $this->arrMicro = ItemFormula::select('raw_materials.*', 'item_formulas.*')
+        //     ->where('item_formulas.active_status', 1)
+        //     ->join('raw_materials', 'item_formulas.raw_material_id', '=', 'raw_materials.id')
+        //     ->where('raw_materials.category', '=', 'MICRO')
+        //     ->get();
+        // $this->arrMedicine = ItemFormula::select('raw_materials.*', 'item_formulas.*')
+        //     ->where('item_formulas.active_status', 1)
+        //     ->join('raw_materials', 'item_formulas.raw_material_id', '=', 'raw_materials.id')
+        //     ->where('raw_materials.category', '=', 'MEDICINE')
+        //     ->get();
+
+        // dd($this->arrMacro);
+
         // dd($macro_input);
         // dd($this->validateArray($data));
         // dd($this->mergeArray($this->arrMacro, $data));
-        if ($this->validateArray($macro_input) || $this->validateArray($micro_input) || $this->validateArray($medicine_input)) {
-            try {
-                $this->pushToDatabase($this->mergeArray($this->arrMacro, $macro_input));
-                $this->pushToDatabase($this->mergeArray($this->arrMicro, $micro_input));
-                $this->pushToDatabase($this->mergeArray($this->arrMedicine, $medicine_input));
+        // [ ]:uncomment later, for premix testing
+        // if ($this->validateArray($macro_input) || $this->validateArray($micro_input) || $this->validateArray($medicine_input)) {
+        //     try {
+        //         $this->pushToDatabase($this->mergeArray($this->arrMacro, $macro_input));
+        //         $this->pushToDatabase($this->mergeArray($this->arrMicro, $micro_input));
+        //         $this->pushToDatabase($this->mergeArray($this->arrMedicine, $medicine_input));
 
-                return redirect('/item_daily')
-                    ->with(
-                        'success_message',
-                        // strtoupper($this->tableData) . ' has been Successfully Created!'
-                        'Item Daily has been Successfully Created!'
-                    );
-            } catch (Exception $exception) {
-                return redirect('/item_daily')
-                    ->with(
-                        'danger_message',
-                        // strtoupper($this->tableData) . ' has been Successfully Created!'
-                        'Unable to store the data!'
-                    );
+        //         return redirect('/item_daily')
+        //             ->with(
+        //                 'success_message',
+        //                 // strtoupper($this->tableData) . ' has been Successfully Created!'
+        //                 'Item Daily has been Successfully Created!'
+        //             );
+        //     } catch (Exception $exception) {
+        //         return redirect('/item_daily')
+        //             ->with(
+        //                 'danger_message',
+        //                 // strtoupper($this->tableData) . ' has been Successfully Created!'
+        //                 'Unable to store the data!'
+        //             );
+        //     }
+        // }
+
+        // Premix
+        $yesterday = Carbon::yesterday();
+        $unique_micro_items = ItemFormula::where('item_formulas.active_status', 1)
+            ->join('items', 'item_formulas.item_id', '=', 'items.id')
+            ->where('items.active_status', 1)
+            ->join('raw_materials', 'item_formulas.raw_material_id', '=', 'raw_materials.id')
+            ->where('category', 'MICRO')
+            ->select('item_formulas.item_id', 'items.item_name') //Get id
+            ->distinct() //Get unique id
+            ->get();
+        $items = Item::where('active_status', 1)->get();
+
+        // Extract the unique item_id values from $unique_micro_items using the pluck method
+        $unique_micro_item_ids = $unique_micro_items->pluck('item_id')->toArray();
+        // Use the whereIn method on $items to filter the collection based on the extracted item_id values
+        $micro_items = $items->whereIn('id', $unique_micro_item_ids);
+
+        $beginning = Premix::select('item_name', 'farm_name', 'premixes.*')
+            ->whereDate('premixes.created_at', $yesterday)
+            ->join('items', 'premixes.item_id', '=', 'items.id')
+            ->join('farms', 'items.farm_id', '=', 'farms.id')
+            ->get();
+
+        // dd($micro_items);
+
+        $premix = collect([]);
+
+        foreach ($micro_items as $item_key => $item) {
+            // Simplify code for setting $newBeginning
+            // [ ]: beginning, to be fixed
+            $newBeginning = ['beginning' => $beginning[0]['ending'] ?? 0];
+            $macro_id = array_search($item['id'], array_column($macro_input, 'id'));
+            // Log::info($item['id']);
+            if ($macro_id !== false) {
+                $id = $item['id']; // Use $item instead of $items
+                $macro = null; // Initialize $macro and $micro to null
+                $micro = null;
+
+                // Use foreach to find matching $macro_item by id
+                foreach ($macro_input as $macro_item) {
+                    if ($macro_item['id'] == $id) {
+                        $macro = $macro_item['batch'];
+                        break; // Exit loop once matching $macro_item is found
+                    }
+                }
+
+                // Use foreach to find matching $micro_item by id
+                foreach ($micro_input as $micro_item) {
+                    if ($micro_item['id'] == $id) {
+                        $micro = $micro_item['batch'];
+                        break; // Exit loop once matching $micro_item is found
+                    }
+                }
+                $ending = $this->compute_ending(0, $micro, $macro);
+
+                $premix->push([
+                    'item_id' => $id,
+                    'beginning' => $beginning,
+                    'micro' => $micro,
+                    'macro' => $macro,
+                    'ending' => $ending,
+                ]);
+                Log::info($premix);
             }
         }
+        dd($premix);
+    }
+
+    public function compute_ending($beginning, $micro, $macro)
+    {
+        $ending = $beginning + $micro - $macro;
+        return $ending;
     }
 
     //[x]: function, check the array for validations("", "letters", "scripts")
@@ -144,7 +226,7 @@ class AddItemDaily extends Component
         return $valid;
     }
 
-    //[x]: function, forloop the array to push every category-by-item and add the batch, total batch, adjustment and usage to the array
+    //[x]: function, forloop the array to push every category-by-item and add the batch, total batch, adjustment and ending to the array
     public function mergeArray($macroArray, array $inputArray)
     {
         // Initialize empty array to hold results
@@ -168,7 +250,7 @@ class AddItemDaily extends Component
             foreach ($inputArray as $input) {
 
                 // If the item id matches the current item id from the first array
-                if ($input['ID'] == $item_id) {
+                if ($input['id'] == $item_id) {
 
                     $item_formula_id = $macro['id'];
 
