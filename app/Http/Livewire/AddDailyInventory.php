@@ -64,7 +64,7 @@ class AddDailyInventory extends Component
             try {
                 // dd($macro, $micro, $medicine);
 
-                // [ ]: apply to micro and medicine
+                // [x]: apply to micro and medicine
                 $this->pushToDatabase($this->withComputations($macro));
                 $this->pushToDatabase($this->withComputations($micro));
                 $this->pushToDatabase($this->withComputations($medicine));
@@ -157,7 +157,7 @@ class AddDailyInventory extends Component
         $daily_inventory = DailyInventory::select('daily_inventories.*')
             ->whereDate('created_at', $yesterday)
             ->get();
-        // [ ]: function to filter out the raw_material_id and return end_inv_kgs, delivery(todate), usage(todate),
+        // [x]: function to filter out the raw_material_id and return end_inv_kgs, delivery(todate), usage(todate),
         // dd($item_dailies);
 
         // Loop through the first array
