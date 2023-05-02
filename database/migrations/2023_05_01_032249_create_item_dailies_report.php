@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('item_dailies_report', function (Blueprint $table) {
+        Schema::create('daily_inventories', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('item_formula_id');
-            $table->foreign('item_formula_id')->references('id')->on('item_formulas');
+            $table->unsignedBigInteger('raw_material_id');
+            $table->foreign('raw_material_id')->references('id')->on('raw_materials');
             $table->string('price_per_kgs');
             $table->string('inventory_cost');
             $table->string('kgs_per_bag');

@@ -7,6 +7,7 @@ use App\Models\RawMaterial;
 
 class AddRawMaterial extends Component
 {
+    // [ ]: add 'price_per_kgs', 'inventory_cost', 'kgs_per_bag'
     public $raw_material_name;
     public $standard_days;
     public $selectedCategory;

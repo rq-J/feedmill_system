@@ -114,95 +114,96 @@ class AddItemDaily extends Component
         // dd($macro_input);
         // dd($this->validateArray($data));
         // dd($this->mergeArray($this->arrMacro, $data));
-        // [ ]: uncomment later, for premix testing
-        // if ($this->validateArray($macro_input) || $this->validateArray($micro_input) || $this->validateArray($medicine_input)) {
-        //     try {
-        //         $this->pushToDatabase($this->mergeArray($this->arrMacro, $macro_input));
-        //         $this->pushToDatabase($this->mergeArray($this->arrMicro, $micro_input));
-        //         $this->pushToDatabase($this->mergeArray($this->arrMedicine, $medicine_input));
+        if ($this->validateArray($macro_input) || $this->validateArray($micro_input) || $this->validateArray($medicine_input)) {
+            try {
+                $this->pushToDatabase($this->mergeArray($this->arrMacro, $macro_input));
+                $this->pushToDatabase($this->mergeArray($this->arrMicro, $micro_input));
+                $this->pushToDatabase($this->mergeArray($this->arrMedicine, $medicine_input));
 
-        //         return redirect('/item_daily')
-        //             ->with(
-        //                 'success_message',
-        //                 // strtoupper($this->tableData) . ' has been Successfully Created!'
-        //                 'Item Daily has been Successfully Created!'
-        //             );
-        //     } catch (Exception $exception) {
-        //         return redirect('/item_daily')
-        //             ->with(
-        //                 'danger_message',
-        //                 // strtoupper($this->tableData) . ' has been Successfully Created!'
-        //                 'Unable to store the data!'
-        //             );
-        //     }
-        // }
+                // Premix
+                $yesterday = Carbon::yesterday();
+                $unique_micro_items = ItemFormula::where('item_formulas.active_status', 1)
+                    ->join('items', 'item_formulas.item_id', '=', 'items.id')
+                    ->where('items.active_status', 1)
+                    ->join('raw_materials', 'item_formulas.raw_material_id', '=', 'raw_materials.id')
+                    ->where('category', 'MICRO')
+                    ->select('item_formulas.item_id', 'items.item_name') //Get id
+                    ->distinct() //Get unique id
+                    ->get();
+                $items = Item::where('active_status', 1)->get();
 
-        // Premix
-        $yesterday = Carbon::yesterday();
-        $unique_micro_items = ItemFormula::where('item_formulas.active_status', 1)
-            ->join('items', 'item_formulas.item_id', '=', 'items.id')
-            ->where('items.active_status', 1)
-            ->join('raw_materials', 'item_formulas.raw_material_id', '=', 'raw_materials.id')
-            ->where('category', 'MICRO')
-            ->select('item_formulas.item_id', 'items.item_name') //Get id
-            ->distinct() //Get unique id
-            ->get();
-        $items = Item::where('active_status', 1)->get();
+                // Extract the unique item_id values from $unique_micro_items using the pluck method
+                $unique_micro_item_ids = $unique_micro_items->pluck('item_id')->toArray();
+                // Use the whereIn method on $items to filter the collection based on the extracted item_id values
+                $micro_items = $items->whereIn('id', $unique_micro_item_ids);
 
-        // Extract the unique item_id values from $unique_micro_items using the pluck method
-        $unique_micro_item_ids = $unique_micro_items->pluck('item_id')->toArray();
-        // Use the whereIn method on $items to filter the collection based on the extracted item_id values
-        $micro_items = $items->whereIn('id', $unique_micro_item_ids);
+                $beginning = Premix::select('item_name', 'farm_name', 'premixes.*')
+                    ->whereDate('premixes.created_at', $yesterday)
+                    ->join('items', 'premixes.item_id', '=', 'items.id')
+                    ->join('farms', 'items.farm_id', '=', 'farms.id')
+                    ->get();
 
-        $beginning = Premix::select('item_name', 'farm_name', 'premixes.*')
-            ->whereDate('premixes.created_at', $yesterday)
-            ->join('items', 'premixes.item_id', '=', 'items.id')
-            ->join('farms', 'items.farm_id', '=', 'farms.id')
-            ->get();
+                // dd($micro_items);
 
-        // dd($micro_items);
+                $premix = collect([]);
 
-        $premix = collect([]);
+                foreach ($micro_items as $item_key => $item) {
+                    // Simplify code for setting $newBeginning
+                    // [ ]: beginning, to be fixed
+                    $newBeginning = ['beginning' => $beginning[0]['ending'] ?? 0];
+                    $macro_id = array_search($item['id'], array_column($macro_input, 'id'));
+                    // Log::info($item['id']);
+                    if ($macro_id !== false) {
+                        $id = $item['id']; // Use $item instead of $items
+                        $macro = null; // Initialize $macro and $micro to null
+                        $micro = null;
 
-        foreach ($micro_items as $item_key => $item) {
-            // Simplify code for setting $newBeginning
-            // [ ]: beginning, to be fixed
-            $newBeginning = ['beginning' => $beginning[0]['ending'] ?? 0];
-            $macro_id = array_search($item['id'], array_column($macro_input, 'id'));
-            // Log::info($item['id']);
-            if ($macro_id !== false) {
-                $id = $item['id']; // Use $item instead of $items
-                $macro = null; // Initialize $macro and $micro to null
-                $micro = null;
+                        // Use foreach to find matching $macro_item by id
+                        foreach ($macro_input as $macro_item) {
+                            if ($macro_item['id'] == $id) {
+                                $macro = $macro_item['batch'];
+                                break; // Exit loop once matching $macro_item is found
+                            }
+                        }
 
-                // Use foreach to find matching $macro_item by id
-                foreach ($macro_input as $macro_item) {
-                    if ($macro_item['id'] == $id) {
-                        $macro = $macro_item['batch'];
-                        break; // Exit loop once matching $macro_item is found
+                        // Use foreach to find matching $micro_item by id
+                        foreach ($micro_input as $micro_item) {
+                            if ($micro_item['id'] == $id) {
+                                $micro = $micro_item['batch'];
+                                break; // Exit loop once matching $micro_item is found
+                            }
+                        }
+                        $ending = $this->compute_ending(0, $micro, $macro);
+
+                        $premix->push([
+                            'item_id' => $id,
+                            'beginning' => $beginning,
+                            'micro' => $micro,
+                            'macro' => $macro,
+                            'ending' => $ending,
+                        ]);
+                        Log::info($premix);
                     }
                 }
 
-                // Use foreach to find matching $micro_item by id
-                foreach ($micro_input as $micro_item) {
-                    if ($micro_item['id'] == $id) {
-                        $micro = $micro_item['batch'];
-                        break; // Exit loop once matching $micro_item is found
-                    }
-                }
-                $ending = $this->compute_ending(0, $micro, $macro);
-
-                $premix->push([
-                    'item_id' => $id,
-                    'beginning' => $beginning,
-                    'micro' => $micro,
-                    'macro' => $macro,
-                    'ending' => $ending,
-                ]);
-                Log::info($premix);
+                return redirect('/item_daily')
+                    ->with(
+                        'success_message',
+                        // strtoupper($this->tableData) . ' has been Successfully Created!'
+                        'Item Daily has been Successfully Created!'
+                    );
+            } catch (Exception $exception) {
+                // return redirect('/item_daily')
+                //     ->with(
+                //         'danger_message',
+                //         // strtoupper($this->tableData) . ' has been Successfully Created!'
+                //         'Unable to store the data!'
+                //     );
             }
         }
-        dd($premix);
+
+
+        // dd($premix);
     }
 
     public function compute_ending($beginning, $micro, $macro)

@@ -9,6 +9,7 @@
                 class="text-danger">*</span></label>
 
         <div class="col-md-12">
+            // BUG: the raw material resets when item_name  is changed
             <input id="item_name" type="text" wire:model="item_name" wire:keyup="valOnly"
                 class="form-control @error('item_name') is-invalid @enderror" name="item_name"
                 value="{{ old('item_name') }}" placeholder="e.g: ITEM" autocomplete="item_name" autofocus
@@ -27,6 +28,7 @@
         <label for="selectedFarm" class="col-md-2 col-form-label text-md">{{ __('Farm') }}</label>
 
         <div class="col-md-12">
+            // BUG: not saved
             <select wire:model="selectedFarm" class="form-control">
                 @foreach ($farms as $key => $value)
                     <option value="{{ $value->id }}">{{ ucfirst($value->farm_name) }}</option>

@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ItemDailiesRecord extends Model
+class DailyInventory extends Model
 {
     use HasFactory;
 
-    protected $nullable = [
+    protected $fillable = [
         'actual_count_bags',
         'actual_count_kgs',
         'actual_count_total',
@@ -18,6 +18,6 @@ class ItemDailiesRecord extends Model
 
     public function item_formula()
     {
-        return $this->belongsTo('App\Models\ItemFormula');
+    	return $this->belongsTo('App\Models\ItemFormula');
     }
 }
