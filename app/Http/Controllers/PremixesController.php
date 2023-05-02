@@ -2,23 +2,40 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Premix;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
+use DataTables;
 
 class PremixesController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // $items = [];
+        //DataTable
+        // [ ]: can be added with date-filter, in the firefox bookmark
+        if ($request->ajax()) {
+            // $items = RawMaterial::where('active_status', 1)->get();
+            $items = Premix::select('items.item_name', 'premixes.*')
+                ->join('items', 'premixes.item_id', '=', 'items.id')
+                ->where('items.active_status', 1)
+                ->get();
+            $data = collect();
+            if ($items->count() > 0) {
+                foreach ($items as $r) {
+                    $data->push([
+                        'item_name' => $r->item_name,
+                        'beginning' => $r->beginning,
+                        'micro' => $r->micro,
+                        'macro' => $r->macro,
+                        'ending' => $r->ending
+                    ]);
+                }
+            }
 
-        // WILL READ THE PREMIX
-        // $this->items = Premix::select('items.item_name', 'farms.farm_name', 'raw_materials.category', 'item_formulas.*')
-        //     ->where('item_formulas.active_status', 1)
-        //     ->join('raw_materials', 'item_formulas.raw_material_id', '=', 'raw_materials.id')
-        //     ->join('items', 'item_formulas.item_id', '=', 'items.id')
-        //     ->join('farms', 'items.farm_id', '=', 'farms.id')
-        //     ->where('raw_materials.category', '=', 'MACRO')
-        //     ->get();
-
+            return DataTables::of($data)
+            ->make(true);
+        }
+        // dd($items);
 
         return view('production_management.premixes');
     }

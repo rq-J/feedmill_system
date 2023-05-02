@@ -6,42 +6,51 @@
 
 @section('content')
 	<h3>Premixes</h3>
-	<div>
-        <table class="table table-hover table-bordered text-center">
+    <div class="container" id="table">
+        {{-- <livewire:raw-material-table /> --}}
+        {{-- TODO : insert data table here --}}
+        <table id="premix_table" class="table table-bordered table-hover text-nowrap" style="width: 100%;">
             <thead>
                 <tr>
-                    <th scope="col">Items</th>
-                    <th scope="col">Beginning</th>
-                    <th scope="col">Micro</th>
-                    <th scope="col">Macro</th>
-                    <th scope="col">Ending</th>
+                    <th class="text-center">Item Name</th>
+                    <th class="text-center">Beginning</th>
+                    <th class="text-center">Micro</th>
+                    <th class="text-center">Macro</th>
+                    <th class="text-center">Ending</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">0</th>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    {{-- <td><button type="button" class="btn btn-warning">Update</button></td> --}}
-                </tr>
-            </tbody>
         </table>
     </div>
 @endsection
 
 @section('scripts')
-	<script src="{{ asset('js/jquery.min.js') }}"></script>
-	<script>
-		$.ajax({
-			type: "GET",
-			url: "{{ config('app.root_domain') . config('app.user_details_slug') . \Crypt::encryptString(Auth::user()->id) }}",
-			dataType: 'json',
-			success: function(response){
-				document.getElementById('fullname').innerHTML = response['first_name'] + " " + response['last_name'];
-				document.getElementById('email').innerHTML = response['email'];
-			}
-		});
-	</script>
+  <script>
+    $(document).ready(function() {
+      let farms = $('#premix_table').DataTable({
+        processing: true,
+        serverSide: true,
+        scrollX: true,
+        columnDefs: [{  className: "dt-center", targets: [0, 1, 2, 3, 4] }],
+
+        ajax: "{{ route('premixes') }}",
+        columns: [
+            { data: 'item_name', name: 'item_name'},
+            { data: 'beginning', name: 'beginning'},
+            { data: 'micro', name: 'micro',},
+            { data: 'macro', name: 'macro'},
+            { data: 'ending', name: 'ending'},
+        ],
+        pagingType: 'full_numbers',
+        language: {
+            "emptyTable": "No Premix records."
+        },
+        searching: true,
+      });
+    });
+
+    $(document).on('click', '#refresh', function(e) {
+      var farms = $('#premix_table').DataTable();
+      farms.ajax.reload();
+    });
+  </script>
 @endsection
