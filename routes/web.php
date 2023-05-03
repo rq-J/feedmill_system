@@ -59,7 +59,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/item_daily', [ItemDailyController::class, 'index'])->name('item_daily');
 
     //Feed Request
-    Route::get('/feed', [FeedRequestController::class, 'index'])->name('feed');
+    Route::get('/request', [FeedRequestController::class, 'index'])->name('request');
 
     // Farm
     Route::prefix('/farm')->group(function () {

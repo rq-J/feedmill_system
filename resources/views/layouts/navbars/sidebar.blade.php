@@ -80,8 +80,8 @@
                 </h6>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ Request::is('feed') ? 'active' : '' }} "
-                    href="{{ url('feed') }}">
+                <a class="nav-link {{ Request::is('request') ? 'active' : '' }} "
+                    href="{{ url('request') }}">
                     <div
                         class="icon icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center p-2">
                         <svg aria-hidden="true" focusable="false" data-prefix="fa-duotone" data-icon="note-sticky"
@@ -104,7 +104,7 @@
                             </g>
                         </svg>
                     </div>
-                    <span class="nav-link-text ms-1">Feed Request Records</span>
+                    <span class="nav-link-text ms-1">Weekly Request</span>
                 </a>
             </li>
             <li class="nav-item">

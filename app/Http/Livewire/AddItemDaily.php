@@ -183,6 +183,7 @@ class AddItemDaily extends Component
                             'ending' => $ending,
                         ]);
                         Log::info($premix);
+                        // [ ]: ?? no save in db?????
                     }
                 }
 
