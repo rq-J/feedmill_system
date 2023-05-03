@@ -8,6 +8,6 @@ class FeedRequestController extends Controller
 {
     public function index()
     {
-        return view('records_inventory.feed_request');
+        return view('records_inventory.weekly_request');
     }
 }
