@@ -9,7 +9,7 @@ use App\Models\FarmLocation;
 class AddLocation extends Component
 {
     public $farm_location;
-    public $selectedCategory;
+    public $selectedCategory = 1;
     public $farm_name;
     public $farms;
 
@@ -106,23 +106,4 @@ class AddLocation extends Component
     {
         return $this->selectedCategory = $category;
     }
-
-
-
-    /**
-     * To get farm options from DB and display as options in HTML select
-     * @param no param
-     * @return options
-     */
-    // public function getFarmOptions()
-    // {
-    //     $farms = Farm::all();
-
-    //     $options = '';
-    //     foreach ($farms as $farm) {
-    //         $options .= '<option value="' . $farm->id . '">' . $farm->name . '</option>';
-    //     }
-
-    //     return $options;
-    // }
 }

@@ -25,11 +25,11 @@
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script> --}}
 
     {{-- Styles --}}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
     {{-- DataTables --}}
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
-
 
     <link id="pagestyle" href="{{ asset('assets/css/bootstrap.css') }}" rel="stylesheet" />
 
@@ -38,8 +38,6 @@
 </head>
 
 <body class="font-sans antialiased g-sidenav-show  bg-gray-100">
-    {{-- @yield('content') --}}
-
     @include('layouts.navbars.sidebar')
     <main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg">
         @include('layouts.navbars.nav')
@@ -76,6 +74,7 @@
     @livewireScripts
     @yield('scripts')
     @yield('alt-scripts')
+    @yield('nav-scripts')
 </body>
 
 </html>
