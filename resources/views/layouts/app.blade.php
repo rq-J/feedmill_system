@@ -59,22 +59,12 @@
     <script src="{{ asset('assets/js/fontawesome.js') }}"></script>
     {{-- <script src="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"></script> --}}
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-    <script>
-        $.ajax({
-            type: "GET",
-            url: "{{ config('app.root_domain') . config('app.user_details_slug') . \Crypt::encryptString(Auth::user()->id) }}",
-            dataType: 'json',
-            success: function(response) {
-                // document.getElementById('fullname').innerHTML = response['first_name'] + " " + response['last_name'];
-                // document.getElementById('email').innerHTML = response['email'];
-            }
-        });
-    </script>
+
 
     @livewireScripts
+    @yield('nav-scripts')
     @yield('scripts')
     @yield('alt-scripts')
-    @yield('nav-scripts')
 </body>
 
 </html>

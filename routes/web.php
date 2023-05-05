@@ -12,15 +12,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FarmInformationController;
-use App\Http\Controllers\FeedRequestController;
-use App\Http\Controllers\FormulaController;
+use App\Http\Controllers\WeeklyRequestController;
 use App\Http\Controllers\InventoryLevelsController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ItemDailyController;
-use App\Http\Controllers\MacroController;
-use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\MessageSlackController;
-use App\Http\Controllers\MicroController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PivotController;
 use App\Http\Controllers\PremixesController;
@@ -59,7 +55,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/item_daily', [ItemDailyController::class, 'index'])->name('item_daily');
 
     //Feed Request
-    Route::get('/request', [FeedRequestController::class, 'index'])->name('request');
+    Route::get('/request', [WeeklyRequestController::class, 'index'])->name('request');
 
     // Farm
     Route::prefix('/farm')->group(function () {

@@ -22,4 +22,9 @@ class WeeklyRequest extends Model
     {
     	return $this->belongsTo('App\Models\FarmLocation');
     }
+
+    public function item()
+    {
+    	return $this->belongsTo('App\Models\Item');
+    }
 }

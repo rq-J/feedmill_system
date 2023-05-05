@@ -8,6 +8,7 @@ use App\Models\Item;
 use Carbon\Carbon;
 use Livewire\Component;
 use App\Http\Controllers\AuditController as AC;
+use App\Models\WeeklyRequest;
 
 class AddWeeklyRequest extends Component
 {
@@ -18,7 +19,7 @@ class AddWeeklyRequest extends Component
 
     public $item_list = [];
     public $items;
-    public $raw_material;
+    public $item_id = 1;
     public $age_or_stage;
     public $population;
     public $grams_per_population;
@@ -48,11 +49,11 @@ class AddWeeklyRequest extends Component
             ->get();
 
         $this->item_list[] = [
-            'raw_material' => '',
-            'age_or_stage' => '',
-            'population' => '',
-            'grams_per_population' => '',
-            'total_request' => ''
+            'item_id' => $this->item_id,
+            'age_or_stage' => $this->age_or_stage,
+            'population' => $this->population,
+            'grams_per_population' => $this->grams_per_population,
+            'total_request' => $this->total_request
         ];
     }
 
@@ -64,7 +65,7 @@ class AddWeeklyRequest extends Component
     public function addButton()
     {
         $this->item_list[] = [
-            'raw_material' => '',
+            'item_id' => '',
             'age_or_stage' => '',
             'population' => '',
             'grams_per_population' => '',
@@ -80,17 +81,18 @@ class AddWeeklyRequest extends Component
 
     public function create()
     {
-        $today = Carbon::today();
-
         $this->item_list = array_map(function ($item) {
+            $today = Carbon::today();
+
             // Update location_id, created_at, updated_at and active_status to 1
-            $item['location_id'] = $this->selectedLocation;
-            $item['created_at'] = today();
-            $item['updated_at'] = today();
+            $item['farm_location_id'] = $this->selectedLocation;
+            $item['created_at'] = $today;
+            $item['updated_at'] = $today;
             $item['active_status'] = 1;
             return $item;
         }, $this->item_list);
-        // dd($this->item_list);
+
+        WeeklyRequest::insert($this->item_list);
 
         // Loop through each item
         foreach ($this->item_list as &$item) {

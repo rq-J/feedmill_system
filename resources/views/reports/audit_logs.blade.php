@@ -39,31 +39,6 @@
 @section('scripts')
   <script>
     $(document).ready(function () {
-    //   let audits = $('#audits').DataTable({
-    //     processing: true,
-    //     serverSide: true,
-    //     scrollX: true,
-    //     columnDefs: [
-    //       { className: "dt-center", targets: [ 2, 3, 6 ] }
-    //     ],
-
-    //     ajax: "{{ route('audit') }}",
-    //     columns: [
-    //       {data: 'id', name: 'id'},
-    //       {data: 'user', name: 'user'},
-    //       {data: 'table', name: 'table'},
-    //       {data: 'action', name: 'action'},
-    //       {data: 'new_value', name: 'new_value'},
-    //       {data: 'old_value', name: 'old_value'},
-    //       {data: 'view', name: 'view', orderable: false, searchable: false},
-    //     ],
-    //     pagingType: 'full_numbers',
-    //     language: {
-    //       "emptyTable": "No record available."
-    //     },
-    //     searching: true,
-    //   });
-
       let audits = $('#audits').DataTable({
         processing: true,
         serverSide: true,

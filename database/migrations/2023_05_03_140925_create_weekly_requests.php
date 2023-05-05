@@ -13,8 +13,12 @@ return new class extends Migration
     {
         Schema::create('weekly_requests', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('farm_location_id');
             $table->foreign('farm_location_id')->references('id')->on('farm_locations');
+            $table->unsignedBigInteger('item_id');
+            $table->foreign('item_id')->references('id')->on('items');
             $table->float('age_or_stage')->default(0);
             $table->float('population')->default(0);
             $table->float('grams_per_population')->default(0);
@@ -25,7 +29,7 @@ return new class extends Migration
             $table->float('thursay')->default(0);
             $table->float('friday')->default(0);
             $table->float('saturday')->default(0);
-            $table->float('active_status')->default(0);
+            $table->boolean('active_status')->default(0);
             $table->timestamps();
         });
     }

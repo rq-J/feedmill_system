@@ -35,10 +35,13 @@
                         @foreach ($item_list as $key => $item_list)
                             <tr>
                                 <td class="text-center">
-                                    <select name="item_list[{{ $key }}][raw_material]"
-                                        wire:model="item_list.{{ $key }}.raw_material" class="form-control">
+                                    {{-- #[x]: sometimes works, sometimes not --}}
+                                    <select name="item_list[{{ $key }}][item_id]"
+                                        wire:model="item_list.{{ $key }}.item_id" class="form-control">
                                         @foreach ($items as $item_key => $item_value)
-                                            <option value="{{ $item_value->id }}">{{ $item_value->item_name }}
+                                            <option value="{{ $item_value->id }}"
+                                                {{ $item_value->id == 1 ? 'selected' : '' }}>
+                                                {{ $item_value->item_name }}
                                             </option>
                                         @endforeach
                                     </select>

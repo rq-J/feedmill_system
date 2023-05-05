@@ -172,7 +172,6 @@
     </div>
 </nav>
 @section('nav-scripts')
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script>
         $.ajax({
             type: "GET",
