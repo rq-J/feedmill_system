@@ -79,7 +79,6 @@ Route::middleware('auth')->group(function () {
 
     //Forecasting
     Route::get('/inventory', [InventoryLevelsController::class, 'index'])->name('inventory');
-    Route::get('/slack', [MessageSlackController::class, 'index'])->name('slack');
 
     //Production Management
     Route::get('/order', [ProductionOrderController::class, 'index'])->name('order');
