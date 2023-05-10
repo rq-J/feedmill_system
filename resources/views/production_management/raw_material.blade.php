@@ -5,31 +5,35 @@
 @endsection
 
 @section('content')
-    <h3>Raw Material</h3>
-    <div class="pull-right">
-        <button id="myButton" class="btn btn-primary"></button>
-        <button id="refresh" class="btn btn-secondary"></button>
+    <div class="bg-white shadow-lg rounded container">
+        <h3 class="pt-4">Raw Material</h3>
+        <div class="pull-right">
+            <button id="myButton" class="btn btn-primary"></button>
+            <button id="refresh" class="btn btn-secondary"></button>
+        </div>
+        @php
+            $isHidden = true;
+        @endphp
+        @if ($isHidden)
+            <div id="create" style="display: none">
+                @livewire('add-raw-material')
+            </div>
+            <div class="container" id="table">
+                <table id="raw_table" class="table table-bordered table-hover text-nowrap" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Raw Material Name</th>
+                            <th class="text-center">Standard Days</th>
+                            <th class="text-center">Category</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        @endif
+        <br>
     </div>
-    @php
-        $isHidden = true;
-    @endphp
-    @if ($isHidden)
-        <div id="create" style="display: none">
-            @livewire('add-raw-material')
-        </div>
-        <div class="container" id="table">
-            <table id="raw_table" class="table table-bordered table-hover text-nowrap" style="width: 100%;">
-                <thead>
-                    <tr>
-                        <th class="text-center">Raw Material Name</th>
-                        <th class="text-center">Standard Days</th>
-                        <th class="text-center">Category</th>
-                        <th class="text-center">Actions</th>
-                    </tr>
-                </thead>
-            </table>
-        </div>
-    @endif
+
 @endsection
 
 @section('alt-scripts')

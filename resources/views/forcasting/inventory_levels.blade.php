@@ -5,39 +5,42 @@
 @endsection
 
 @section('content')
-	<h3>Inventory Levels</h3>
-	<div>
-        <table class="table table-hover table-bordered text-center">
-            <thead>
-                <tr>
-                    <th scope="col">Item</th>
-                    <th scope="col">Actual</th>
-                    <th scope="col">Standard</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">DummyData</th>
-                    <td>DummyData</td>
-                    <td>DummyData</td>
-                    <td><button type="button" class="btn btn-warning">Update</button></td>
-                </tr>
-                <tr>
-                    <th scope="row">DummyData</th>
-                    <td>DummyData</td>
-                    <td>DummyData</td>
-                    <td><button type="button" class="btn btn-warning">Update</button></td>
-                </tr>
-                <tr>
-                    <th scope="row">DummyData</th>
-                    <td>DummyData</td>
-                    <td>DummyData</td>
-                    <td><button type="button" class="btn btn-warning">Update</button></td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="bg-white shadow-lg rounded container">
+        <h3 class="pt-4">Inventory Levels</h3>
+        <div>
+            <table class="table table-hover table-bordered text-center">
+                <thead>
+                    <tr>
+                        <th scope="col">Item</th>
+                        <th scope="col">Actual</th>
+                        <th scope="col">Standard</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">DummyData</th>
+                        <td>DummyData</td>
+                        <td>DummyData</td>
+                        <td><button type="button" class="btn btn-warning">Update</button></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">DummyData</th>
+                        <td>DummyData</td>
+                        <td>DummyData</td>
+                        <td><button type="button" class="btn btn-warning">Update</button></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">DummyData</th>
+                        <td>DummyData</td>
+                        <td>DummyData</td>
+                        <td><button type="button" class="btn btn-warning">Update</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
+
 @endsection
 
 @section('scripts')

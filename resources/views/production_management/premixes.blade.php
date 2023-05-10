@@ -5,22 +5,26 @@
 @endsection
 
 @section('content')
-	<h3>Premixes</h3>
-    <div class="container" id="table">
-        {{-- <livewire:raw-material-table /> --}}
-        {{-- TODO : insert data table here --}}
-        <table id="premix_table" class="table table-bordered table-hover text-nowrap" style="width: 100%;">
-            <thead>
-                <tr>
-                    <th class="text-center">Item Name</th>
-                    <th class="text-center">Beginning</th>
-                    <th class="text-center">Micro</th>
-                    <th class="text-center">Macro</th>
-                    <th class="text-center">Ending</th>
-                </tr>
-            </thead>
-        </table>
+    <div class="bg-white shadow-lg rounded container">
+        <h3 class="pt-4">Premixes</h3>
+        <div class="container" id="table">
+            {{-- <livewire:raw-material-table /> --}}
+            {{-- TODO : insert data table here --}}
+            <table id="premix_table" class="table table-bordered table-hover text-nowrap" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th class="text-center">Item Name</th>
+                        <th class="text-center">Beginning</th>
+                        <th class="text-center">Micro</th>
+                        <th class="text-center">Macro</th>
+                        <th class="text-center">Ending</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <br>
     </div>
+
 @endsection
 
 @section('scripts')

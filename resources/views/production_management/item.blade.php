@@ -5,30 +5,34 @@
 @endsection
 
 @section('content')
-	<h3>Item - Formula</h3>
-	<div class="pull-right">
-        <button id="myButton" class="btn btn-primary"></button>
-        <button id="refresh" class="btn btn-secondary"></button>
+    <div class="bg-white shadow-lg rounded container">
+        <h3 class="pt-4">Item - Formula</h3>
+        <div class="pull-right">
+            <button id="myButton" class="btn btn-primary"></button>
+            <button id="refresh" class="btn btn-secondary"></button>
+        </div>
+        @php
+            $isHidden = true;
+        @endphp
+        @if ($isHidden)
+        <div id="create" style="display: none">
+            @livewire('add-item')
+        </div>
+        <div class="container" id="table">
+            <table id="farms" class="table table-bordered table-hover text-nowrap" style="width: 100%;">
+                <thead>
+                    <tr>
+                        {{-- #[x]: add the farm later --}}
+                        <th class="text-center">Item Name</th>
+                        <th class="text-center">Farm</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <br>
     </div>
-    @php
-        $isHidden = true;
-    @endphp
-    @if ($isHidden)
-    <div id="create" style="display: none">
-        @livewire('add-item')
-    </div>
-    <div class="container" id="table">
-        <table id="farms" class="table table-bordered table-hover text-nowrap" style="width: 100%;">
-            <thead>
-                <tr>
-                    {{-- #[x]: add the farm later --}}
-                    <th class="text-center">Item Name</th>
-                    <th class="text-center">Farm</th>
-                    <th class="text-center">Action</th>
-                </tr>
-            </thead>
-        </table>
-    </div>
+
 @endif
 @endsection
 
