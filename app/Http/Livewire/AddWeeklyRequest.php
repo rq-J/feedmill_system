@@ -109,5 +109,7 @@ class AddWeeklyRequest extends Component
         }
 
         //[ ]: go to weekly request again
+        return redirect('/request')->with('success_message', 'Weekly Request Has Been Succesfully Created!');
+
     }
 }
