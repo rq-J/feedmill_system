@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-	Dashboard
+	Audit Logs
 @endsection
 
 @section('content')

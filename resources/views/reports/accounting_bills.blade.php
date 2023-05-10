@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Dashboard
+    Accounting Bills
 @endsection
 
 @section('content')
