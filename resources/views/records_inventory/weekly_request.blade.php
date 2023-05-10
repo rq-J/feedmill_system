@@ -44,46 +44,48 @@
         @if ($weekly_request_this_week->count() >= 1)
             {{-- Show request this week (editable, deletable) --}}
             <h5>Request</h5>
-            <table class="table table-hover table-bordered text-center">
-                @inject('encrypt', 'Illuminate\Support\Facades\Crypt')
-                <thead>
-                    <tr>
-                        <th>Location</th>
-                        <th>Item</th>
-                        <th>Age/Stage</th>
-                        <th>Population</th>
-                        <th>Grams/Pop.</th>
-                        <th>Total Request</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($weekly_request_this_week as $this_week)
+            <div  style="overflow-x:auto;">
+                <table class="table table-hover table-bordered text-center">
+                    @inject('encrypt', 'Illuminate\Support\Facades\Crypt')
+                    <thead>
                         <tr>
-                            {{-- {{ $this_week }} --}}
-                            <td>{{ $this_week->farm_location }}</td>
-                            <td>{{ $this_week->item_name }}</td>
-                            <td>{{ $this_week->age_or_stage }}</td>
-                            <td>{{ $this_week->population }}</td>
-                            <td>{{ $this_week->grams_per_population }}</td>
-                            <td>{{ $this_week->total_request }}</td>
-
-                            <td>
-                                <a href="{{ route('request.update', ['id' => $encrypt::encryptString($this_week->id)]) }}"
-                                    class="btn btn-warning">
-                                    Update
-                                </a>
-                                {{-- <a href="{{ route('request.remove', ['id' => $encrypt::encryptString($this_week->id)]) }}"
-                                    class="btn btn-danger">
-                                    Delete
-                                </a> --}}
-                                <button id="remove" data-id="{{ $encrypt::encryptString($this_week->id) }}" data-name="{{ $this_week->farm_location }} - {{ $this_week->item_name }}" class="btn btn-danger">Delete</button>
-
-                            </td>
+                            <th>Location</th>
+                            <th>Item</th>
+                            <th>Age/Stage</th>
+                            <th>Population</th>
+                            <th>Grams/Pop.</th>
+                            <th>Total Request</th>
+                            <th></th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach ($weekly_request_this_week as $this_week)
+                            <tr>
+                                {{-- {{ $this_week }} --}}
+                                <td>{{ $this_week->farm_location }}</td>
+                                <td>{{ $this_week->item_name }}</td>
+                                <td>{{ $this_week->age_or_stage }}</td>
+                                <td>{{ $this_week->population }}</td>
+                                <td>{{ $this_week->grams_per_population }}</td>
+                                <td>{{ $this_week->total_request }}</td>
+
+                                <td>
+                                    <a href="{{ route('request.update', ['id' => $encrypt::encryptString($this_week->id)]) }}"
+                                        class="btn btn-warning">
+                                        Update
+                                    </a>
+                                    {{-- <a href="{{ route('request.remove', ['id' => $encrypt::encryptString($this_week->id)]) }}"
+                                        class="btn btn-danger">
+                                        Delete
+                                    </a> --}}
+                                    <button id="remove" data-id="{{ $encrypt::encryptString($this_week->id) }}" data-name="{{ $this_week->farm_location }} - {{ $this_week->item_name }}" class="btn btn-danger">Delete</button>
+
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
             <br>
         @else
             <div>
