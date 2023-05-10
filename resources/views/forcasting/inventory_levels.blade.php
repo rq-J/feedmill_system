@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-	Dashboard
+	Inventory Levels
 @endsection
 
 @section('content')
