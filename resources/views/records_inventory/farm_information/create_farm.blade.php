@@ -5,7 +5,8 @@
 @endsection
 
 @section('content')
-    <h3>
+    <div class="bg-white shadow-lg rounded container">
+    <h3 class="pt-4">
         <a href="{{ route('farm') }}">
             <svg aria-hidden="true" focusable="false" data-prefix="fa-duotone" data-icon="left"
                 class="svg-inline--fa fa-left fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
@@ -51,6 +52,8 @@
             </table>
         </div>
     @endif
+    </div>
+
 @endsection
 
 @section('alt-scripts')

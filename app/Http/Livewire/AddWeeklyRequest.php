@@ -9,11 +9,13 @@ use Carbon\Carbon;
 use Livewire\Component;
 use App\Http\Controllers\AuditController as AC;
 use App\Models\WeeklyRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 
 class AddWeeklyRequest extends Component
 {
     public $farm_location;
-    public $selectedLocation = 1;
+    public $selectedLocation;
     public $farm_name;
     public $locations;
 
@@ -34,7 +36,6 @@ class AddWeeklyRequest extends Component
         if ($this->locations->count() == 0) {
             //go to the farm
         }
-        // dd($this->item_list);
         return view('livewire.add-weekly-request');
     }
 
@@ -89,12 +90,13 @@ class AddWeeklyRequest extends Component
             $item['created_at'] = $today;
             $item['updated_at'] = $today;
             $item['active_status'] = 1;
+            $item['user_id'] = Auth::user()->id;
             return $item;
         }, $this->item_list);
 
         WeeklyRequest::insert($this->item_list);
 
-        // Loop through each item
+        // Loop through each itemre
         foreach ($this->item_list as &$item) {
             // Log the changes
             $log_entry = [
@@ -105,5 +107,7 @@ class AddWeeklyRequest extends Component
             ];
             AC::logEntry($log_entry);
         }
+
+        //[ ]: go to weekly request again
     }
 }

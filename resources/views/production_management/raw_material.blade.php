@@ -18,8 +18,6 @@
             @livewire('add-raw-material')
         </div>
         <div class="container" id="table">
-            {{-- <livewire:raw-material-table /> --}}
-            {{-- TODO : insert data table here --}}
             <table id="raw_table" class="table table-bordered table-hover text-nowrap" style="width: 100%;">
                 <thead>
                     <tr>
@@ -32,36 +30,6 @@
             </table>
         </div>
     @endif
-
-    {{-- <div>
-        @inject('raw_mats', 'Illuminate\Support\Facades\Crypt')
-
-        <table class="table table-hover table-bordered text-center">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Standard Days</th>
-                    <th>Category</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($raw_materials as $raw_material)
-                    <tr>
-                        <td>{{ $raw_material->raw_material_name }}</td>
-                        <td>{{ $raw_material->standard_days }}</td>
-                        <td>{{ $raw_material->category }}</td>
-                        <td>
-                            <a href="{{ route('raw_materials.show', ['id' => $raw_mats::encryptString($raw_material->id)]) }}"
-                                class="btn btn-warning">
-                                Update
-                            </a>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div> --}}
 @endsection
 
 @section('alt-scripts')

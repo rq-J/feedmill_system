@@ -19,7 +19,7 @@
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror
-                {{ strtoupper($farm_location) }}
+                {{-- {{ strtoupper($farm_location) }} --}}
             </div>
         </div>
 
@@ -41,30 +41,8 @@
 
         <div class="row">
             <div class="col-md-12">
-
                 <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
-                    data-bs-target="#createModal">
-                    <div class="icon icon-sm text-center me-0 align-items-center justify-content-center p-2">
-                        <svg aria-hidden="true" focusable="false" data-bs-prefix="fa-duotone" data-bs-icon="plus"
-                            class="svg-inline--fa fa-plus fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 448 512">
-                            <defs>
-                                <style>
-                                    .fa-secondary {
-                                        opacity: .4
-                                    }
-                                </style>
-                            </defs>
-                            <g class="fa-group">
-                                <path
-                                    d="M224 464C201.906 464 184 446.094 184 424V88C184 65.906 201.906 48 224 48S264 65.906 264 88V424C264 446.094 246.094 464 224 464Z"
-                                    class="fa-secondary" fill="currentColor" />
-                                <path
-                                    d="M392 296H56C33.906 296 16 278.094 16 256S33.906 216 56 216H392C414.094 216 432 233.906 432 256S414.094 296 392 296Z"
-                                    class="fa-primary" fill="currentColor" />
-                            </g>
-                        </svg>
-                    </div>Create
+                    data-bs-target="#createModal">Update
                 </button>
 
                 <div class="modal fade" id="createModal" tabindex="-1" role="dialog"
@@ -72,13 +50,13 @@
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle">Create New Raw Material?</h5>
+                                <h5 class="modal-title" id="exampleModalLongTitle">Update Location?</h5>
                                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                Are You Sure You Want To Create New Raw Material?
+                                Are You Sure You Want To Update Location?
                             </div>
                             <div class="modal-footer">
                                 <button wire:click="redirect_back_with_action"

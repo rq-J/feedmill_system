@@ -157,13 +157,10 @@ class UpdateRawMaterial extends Component
         $raw_Materials->category = $this->selectedCategory;
         $raw_Materials->active_status = 1;
 
-        // if ($this->test_similarity($this->raw_material_name)) {
-        //     return redirect('/raw')->with('danger_message', 'Invalid Input, Duplicate Data Found!');
-        // }
-
         $to_remove = RawMaterial::findorfail($this->mat_id);
         $to_remove->active_status = 0;
 
+        // [ ]: audit logs??
         if ($to_remove->save() && $raw_Materials->save()) {
             return redirect('/raw')->with('success_message', 'Task Has Been Succesfully Updated!');
         } else {

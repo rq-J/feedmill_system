@@ -26,7 +26,7 @@ return new class extends Migration
             $table->float('monday')->default(0);
             $table->float('tuesday')->default(0);
             $table->float('wenesday')->default(0);
-            $table->float('thursay')->default(0);
+            $table->float('thursday')->default(0);
             $table->float('friday')->default(0);
             $table->float('saturday')->default(0);
             $table->boolean('active_status')->default(0);

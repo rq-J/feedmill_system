@@ -36,11 +36,7 @@ class RawMaterialsController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-
-        $raw_material_data = RawMaterial::where("active_status", 1)->get();
-
-        return view('production_management.raw_material')
-            ->with('raw_materials', $raw_material_data);
+        return view('production_management.raw_material');
     }
 
     /**

@@ -136,13 +136,13 @@
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle">Create New Raw Material?</h5>
+                                <h5 class="modal-title" id="exampleModalLongTitle">Update Raw Material?</h5>
                                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                Are You Sure You Want To Create New Raw Material?
+                                Are You Sure You Want To Update Raw Material?
                             </div>
                             <div class="modal-footer">
                                 {{-- <button wire:click="redirect_back_with_action"

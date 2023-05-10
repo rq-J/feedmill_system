@@ -55,7 +55,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/item_daily', [ItemDailyController::class, 'index'])->name('item_daily');
 
     //Feed Request
-    Route::get('/request', [WeeklyRequestController::class, 'index'])->name('request');
+    Route::prefix('/request')->group(function () {
+        Route::get('/', [WeeklyRequestController::class, 'index'])->name('request');
+        Route::get('/{id?}', [WeeklyRequestController::class, 'update'])->name('request.update');
+        Route::get('/remove/{id?}', [WeeklyRequestController::class, 'remove'])->name('request.remove');
+        Route::get('/monitor/{id?}', [WeeklyRequestController::class, 'monitor'])->name('request.monitor');
+    });
 
     // Farm
     Route::prefix('/farm')->group(function () {

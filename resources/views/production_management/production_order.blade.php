@@ -6,38 +6,33 @@
 
 @section('content')
     <h3>Production Order</h3>
-    <div>
-        <table class="table table-hover table-bordered text-center">
-            <thead>
+    <table class="table table-hover table-bordered text-center">
+        @inject('encrypt', 'Illuminate\Support\Facades\Crypt')
+        <thead>
+            <tr>
+                <th>Location</th>
+                <th>Item</th>
+                <th>Age/Stage</th>
+                <th>Population</th>
+                <th>Grams/Pop.</th>
+                <th>Total Request</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($weekly_request_this_week as $this_week)
                 <tr>
-                    <th scope="col">Farm</th>
-                    <th scope="col">Location</th>
-                    <th scope="col">Item Request</th>
-                    <th scope="col"></th>
+                    {{-- {{ $this_week }} --}}
+                    <td>{{ $this_week->farm_location }}</td>
+                    <td>{{ $this_week->item_name }}</td>
+                    <td>{{ $this_week->age_or_stage }}</td>
+                    <td>{{ $this_week->population }}</td>
+                    <td>{{ $this_week->grams_per_population }}</td>
+                    <td>{{ $this_week->total_request }}</td>
                 </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">DummyData</th>
-                    <td>DummyData</td>
-                    <td>DummyData</td>
-                    <td><button type="button" class="btn btn-warning">Delivered</button></td>
-                </tr>
-                <tr>
-                    <th scope="row">DummyData</th>
-                    <td>DummyData</td>
-                    <td>DummyData</td>
-                    <td><button type="button" class="btn btn-warning">Delivered</button></td>
-                </tr>
-                <tr>
-                    <th scope="row">DummyData</th>
-                    <td>DummyData</td>
-                    <td>DummyData</td>
-                    <td><button type="button" class="btn btn-warning">Delivered</button></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+            @endforeach
+        </tbody>
+    </table>
+    <br>
 @endsection
 
 @section('scripts')

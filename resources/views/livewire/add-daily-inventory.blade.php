@@ -149,6 +149,7 @@
                 </thead>
                 <tbody>
                     {{-- #[ ]: weird ui --}}
+                    {{-- #[ ]: update to array formula like weekly request  --}}
                     @foreach ($arrMedicine as $medicine)
                         <tr>
                             <td style="display:none;">{{ $medicine['id'] }}</td>
@@ -184,6 +185,7 @@
 
 @section('scripts')
     <script>
+
         $(document).ready(function() {
 
             //[x]: get all the input(like formula.blade.php) then pass it onto the controller via .emit

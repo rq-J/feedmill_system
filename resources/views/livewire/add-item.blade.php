@@ -68,6 +68,7 @@
         </div>
     </div>
     <div>
+        {{-- #[ ]: update with array formula like weekly request --}}
         <div class="row">
             <div class="col-4">
                 <label for="myMacroSelect" class="col-form-label">Macro</label>
