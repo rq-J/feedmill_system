@@ -21,7 +21,7 @@ class WeeklyRequestController extends Controller
         $thursday4pm = Carbon::parse(now()->year . '-W' . now()->week . '-4 16:00:00');
 
         // dd($last_week_start, $last_week_end);
-        // [ ]: all user can see each other request?
+        // [ ]: all user can see each other request? use Auth, wait lang
         $weekly_request_last_week = WeeklyRequest::select('farm_locations.farm_location', 'items.item_name', 'weekly_requests.*')
             ->where('weekly_requests.active_status', 1)
             ->join('farm_locations', 'weekly_requests.farm_location_id', '=', 'farm_locations.id')
