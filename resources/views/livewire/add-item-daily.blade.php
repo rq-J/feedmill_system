@@ -17,7 +17,7 @@
             </a>
         </li>
         {{-- #FIXME: align this to left --}}
-        {{-- #BUG: should be disabled once used, once a day only --}}
+        {{-- #[x]: should be disabled once used, once a day only --}}
         <button class="btn btn-primary d-block" id="saveButton">Save for today</button>
     </ul>
     <div class="tab-content">

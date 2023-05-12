@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use App\Http\Controllers\AuditController as AC;
+use Auth;
 
 class WeeklyRequestController extends Controller
 {
@@ -19,11 +20,13 @@ class WeeklyRequestController extends Controller
         $this_week_start = Carbon::now()->startOfWeek();
         $this_week_end = Carbon::now()->endOfWeek();
         $thursday4pm = Carbon::parse(now()->year . '-W' . now()->week . '-4 16:00:00');
+        $user_id = Auth::user()->id;
 
         // dd($last_week_start, $last_week_end);
-        // [ ]: all user can see each other request? use Auth, wait lang
+        // [x]: all user can see each other request? #fixed
         $weekly_request_last_week = WeeklyRequest::select('farm_locations.farm_location', 'items.item_name', 'weekly_requests.*')
             ->where('weekly_requests.active_status', 1)
+            ->where('user_id', $user_id)
             ->join('farm_locations', 'weekly_requests.farm_location_id', '=', 'farm_locations.id')
             ->join('items', 'weekly_requests.item_id', '=', 'items.id')
             ->where('weekly_requests.created_at', '>=', $last_week_start)
@@ -31,6 +34,7 @@ class WeeklyRequestController extends Controller
             ->get();
         $weekly_request_this_week = WeeklyRequest::select('farm_locations.farm_location', 'items.item_name', 'weekly_requests.*')
             ->where('weekly_requests.active_status', 1)
+            ->where('user_id', $user_id)
             ->join('farm_locations', 'weekly_requests.farm_location_id', '=', 'farm_locations.id')
             ->join('items', 'weekly_requests.item_id', '=', 'items.id')
             ->where('weekly_requests.created_at', '>=', $this_week_start)

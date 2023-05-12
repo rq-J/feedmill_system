@@ -143,14 +143,19 @@ class AddItemDaily extends Component
                     ->join('farms', 'items.farm_id', '=', 'farms.id')
                     ->get();
 
-                // dd($micro_items);
+                // dd($beginning);
 
                 $premix = collect([]);
 
                 foreach ($micro_items as $item_key => $item) {
                     // Simplify code for setting $newBeginning
-                    // [ ]: beginning, to be fixed
-                    $newBeginning = ['beginning' => $beginning[0]['ending'] ?? 0];
+                    // [x]: beginning, to be fixed
+                    if($beginning->count() == 0){
+                        $newBeginning = '0';
+                    }else{
+                        $newBeginning = $beginning[0]['ending'];
+                    }
+                    // dd($newBeginning);
                     $macro_id = array_search($item['id'], array_column($macro_input, 'id'));
                     // Log::info($item['id']);
                     if ($macro_id !== false) {
@@ -173,17 +178,31 @@ class AddItemDaily extends Component
                                 break; // Exit loop once matching $micro_item is found
                             }
                         }
-                        $ending = $this->compute_ending(0, $micro, $macro);
+                        $ending = $this->compute_ending($newBeginning, $micro, $macro);
 
                         $premix->push([
                             'item_id' => $id,
-                            'beginning' => $beginning,
+                            'beginning' => $newBeginning,
                             'micro' => $micro,
                             'macro' => $macro,
                             'ending' => $ending,
+                            'created_at' => now()
                         ]);
-                        Log::info($premix);
-                        // [ ]: ?? no save in db?????
+                        // dd($premix->toArray());
+                        // [x]: ?? no save in db?????
+                        Premix::insert($premix->toArray());
+                        // Loop through each item_daily
+                        foreach ($premix as $mix) {
+                            // Log the changes
+                            $log_entry = [
+                                'add',
+                                'premix',
+                                '',
+                                json_encode($mix),
+
+                            ];
+                            AC::logEntry($log_entry);
+                        }
                     }
                 }
 
@@ -253,13 +272,24 @@ class AddItemDaily extends Component
 
                 // If the item id matches the current item id from the first array
                 if ($input['id'] == $item_id) {
+                    // dd($item_id);
+                    $yesterday = Carbon::yesterday();
+
+                    $batch_yesterday_query = ItemDaily::select('item_dailies.*')
+                    ->whereDate('item_dailies.created_at', $yesterday)
+                    ->where('item_formula_id', $item_id)
+                    ->get();
+                    // dd($batch_yesterday_query[0]['total_batch']);
 
                     $item_formula_id = $macro['id'];
 
+                    $batch += $input['batch'];
+
                     // Add the batch to the total batch
-                    // BUG: batch yesterday should be included
+                    // [x]: batch yesterday should be included
                     // maybe find yesterday's record using "whereDate = yesterday"
-                    $total_batch += $input['batch'];
+                    $total_batch = intval($input['batch']) + intval($batch_yesterday_query->count() > 0 ? $batch_yesterday_query[0]['total_batch'] : 0); // +yesterday total batch
+                    // dd('error');
 
                     // Add the adjustment to the adjustment variable
                     $adjustment += $input['adjustment'];
@@ -280,9 +310,9 @@ class AddItemDaily extends Component
         }
 
         // Return the results array
-        return $results;
+        // return $results;
         // print_r($results);
-        // dd($results);
+        dd($results);
 
     }
 

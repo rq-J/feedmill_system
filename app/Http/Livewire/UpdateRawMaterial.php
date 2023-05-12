@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\RawMaterial;
 use Illuminate\Validation\Rule;
+use App\Http\Controllers\AuditController as AC;
 
 
 class UpdateRawMaterial extends Component
@@ -160,8 +161,27 @@ class UpdateRawMaterial extends Component
         $to_remove = RawMaterial::findorfail($this->mat_id);
         $to_remove->active_status = 0;
 
-        // [ ]: audit logs??
+        // [x]: audit logs??
         if ($to_remove->save() && $raw_Materials->save()) {
+
+            $log_entry = [
+                'update',
+                'raw_materials',
+                '',
+                json_encode($raw_Materials),
+
+            ];
+            AC::logEntry($log_entry);
+
+            $log_entry = [
+                'update',
+                '',
+                'raw_materials',
+                json_encode($to_remove),
+
+            ];
+            AC::logEntry($log_entry);
+
             return redirect('/raw')->with('success_message', 'Task Has Been Succesfully Updated!');
         } else {
             return redirect('/raw')->with('danger_message', 'Error in Database!');

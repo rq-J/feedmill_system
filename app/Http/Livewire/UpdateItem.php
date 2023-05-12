@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Item;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
+use App\Http\Controllers\AuditController as AC;
 
 class UpdateItem extends Component
 {
@@ -69,8 +70,25 @@ class UpdateItem extends Component
         $to_remove = Item::findorfail($this->item_id);
         $to_remove->active_status = 0;
 
-        // [ ]: audit logs too?
+        // [x]: audit logs too?
         if ($to_remove->save() && $updated_item->save()) {
+            $log_entry = [
+                'update',
+                'items',
+                '',
+                json_encode($updated_item),
+
+            ];
+            AC::logEntry($log_entry);
+
+            $log_entry_to_remove = [
+                'update',
+                '',
+                'items',
+                json_encode($to_remove),
+
+            ];
+            AC::logEntry($log_entry_to_remove);
             return redirect('/item')->with('success_message', 'Item Has Been Succesfully Updated!');
         } else {
             return redirect('/item')->with('danger_message', 'Error in Database!');

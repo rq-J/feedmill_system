@@ -24,6 +24,19 @@
         </div>
 
         <div class="row mb-3">
+            <label for="" class="col-md-2 col-form-label text-md">{{ __('Category') }}</label>
+
+            <div class="col-md-12">
+                <select wire:model="selectedCategory" class="form-control">
+                    @foreach (['macro', 'micro', 'medicine'] as $option)
+                        <option value="{{ $option }}">{{ ucfirst($option) }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        {{-- {{ strtoupper($selectedCategory) }} --}}
+
+        <div class="row mb-3">
             <label for="standard_days" class="col-md-2 col-form-label text-md">{{ __('Standard Days') }}</label>
 
             <div class="col-md-12">
@@ -39,33 +52,54 @@
             </div>
         </div>
 
-        {{-- <div x-data="{ open: false }" class="relative">
-            <div @click="open = !open">
-                <span
-                    class="inline-block bg-gray-200 rounded py-2 px-4">{{ $selectedCategory ?? 'Select a Category' }}</span>
-                <div class="absolute top-0 right-0 mt-12 w-56 bg-white rounded-md shadow-lg z-10" x-show="open"
-                    @click.away="open = false">
-                    @foreach ($categories as $catergory)
-                        <span wire:click="$emit('categorySelected', '{{ $catergory }}')"
-                            class="cursor-pointer block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">{{ $catergory }}</span>
-                    @endforeach
-                </div>
-            </div>
-        </div> --}}
         <div class="row mb-3">
-            <label for="standard_days" class="col-md-2 col-form-label text-md">{{ __('Category') }}</label>
+            <label for="price_per_kgs" class="col-md-4 col-form-label text-md">{{ __('Price per Kilogram') }}</label>
 
             <div class="col-md-12">
-                <select wire:model="selectedCategory" class="form-control">
-                    @foreach (['macro', 'micro', 'medicine'] as $option)
-                        <option value="{{ $option }}">{{ ucfirst($option) }}</option>
-                    @endforeach
-                </select>
+                <input id="price_per_kgs" type="number" wire:model="price_per_kgs" wire:keyup="valOnly"
+                    class="form-control @error('price_per_kgs') is-invalid @enderror" name="price_per_kgs"
+                    value="{{ old('price_per_kgs') }}" placeholder="e.g: 1" autocomplete="price_per_kgs">
+
+                @error('price_per_kgs')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
             </div>
         </div>
 
+        <div class="row mb-3">
+            <label for="inventory_cost" class="col-md-4 col-form-label text-md">{{ __('Inventory Cost') }}</label>
 
-        {{ strtoupper($selectedCategory) }}
+            <div class="col-md-12">
+                <input id="inventory_cost" type="number" wire:model="inventory_cost" wire:keyup="valOnly"
+                    class="form-control @error('inventory_cost') is-invalid @enderror" name="inventory_cost"
+                    value="{{ old('inventory_cost') }}" placeholder="e.g: 1" autocomplete="inventory_cost">
+
+                @error('inventory_cost')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label for="kgs_per_bag" class="col-md-4 col-form-label text-md">{{ __('Price per Kilogram') }}</label>
+
+            <div class="col-md-12">
+                <input id="kgs_per_bag" type="number" wire:model="kgs_per_bag" wire:keyup="valOnly"
+                    class="form-control @error('kgs_per_bag') is-invalid @enderror" name="kgs_per_bag"
+                    value="{{ old('kgs_per_bag') }}" placeholder="e.g: 1" autocomplete="kgs_per_bag">
+
+                @error('kgs_per_bag')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-md-12">
 

@@ -7,6 +7,7 @@ use App\Models\Item;
 use App\Models\WeeklyRequest;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\AuditController as AC;
 
 class UpdateWeeklyRequest extends Component
 {
@@ -89,7 +90,26 @@ class UpdateWeeklyRequest extends Component
         $to_remove->active_status = 0;
 
         if ($to_remove->save() && $new_request->save()) {
-            // [ ]: audit logs?
+            // [x]: audit logs?
+
+            $log_entry = [
+                'update',
+                'raw_materials',
+                '',
+                json_encode($new_request),
+
+            ];
+            AC::logEntry($log_entry);
+
+            $log_entry = [
+                'update',
+                '',
+                'raw_materials',
+                json_encode($to_remove),
+
+            ];
+            AC::logEntry($log_entry);
+
             return redirect('/request')->with('success_message', 'Daily Monitoring Has Been Succesfully Updated!');
         } else {
             return redirect('/request')->with('danger_message', 'Error in Database!');

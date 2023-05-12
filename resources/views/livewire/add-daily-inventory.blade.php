@@ -148,7 +148,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {{-- #[ ]: weird ui --}}
                     {{-- #[ ]: update to array formula like weekly request  --}}
                     @foreach ($arrMedicine as $medicine)
                         <tr>

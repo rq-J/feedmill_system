@@ -63,6 +63,11 @@ class AddWeeklyRequest extends Component
         return $this->selectedLocation = $data;
     }
 
+    public function valOnly()
+    {
+        $this->validate();
+    }
+
     public function addButton()
     {
         $this->item_list[] = [

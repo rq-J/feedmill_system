@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\WeeklyRequest;
 use Livewire\Component;
+use App\Http\Controllers\AuditController as AC;
 use PhpParser\Node\Expr\FuncCall;
 
 class UpdateDailyMonitoring extends Component
@@ -98,7 +99,15 @@ class UpdateDailyMonitoring extends Component
 
 
         if ($to_update->save()) {
-            // [ ]: audit logs?
+            // [x]: audit logs?
+
+            $log_entry = [
+                'update',
+                'weekly_requests',
+                '',
+                json_encode($to_update),
+            ];
+            AC::logEntry($log_entry);
             return redirect('/request')->with('success_message', 'Weekly Request Has Been Succesfully Updated!');
         } else {
             return redirect('/request')->with('danger_message', 'Error in Database!');

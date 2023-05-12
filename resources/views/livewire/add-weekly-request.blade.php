@@ -34,6 +34,7 @@
                     <tbody>
                         @foreach ($item_list as $key => $item_list)
                             <tr>
+                                {{-- #NOTE: cannot ba added with wire:keyup --}}
                                 <td class="text-center">
                                     {{-- #[x]: sometimes works, sometimes not --}}
                                     <select name="item_list[{{ $key }}][item_id]"

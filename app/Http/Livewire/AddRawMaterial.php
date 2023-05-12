@@ -7,10 +7,14 @@ use App\Models\RawMaterial;
 
 class AddRawMaterial extends Component
 {
-    // [ ]: add 'price_per_kgs', 'inventory_cost', 'kgs_per_bag'
+    // [x]: add 'price_per_kgs', 'inventory_cost', 'kgs_per_bag'
     public $raw_material_name;
     public $standard_days;
     public $selectedCategory;
+
+    public $price_per_kgs;
+    public $inventory_cost;
+    public $kgs_per_bag;
 
     public $categories = [
         'Macro',
@@ -39,8 +43,8 @@ class AddRawMaterial extends Component
     public function mount()
     {
         $this->raw_material_name = null;
-        $this->standard_days = null;
-        $this->selectedCategory = 'micro';
+        $this->standard_days     = null;
+        $this->selectedCategory  = 'micro';
     }
 
     /**
@@ -62,7 +66,10 @@ class AddRawMaterial extends Component
      */
     protected $rules = [
         'raw_material_name' => 'required|string|min:5|max:255|unique:raw_materials,raw_material_name',
-        'standard_days' => 'required|integer|min:1|max:180'
+        'standard_days'     => 'required|integer|min:1|max:180',
+        'price_per_kgs'     => 'required|numeric|min:1',
+        'inventory_cost'    => 'required|numeric|min:1',
+        'kgs_per_bag'       => 'required|integer|min:1',
     ];
 
     /**
@@ -98,17 +105,23 @@ class AddRawMaterial extends Component
         if ($this->validate()) {
             $raw_Materials = new RawMaterial();
             $raw_Materials->raw_material_name = $this->raw_material_name;
-            $raw_Materials->standard_days = $this->standard_days;
-            $raw_Materials->category = strtoupper($this->selectedCategory);
-            $raw_Materials->active_status = 1;
+            $raw_Materials->standard_days     = $this->standard_days;
+            $raw_Materials->price_per_kgs     = $this->price_per_kgs;
+            $raw_Materials->inventory_cost    = $this->inventory_cost;
+            $raw_Materials->kgs_per_bag       = $this->kgs_per_bag;
+            $raw_Materials->category          = strtoupper($this->selectedCategory);
+            $raw_Materials->active_status     = 1;
 
             if ($this->test_similarity($this->raw_material_name) == true) {
-                return redirect('/raw')->with('danger_message', 'Invalid Input, Duplicate Data Found!');
+                return redirect('/raw')
+                    ->with('danger_message', 'Invalid Input, Duplicate Data Found!');
             } else {
                 if ($raw_Materials->save()) {
-                    return redirect('/raw')->with('success_message', 'Task Has Been Succesfully Created!');
+                    return redirect('/raw')
+                        ->with('success_message', 'Raw Material Has Been Succesfully Created!');
                 } else {
-                    return redirect('/raw')->with('danger_message', 'DATABASED ERROR!');
+                    return redirect('/raw')
+                        ->with('danger_message', 'DATABASED ERROR!');
                 }
             }
         }
