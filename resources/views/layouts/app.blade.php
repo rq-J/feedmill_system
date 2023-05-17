@@ -35,6 +35,19 @@
 
     @livewireStyles
     @yield('styles')
+
+    {{-- <style>
+        table {
+            display: block;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        table tbody {
+            display: table;
+            width: 100%;
+        }
+    </style> --}}
 </head>
 
 <body class="font-sans antialiased g-sidenav-show  bg-gray-100">

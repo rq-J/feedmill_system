@@ -40,6 +40,7 @@
                 </tbody>
             </table>
         @endif
+        <hr>
         @if ($weekly_request_this_week->count() >= 1)
             {{-- Show request this week (editable, deletable) --}}
             <h5>Request</h5>
