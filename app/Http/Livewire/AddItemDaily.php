@@ -310,9 +310,9 @@ class AddItemDaily extends Component
         }
 
         // Return the results array
-        // return $results;
+        return $results;
         // print_r($results);
-        dd($results);
+        // dd($results);
 
     }
 
@@ -325,6 +325,7 @@ class AddItemDaily extends Component
             $item['updated_at'] = now();
             return $item;
         }, $data);
+        // dd($data);
         $this->tableData = $data;
         ItemDaily::insert($data);
 

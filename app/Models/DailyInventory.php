@@ -9,12 +9,7 @@ class DailyInventory extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'actual_count_bags',
-        'actual_count_kgs',
-        'actual_count_total',
-        'actual_count_diff'
-    ];
+
 
     public function item_formula()
     {

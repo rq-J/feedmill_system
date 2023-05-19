@@ -16,19 +16,19 @@
             <div style="padding:10px">
                 <div class="row">
                     <div class="col-md-12">
-                    <table id="audits" class="table table-bordered table-hover text-nowrap" width="100%">
-                        <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">User</th>
-                            <th scope="col">Table</th>
-                            <th scope="col">Action</th>
-                            <th scope="col">New Value</th>
-                            <th scope="col">Old Value</th>
-                            <th scope="col">View</th>
-                        </tr>
-                        </thead>
-                    </table>
+                        <table id="audits" class="table table-bordered table-hover text-nowrap" width="100%">
+                            <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">User</th>
+                                <th scope="col">Table</th>
+                                <th scope="col">Action</th>
+                                <th scope="col">New Value</th>
+                                <th scope="col">Old Value</th>
+                                <th scope="col">View</th>
+                            </tr>
+                            </thead>
+                        </table>
                     </div>
                 </div>
             </div>

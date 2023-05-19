@@ -96,8 +96,8 @@ class AddDailyInventory extends Component
                     !is_numeric($row['price_per_kgs']) ||
                     !is_numeric($row['inventory_cost']) ||
                     !is_numeric($row['kgs_per_bag']) ||
-                    !is_numeric($row['deliveries_today'])
-                    || !is_numeric($row['actual_count_bags']) ||
+                    !is_numeric($row['deliveries_today']) ||
+                    !is_numeric($row['actual_count_bags']) ||
                     !is_numeric($row['actual_count_kgs'])
                 ) {
                     $valid = false;
@@ -116,9 +116,10 @@ class AddDailyInventory extends Component
             return $item;
         }, $data);
 
-        dd($data);
+        // dd($data);
         $this->tableData = $data;
         DailyInventory::insert($data);
+
 
         // Loop through each item_daily
         foreach ($this->tableData as &$item_daily) {
@@ -135,6 +136,8 @@ class AddDailyInventory extends Component
             ];
             AC::logEntry($log_entry);
         }
+
+        return redirect('/item_daily')->with('success_message', 'Daily Inventory Has Been Succesfully Created!');
     }
 
     public function withComputations($rawMaterialArray)
@@ -154,20 +157,22 @@ class AddDailyInventory extends Component
         // [x]: filter the raw_material_id and get the total usage and return the grand_total
 
         //get data from yesterday
+        // #BUG: if no available daily inventory yesterday, will not work
         $daily_inventory = DailyInventory::select('daily_inventories.*')
             ->whereDate('created_at', $yesterday)
             ->get();
+
         // [x]: function to filter out the raw_material_id and return end_inv_kgs, delivery(todate), usage(todate),
-        // dd($item_dailies);
+        // dd($daily_inventory);
 
         // Loop through the first array
         foreach ($rawMaterialArray as $macro) {
             // dd($macro, $item_dailies);
             // Initialize variables to hold category and macro id
-            $raw_material_id = $macro['id'];
+            $raw_material_id = $macro['raw_material_id'];
             $grand_total = $this->getGrandTotal($raw_material_id, $item_dailies);
             $multiple_data = $this->getMultipleData($raw_material_id, $daily_inventory);
-            // dd($multiple_data[0]);
+            // dd($multiple_data);
 
 
             // dd($this->getGrandTotal($raw_material_id, $item_dailies));
@@ -189,26 +194,26 @@ class AddDailyInventory extends Component
             $numbers_of_working = $macro['number_of_working_days'];
             $average_usage = $numbers_of_working != 0 ?  $usage_todate / $numbers_of_working : 0;
             $number_of_days = $average_usage != 0 ? $end_inventory_kgs / $average_usage : 0;
-            $actual_count_bags = isset($macro['actual_count_bags']) ? $macro['actual_count_bags'] : null;
-            $actual_count_kgs = isset($macro['actual_count_kgs']) ? $macro['actual_count_kgs'] : null;
+            $actual_count_bags = isset($macro['actual_count_bags']) ? $macro['actual_count_bags'] : 0;
+            $actual_count_kgs = isset($macro['actual_count_kgs']) ? $macro['actual_count_kgs'] : 0;
             $actual_count_total = $kgs_per_bag * $actual_count_bags + $actual_count_kgs;
             $actual_count_diff = $actual_count_total != 0 ? $end_inventory_kgs / $actual_count_total : 0;
             //created_at
 
             // Push the category-by-item with batch, total batch, adjustment, and usage to the results array
             array_push($results, array(
-                'id' => $raw_material_id,
-                'price_per_kgs' => $price_per_kgs,
-                'inventory_cost' => $inventory_cost,
-                'kgs_per_bag' => $kgs_per_bag,
+                'raw_material_id' => floatval($raw_material_id),
+                'price_per_kgs' => floatval($price_per_kgs),
+                'inventory_cost' => floatval($inventory_cost),
+                'kgs_per_bag' => floatval($kgs_per_bag),
                 'begin_inventory_kgs' => $begin_inventory_kgs,
-                'deliveries_today' => $deliveries_today,
+                'deliveries_today' => floatval($deliveries_today),
                 'deliveries_todate' => $deliveries_todate,
                 'usage_today' => $usage_today,
                 'usage_todate' => $usage_todate,
                 'end_inventory_kgs' => $end_inventory_kgs,
                 'end_inventory_bags' => $end_inventory_bags,
-                'numbers_of_working' => $numbers_of_working,
+                'number_of_working' => floatval($numbers_of_working),
                 'average_usage' => $average_usage,
                 'number_of_days' => $number_of_days,
                 'actual_count_bags' => $actual_count_bags,

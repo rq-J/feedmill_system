@@ -8,7 +8,7 @@
     <div class="bg-white shadow-lg rounded container">
         @if ($result == 'complete')
             <div>
-                <p class="text-center">Good work!</p>
+                <h3 class="text-center pt-4">Daily Item Entries has been fulfilled. Good work!</h3>
             </div>
         @elseif ($result == 'daily_inventory')
             <h3 class="pt-4">Daily Inventory</h3>

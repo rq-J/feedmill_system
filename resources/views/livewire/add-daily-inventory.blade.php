@@ -63,7 +63,7 @@
                                     value="{{ $macro['kgs_per_bag'] }}">
                             </td>
                             <td>
-                                <input class="form-control" type="number" name="deliveries_today">
+                                <input class="form-control" type="number" name="deliveries_today" value="1">
                             </td>
                         </tr>
                     @endforeach
@@ -111,13 +111,13 @@
                                     value="{{ $micro['kgs_per_bag'] }}">
                             </td>
                             <td>
-                                <input class="form-control" type="number" name="deliveries_today">
+                                <input class="form-control" type="number" name="deliveries_today" value="1">
                             </td>
                             <td>
-                                <input class="form-control" type="number" name="actual_count_bags">
+                                <input class="form-control" type="number" name="actual_count_bags" value="1">
                             </td>
                             <td>
-                                <input class="form-control" type="number" name="actual_count_kgs">
+                                <input class="form-control" type="number" name="actual_count_kgs" value="1">
                             </td>
                         </tr>
                     @endforeach
@@ -166,13 +166,13 @@
                                     value="{{ $medicine['kgs_per_bag'] }}">
                             </td>
                             <td>
-                                <input class="form-control" type="number" name="deliveries_today">
+                                <input class="form-control" type="number" name="deliveries_today" value="1">
                             </td>
                             <td>
-                                <input class="form-control" type="number" name="actual_count_bags">
+                                <input class="form-control" type="number" name="actual_count_bags" value="1">
                             </td>
                             <td>
-                                <input class="form-control" type="number" name="actual_count_kgs">
+                                <input class="form-control" type="number" name="actual_count_kgs" value="1">
                             </td>
                         </tr>
                     @endforeach
@@ -198,7 +198,7 @@
 
                 $('#macroTable tbody tr').each(function() {
                     var rowData = {};
-                    rowData['id'] = $(this).find('td:eq(0)').text();
+                    rowData['raw_material_id'] = $(this).find('td:eq(0)').text();
                     var price_per_kgs = $(this).find('input[name="price_per_kgs"]').val();
                     var inventory_cost = $(this).find('input[name="inventory_cost"]').val();
                     var kgs_per_bag = $(this).find('input[name="kgs_per_bag"]').val();
@@ -215,7 +215,7 @@
 
                 $('#microTable tbody tr').each(function() {
                     var rowData = {};
-                    rowData['id'] = $(this).find('td:eq(0)').text();
+                    rowData['raw_material_id'] = $(this).find('td:eq(0)').text();
                     var price_per_kgs = $(this).find('input[name="price_per_kgs"]').val();
                     var inventory_cost = $(this).find('input[name="inventory_cost"]').val();
                     var kgs_per_bag = $(this).find('input[name="kgs_per_bag"]').val();
@@ -236,7 +236,7 @@
 
                 $('#medicineTable tbody tr').each(function() {
                     var rowData = {};
-                    rowData['id'] = $(this).find('td:eq(0)').text();
+                    rowData['raw_material_id'] = $(this).find('td:eq(0)').text();
                     var price_per_kgs = $(this).find('input[name="price_per_kgs"]').val();
                     var inventory_cost = $(this).find('input[name="inventory_cost"]').val();
                     var kgs_per_bag = $(this).find('input[name="kgs_per_bag"]').val();
