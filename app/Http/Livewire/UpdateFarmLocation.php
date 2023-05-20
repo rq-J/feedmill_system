@@ -106,6 +106,7 @@ class UpdateFarmLocation extends Component
         $to_remove->active_status = 0;
 
         if ($to_remove->save() && $Farm->save()) {
+            // [ ]: audit logs
             return redirect('/farm')->with('success_message', 'Task Has Been Succesfully Updated!');
         } else {
             return redirect('/farm')->with('danger_message', 'Error in Database!');

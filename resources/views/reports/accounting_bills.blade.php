@@ -5,141 +5,143 @@
 @endsection
 
 @section('content')
-    <h3>Accounting Bills</h3>
-    <br>
-    <div class="row">
-        <div class="col-6">
-            <h4>Electric Cost</h4>
-            <table class="table table-hover table-bordered text-center">
-                <thead>
-                    <tr>
-                        <th scope="col">Month</th>
-                        <th scope="col">Electric Cost</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">DummyData</th>
-                        <td>DummyData</td>
-                        <td><button type="button" class="btn btn-warning">Update</button></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">DummyData</th>
-                        <td>DummyData</td>
-                        <td><button type="button" class="btn btn-warning">Update</button></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">DummyData</th>
-                        <td>DummyData</td>
-                        <td><button type="button" class="btn btn-warning">Update</button></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="col-6">
-            <h4>Maintenance Cost</h4>
-            <table class="table table-hover table-bordered text-center">
-                <thead>
-                    <tr>
-                        <th scope="col">Month</th>
-                        <th scope="col">Maintenance Cost</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">DummyData</th>
-                        <td>DummyData</td>
-                        <td><button type="button" class="btn btn-warning">Update</button></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">DummyData</th>
-                        <td>DummyData</td>
-                        <td><button type="button" class="btn btn-warning">Update</button></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">DummyData</th>
-                        <td>DummyData</td>
-                        <td><button type="button" class="btn btn-warning">Update</button></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+<div class="bg-white shadow-lg rounded container">
+    <h3 class="pt-4">Accounting Bills - Electric Cost</h3>
+    <div class="">
+        @if (!$bool_month)
+            @livewire('add-electric-cost')
+        @endif
     </div>
-    <div class="row">
-        <div class="col-6">
-            <h4>Man Power</h4>
-            <table class="table table-hover table-bordered text-center">
-                <thead>
-                    <tr>
-                        <th scope="col">Month</th>
-                        <th scope="col">Man Power</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">DummyData</th>
-                        <td>DummyData</td>
-                        <td><button type="button" class="btn btn-warning">Update</button></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">DummyData</th>
-                        <td>DummyData</td>
-                        <td><button type="button" class="btn btn-warning">Update</button></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">DummyData</th>
-                        <td>DummyData</td>
-                        <td><button type="button" class="btn btn-warning">Update</button></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        {{-- <div class="col-6">
-            <table class="table table-hover table-bordered text-center">
-                <thead>
-                    <tr>
-                        <th scope="col">Month</th>
-                        <th scope="col">Maintenance Cost</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">DummyData</th>
-                        <td>DummyData</td>
-                        <td><button type="button" class="btn btn-warning">Update</button></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">DummyData</th>
-                        <td>DummyData</td>
-                        <td><button type="button" class="btn btn-warning">Update</button></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">DummyData</th>
-                        <td>DummyData</td>
-                        <td><button type="button" class="btn btn-warning">Update</button></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div> --}}
+    <div>
+        <table id="electric" class="table table-bordered table-hover text-nowrap" width="100%">
+            <thead>
+            <tr>
+                <th scope="col">Month and Year</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+        </table>
     </div>
+</div>
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
-    <script>
-        $.ajax({
-            type: "GET",
-            url: "{{ config('app.root_domain') . config('app.user_details_slug') . \Crypt::encryptString(Auth::user()->id) }}",
-            dataType: 'json',
-            success: function(response) {
-                document.getElementById('fullname').innerHTML = response['first_name'] + " " + response[
-                    'last_name'];
-                document.getElementById('email').innerHTML = response['email'];
-            }
-        });
-    </script>
+  <script>
+    $(document).ready(function () {
+      let electric = $('#electric').DataTable({
+        processing: true,
+        serverSide: true,
+        scrollX: true,
+        columnDefs: [{ className: "dt-center", targets: [0, 1] }],
+        order: [[0, 'desc']], // Order by the first column (index 0) in ascending order
+
+        ajax: "{{ route('bills') }}",
+        columns: [
+          {data: 'month_and_year', name: 'month_and_year', orderable: true},
+          {data: 'action', name: 'action', orderable: false, searchable: false},
+        ],
+        pagingType: 'full_numbers',
+        language: {
+            "emptyTable": "No Electric Cost Logs."
+        },
+        searching: true,
+      });
+    });
+
+
+    $(document).on('click', '#refresh', function(e) {
+      var electric = $('#electric').DataTable();
+      electric.ajax.reload();
+    });
+
+    $(document).on('click', '#update', function (e) {
+      e.preventDefault();
+      var id = $(this).data('id');
+      var name = $(this).data('name');
+      var title = "View Electric Cost?";
+      var html_text = "<p>Are you sure you want to view <b>" + name + "</b>?</p>";
+      Swal.fire({
+        title: title,
+        html: html_text,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Continue'
+      }).then((result) => {
+        if (result.value) {
+          var update_url = "{{ route('bills.update') }}"
+          window.location.replace(update_url + "/" + id);
+        }
+        else {
+          Swal.fire({
+            title: 'Action Cancelled',
+            text: "",
+            icon: 'info',
+            showCancelButton: false,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Close'
+          });
+        }
+      });
+    });
+
+    $(document).on('click', '#remove', function (e) {
+      e.preventDefault();
+      var id = $(this).data('id');
+      var title = "Remove Item?";
+      var name = $(this).data('name');
+      var html_text = "<p>Are you sure you want to remove <b>" + name + "</b>?</p>";
+      Swal.fire({
+        title: title,
+        html: html_text,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Continue'
+      }).then((result) => {
+        if (result.value) {
+          var update_url = "{{ route('bills.remove') }}"
+          window.location.replace(update_url + "/" + id);
+        }
+        else {
+          Swal.fire({
+            title: 'Action Cancelled',
+            text: "",
+            icon: 'info',
+            showCancelButton: false,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Close'
+          });
+        }
+      });
+    });
+  </script>
+  <script>
+    @if (session('success_message'))
+      Swal.fire({
+        title: 'Done!',
+        text: '{{ session('success_message') }}',
+        icon: 'success',
+        timer: 3000,
+        showCancelButton: false,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Close'
+      });
+    @elseif (session('danger_message'))
+      Swal.fire({
+        title: 'Done!',
+        text: '{{ session('danger_message') }}',
+        icon: 'error',
+        timer: 3000,
+        showCancelButton: false,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+      });
+    @endif
+  </script>
 @endsection

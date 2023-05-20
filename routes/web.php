@@ -16,21 +16,11 @@ use App\Http\Controllers\WeeklyRequestController;
 use App\Http\Controllers\InventoryLevelsController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ItemDailyController;
-use App\Http\Controllers\MessageSlackController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PivotController;
 use App\Http\Controllers\PremixesController;
 use App\Http\Controllers\ProductionOrderController;
 use App\Http\Controllers\RawMaterialsController;
-use App\Http\Livewire\AddDivision;
-use App\Http\Livewire\AddFarm;
-use App\Http\Livewire\AddLocation;
-use App\Http\Livewire\AddRawMaterial;
-use App\Http\Livewire\UpdateFarm;
-use App\Http\Livewire\UpdateFarmLocation;
-use App\Http\Livewire\UpdateRawMaterial;
-use App\Models\Audit;
-use App\Models\RawMaterial;
 use App\Utilities\GenericUtilities as GU;
 use App\Services\GenericServices as GS;
 
@@ -94,8 +84,12 @@ Route::middleware('auth')->group(function () {
     });
 
     //Reports
-    Route::get('/bills', [AccountingBillsController::class, 'index'])->name('bills');
+    Route::prefix('/bills')->group(function () {
+        Route::get('/', [AccountingBillsController::class, 'index'])->name('bills');
+        Route::get('/{id?}', [AccountingBillsController::class, 'update'])->name('bills.update');
+        Route::get('/remove/{id?}', [AccountingBillsController::class, 'remove'])->name('bills.remove');
 
+    });
     Route::prefix('/payrolls')->group(function () {
         Route::get('/', [AccountingPayrollsController::class, 'index'])->name('payrolls');
         Route::get('/{id?}', [AccountingPayrollsController::class, 'view'])->name('payrolls.view');

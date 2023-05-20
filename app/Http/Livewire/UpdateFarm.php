@@ -95,10 +95,6 @@ class UpdateFarm extends Component
         $Farm->farm_name = $this->farm_name;
         $Farm->active_status = 1;
 
-        // if ($this->test_similarity($this->farm_name)) {
-        //     return redirect('/raw_materials')->with('danger_message', 'Invalid Input, Duplicate Data Found!');
-        // }
-
         $to_remove = Farm::findorfail($this->farm_id);
         $to_remove->active_status = 0;
         // [ ]: no audit logs

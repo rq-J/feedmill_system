@@ -84,22 +84,6 @@ class AddFarm extends Component
      */
     public function create()
     {
-        /*if ($this->validate()) {
-            $raw_Materials = new Farm();
-            $raw_Materials->farm_name = $this->farm_name;
-            $raw_Materials->active_status = 1;
-
-            if ($this->test_similarity($this->farm_name) == true) {
-                return redirect('/farm/farm')->with('danger_message', 'Invalid Input, Duplicate Data Found!');
-            } else {
-                if ($raw_Materials->save()) {
-                    return redirect('/farm')->with('success_message', 'Task Has Been Succesfully Created!');
-                } else {
-                    return redirect('/farm/farm')->with('danger_message', 'DATABASED ERROR!');
-                }
-            }
-        }*/
-
         if (!$this->validate()) {
             return;
         }
