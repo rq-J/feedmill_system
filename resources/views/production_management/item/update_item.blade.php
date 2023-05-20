@@ -5,7 +5,8 @@
 @endsection
 
 @section('content')
-	<h3>Update Item</h3>
+	<h3>
+        Update Item</h3>
     <div>
         @livewire('update-item', ['id' => $id])
     </div>

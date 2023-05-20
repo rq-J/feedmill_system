@@ -95,7 +95,12 @@ Route::middleware('auth')->group(function () {
 
     //Reports
     Route::get('/bills', [AccountingBillsController::class, 'index'])->name('bills');
-    Route::get('/payrolls', [AccountingPayrollsController::class, 'index'])->name('payrolls');
+
+    Route::prefix('/payrolls')->group(function () {
+        Route::get('/', [AccountingPayrollsController::class, 'index'])->name('payrolls');
+        Route::get('/{id?}', [AccountingPayrollsController::class, 'view'])->name('payrolls.view');
+        Route::get('/remove/{id?}', [AccountingPayrollsController::class, 'remove'])->name('payrolls.remove');
+    });
     Route::get('/audit', [AuditController::class, 'index'])->name('audit');
     Route::get('/pivot', [PivotController::class, 'index'])->name('pivot');
 

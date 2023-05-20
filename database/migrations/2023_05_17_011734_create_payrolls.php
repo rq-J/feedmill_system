@@ -29,6 +29,7 @@ return new class extends Migration
             $table->float('manila_allowance_30')->default(0);
             $table->float('manila_month_13th_15')->default(0);
             $table->float('manila_month_13th_30')->default(0);
+            $table->boolean('active_status')->default(1);
             $table->timestamps();
         });
     }

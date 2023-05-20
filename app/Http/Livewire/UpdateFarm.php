@@ -101,7 +101,7 @@ class UpdateFarm extends Component
 
         $to_remove = Farm::findorfail($this->farm_id);
         $to_remove->active_status = 0;
-
+        // [ ]: no audit logs
         if ($to_remove->save() && $Farm->save()) {
             return redirect('/farm')
                 ->with('success_message', 'Task Has Been Succesfully Updated!');

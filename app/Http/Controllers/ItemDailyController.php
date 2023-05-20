@@ -29,7 +29,7 @@ class ItemDailyController extends Controller
         if ($daily_inventory_today && $item_daily) {
             // show nothing if has record for today, both
             $result = 'complete';
-            dd($daily_inventory_today && $item_daily);
+            // dd($daily_inventory_today && $item_daily);
         } else if ($item_daily) {
             // show daily_inventory if there is already $item_daily record
             $result = 'daily_inventory';

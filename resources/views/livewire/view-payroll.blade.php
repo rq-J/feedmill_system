@@ -7,7 +7,7 @@
             text-align: center;
         }
     </style>
-    <form wire:submit.prevent="create" method="POST">
+    <form wire:submit.prevent="update" method="POST">
         @php
             $upCaseField = 'style="text-transform:uppercase;"';
         @endphp
@@ -19,7 +19,7 @@
                                 class="text-danger">*</span></label>
 
                         <div class="col-md-12">
-                                <input type="date" wire:model="date_now" value="{{ old('date_now') }}" name="date_now" id="date_now" class="form-control">
+                                <input type="date" wire:model="payroll_date" value="{{ old('payroll_date') }}" name="payroll_date" id="payroll_date" class="form-control">
                         </div>
                     </div>
                 </div>
@@ -135,7 +135,13 @@
                     <th scope="col">Allowance
                         <br>30th
                     </th>
-                    <th scope="col"></th>
+                    <th scope="col">13th Month
+                        <br>15th
+                    </th>
+                    <th scope="col">13th Month
+                        <br>30th
+                    </th>
+                    {{-- <th scope="col"></th> --}}
                 </tr>
             </thead>
             <tbody>
@@ -180,6 +186,16 @@
                                 wire:model="payroll_list.{{ $key }}.allowance_30" required>
                         </td>
                         <td>
+                            <input type="number" step="any"
+                                name="payroll_list[{{ $key }}][month_13th_15]" class="form-control"
+                                wire:model="payroll_list.{{ $key }}.month_13th_15" required>
+                        </td>
+                        <td>
+                            <input type="number" step="any"
+                                name="payroll_list[{{ $key }}][month_13th_30]" class="form-control"
+                                wire:model="payroll_list.{{ $key }}.month_13th_30" required>
+                        </td>
+                        <td>
                             <button class="btn btn-danger" wire:click.prevent="removeButton({{ $key }})"><i
                                     class="fas fa-trash"></i></button>
                         </td>
@@ -188,9 +204,39 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td class="text-center" colspan="8">
+                    <td class="text-center" colspan="13">
                         <button class="btn btn-primary" wire:click.prevent="addButton"><i
                                 class="fas fa-plus"></i></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>{{ $this->latest->sum('salary_15') }}</td>
+                    <td>{{ $this->latest->sum('salary_30') }}</td>
+                    <td>{{ $this->latest->sum('overtime_15') }}</td>
+                    <td>{{ $this->latest->sum('overtime_30') }}</td>
+                    <td>{{ $this->latest->sum('allowance_15') }}</td>
+                    <td>{{ $this->latest->sum('allowance_30') }}</td>
+                    <td>{{ $this->latest->sum('month_13th_15') }}</td>
+                    <td>{{ $this->latest->sum('month_13th_30') }}</td>
+                </tr>
+                <tr>
+                    <td colspan="5">
+                        Net Pay: {{
+                            $this->latest->sum('salary_15') +
+                            $this->latest->sum('salary_30') +
+                            $this->latest->sum('allowance_15') +
+                            $this->latest->sum('allowance_30')
+                            }}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5">
+                        Overtime: {{
+                            $this->latest->sum('overtime_15') +
+                            $this->latest->sum('overtime_30')
+                            }}
                     </td>
                 </tr>
             </tfoot>
@@ -201,7 +247,7 @@
 
                 <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal"
                     data-bs-target="#createModal">
-                    Create
+                    Update
                 </button>
 
                 <div class="modal fade" id="createModal" tabindex="-1" role="dialog"
@@ -209,13 +255,13 @@
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle">Create Payroll?</h5>
+                                <h5 class="modal-title" id="exampleModalLongTitle">Update Payroll?</h5>
                                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                Are You Sure You Want To Create New Payroll?
+                                Are You Sure You Want To Update Payroll?
                             </div>
                             <div class="modal-footer">
                                 <button data-bs-dismiss="modal"

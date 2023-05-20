@@ -32,6 +32,8 @@ class AddPayroll extends Component
     public $manila_month_13th_15;
     public $manila_month_13th_30;
 
+    public $date_now;
+
 
     public function render()
     {
@@ -40,6 +42,8 @@ class AddPayroll extends Component
 
     public function mount()
     {
+        $this->date_now = Carbon::now()->format('Y-m-d');
+
         $this->payroll_list[] = [
             'name' => $this->name,
             'position' => $this->position,
@@ -54,40 +58,42 @@ class AddPayroll extends Component
         ];
 
         $latest = Payroll::latest('created_at')->first();
-        $latest_array = Payroll::whereDate('created_at', $latest->created_at->toDateString())
-            ->get();
+        if ($latest != null) {
+            $latest_array = Payroll::whereDate('created_at', $latest->created_at->toDateString())
+                ->get();
 
-        $this->payroll_list = $latest_array->toArray();
+            $this->payroll_list = $latest_array->toArray();
 
-        $this->manila_salary_15 = $latest->manila_salary_15;
-        $this->manila_salary_30 = $latest->manila_salary_30;
-        $this->manila_allowance_15 = $latest->manila_allowance_15;
-        $this->manila_allowance_30 = $latest->manila_allowance_30;
-        $this->manila_month_13th_15 = $latest->manila_month_13th_15;
-        $this->manila_month_13th_30 = $latest->manila_month_13th_30;
+            $this->manila_salary_15 = $latest->manila_salary_15;
+            $this->manila_salary_30 = $latest->manila_salary_30;
+            $this->manila_allowance_15 = $latest->manila_allowance_15;
+            $this->manila_allowance_30 = $latest->manila_allowance_30;
+            $this->manila_month_13th_15 = $latest->manila_month_13th_15;
+            $this->manila_month_13th_30 = $latest->manila_month_13th_30;
 
-        foreach ($this->payroll_list as &$payroll) {
-            $payroll['salary_15'] = null;
-            $payroll['salary_30'] = null;
-            $payroll['overtime_15'] = null;
-            $payroll['overtime_30'] = null;
-            $payroll['allowance_15'] = null;
-            $payroll['allowance_30'] = null;
+            foreach ($this->payroll_list as &$payroll) {
+                $payroll['salary_15'] = null;
+                $payroll['salary_30'] = null;
+                $payroll['overtime_15'] = null;
+                $payroll['overtime_30'] = null;
+                $payroll['allowance_15'] = null;
+                $payroll['allowance_30'] = null;
 
-            unset($payroll['id']);
-            unset($payroll['created_at']);
-            unset($payroll['updated_at']);
-            unset($payroll['month_13th_15']);
-            unset($payroll['month_13th_30']);
-            unset($payroll['manila_salary_15']);
-            unset($payroll['manila_salary_30']);
-            unset($payroll['manila_allowance_15']);
-            unset($payroll['manila_allowance_30']);
-            unset($payroll['manila_month_13th_15']);
-            unset($payroll['manila_month_13th_30']);
+                unset($payroll['id']);
+                unset($payroll['created_at']);
+                unset($payroll['updated_at']);
+                unset($payroll['month_13th_15']);
+                unset($payroll['month_13th_30']);
+                unset($payroll['manila_salary_15']);
+                unset($payroll['manila_salary_30']);
+                unset($payroll['manila_allowance_15']);
+                unset($payroll['manila_allowance_30']);
+                unset($payroll['manila_month_13th_15']);
+                unset($payroll['manila_month_13th_30']);
+            }
+
+            unset($payroll);
         }
-
-        unset($payroll);
     }
 
     public function valOnly()
@@ -130,11 +136,11 @@ class AddPayroll extends Component
     {
         // dd($this->payroll_list);
         $this->payroll_list = array_map(function ($payroll) {
-            $today = Carbon::today();
 
             // Update created_at, updated_at
-            $payroll['created_at'] = $today;
-            $payroll['updated_at'] = $today;
+            $payroll['active_status'] = 1;
+            $payroll['created_at'] = $this->date_now;
+            $payroll['updated_at'] = $this->date_now;
 
             $payroll['month_13th_15'] = intval($payroll['salary_15']) / 12;
             $payroll['month_13th_30'] = intval($payroll['salary_30']) / 12;
@@ -147,7 +153,7 @@ class AddPayroll extends Component
             $payroll['manila_month_13th_30'] = $this->manila_month_13th_30;
             return $payroll;
         }, $this->payroll_list);
-
+        // dd($this->payroll_list);
         Payroll::insert($this->payroll_list);
 
         // Loop through each itemre

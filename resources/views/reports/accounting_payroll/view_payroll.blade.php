@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @section('title')
-    {{ __('Raw Material') }}
+    Accounting Payrolls
 @endsection
 
 @section('content')
     <div class="bg-white shadow-lg rounded container">
         <h3 class="pt-4">
-            <a href="{{ route('raw') }}">
+            <a href="{{ route('payrolls') }}">
                 <svg aria-hidden="true" focusable="false" data-prefix="fa-duotone" data-icon="left"
                     class="svg-inline--fa fa-left fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 448 512">
@@ -26,11 +26,12 @@
                             class="fa-primary" fill="currentColor" />
                     </g>
                 </svg>
-            </a>&nbsp;Update Raw Material
-        </h3>
-        @livewire('update-raw-material', ['id' => $id])
+            </a>&nbsp;Accounting Payrolls</h3>
+        <div class="">
+            @livewire('view-payroll',[$id, 'id'])
+        </div>
     </div>
 @endsection
 
-@section('scripts')
+@section('alt-scripts')
 @endsection
