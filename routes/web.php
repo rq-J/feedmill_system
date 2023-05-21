@@ -88,7 +88,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [AccountingBillsController::class, 'index'])->name('bills');
         Route::get('/{id?}', [AccountingBillsController::class, 'update'])->name('bills.update');
         Route::get('/remove/{id?}', [AccountingBillsController::class, 'remove'])->name('bills.remove');
-
     });
     Route::prefix('/payrolls')->group(function () {
         Route::get('/', [AccountingPayrollsController::class, 'index'])->name('payrolls');
@@ -96,7 +95,19 @@ Route::middleware('auth')->group(function () {
         Route::get('/remove/{id?}', [AccountingPayrollsController::class, 'remove'])->name('payrolls.remove');
     });
     Route::get('/audit', [AuditController::class, 'index'])->name('audit');
-    Route::get('/pivot', [PivotController::class, 'index'])->name('pivot');
+    Route::prefix('/pivot')->group(function () {
+        Route::get('/', [PivotController::class, 'index'])->name('pivot');
+        Route::prefix('/quality_assurance')->group(function () {
+            Route::get('/', [PivotController::class, 'qa_index'])->name('pivot.qa');
+            Route::get('/{id?}', [PivotController::class, 'qa_update'])->name('pivot.qa.update');
+            Route::get('/remove/{id?}', [PivotController::class, 'qa_remove'])->name('pivot.qa.remove');
+        });
+        Route::prefix('/downtime')->group(function () {
+            Route::get('/', [PivotController::class, 'dt_index'])->name('pivot.dt');
+            Route::get('/{id?}', [PivotController::class, 'dt_update'])->name('pivot.dt.update');
+            Route::get('/remove/{id?}', [PivotController::class, 'dt_remove'])->name('pivot.dt.remove');
+        });
+    });
 
     //Users
     Route::get('/accounts', [AccountsController::class, 'index'])->name('accounts');
