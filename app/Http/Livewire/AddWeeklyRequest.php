@@ -21,7 +21,7 @@ class AddWeeklyRequest extends Component
 
     public $item_list = [];
     public $items;
-    public $item_id = 1;
+    public $item_id = 1; // = 1 temporary cheat for automatic value
     public $age_or_stage;
     public $population;
     public $grams_per_population;
@@ -34,7 +34,7 @@ class AddWeeklyRequest extends Component
     public function render()
     {
         if ($this->locations->count() == 0) {
-            //go to the farm
+            // [ ]: go to the farm
         }
         return view('livewire.add-weekly-request');
     }

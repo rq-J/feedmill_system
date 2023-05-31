@@ -41,6 +41,7 @@ class AddItemDaily extends Component
             ->join('farms', 'items.farm_id', '=', 'farms.id')
             ->where('raw_materials.category', '=', 'MACRO')
             ->get();
+        // dd($this->arrMacro);
         $this->arrMicro = ItemFormula::select('items.item_name', 'farms.farm_name', 'raw_materials.category', 'item_formulas.*')
             ->where('item_formulas.active_status', 1)
             ->join('raw_materials', 'item_formulas.raw_material_id', '=', 'raw_materials.id')
@@ -150,9 +151,9 @@ class AddItemDaily extends Component
                 foreach ($micro_items as $item_key => $item) {
                     // Simplify code for setting $newBeginning
                     // [x]: beginning, to be fixed
-                    if($beginning->count() == 0){
+                    if ($beginning->count() == 0) {
                         $newBeginning = '0';
-                    }else{
+                    } else {
                         $newBeginning = $beginning[0]['ending'];
                     }
                     // dd($newBeginning);
@@ -276,9 +277,9 @@ class AddItemDaily extends Component
                     $yesterday = Carbon::yesterday();
 
                     $batch_yesterday_query = ItemDaily::select('item_dailies.*')
-                    ->whereDate('item_dailies.created_at', $yesterday)
-                    ->where('item_formula_id', $item_id)
-                    ->get();
+                        ->whereDate('item_dailies.created_at', $yesterday)
+                        ->where('item_formula_id', $item_id)
+                        ->get();
                     // dd($batch_yesterday_query[0]['total_batch']);
 
                     $item_formula_id = $macro['id'];
@@ -325,7 +326,7 @@ class AddItemDaily extends Component
             $item['updated_at'] = now();
             return $item;
         }, $data);
-        // dd($data);
+        // dd($data, $this->arrMacro);
         $this->tableData = $data;
         ItemDaily::insert($data);
 

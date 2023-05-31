@@ -37,8 +37,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                @foreach ($arrMacro as $macro)
                 @foreach ($unique_item_ids as $unique_id)
+                @foreach ($arrMacro as $macro)
                     @if ($macro->item_id == $unique_id->item_id)
                     <tr>
                         <td style="display:;">{{ $macro['item_id'] }}</td>
@@ -48,6 +48,7 @@
                         <td><input class="form-control" type="number" name="batch"></td>
                         <td><input class="form-control" type="number" name="adjustment"></td>
                     </tr>
+                    @break
                     @endif
                 @endforeach
                 @endforeach
@@ -67,8 +68,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                @foreach ($arrMicro as $micro)
                 @foreach ($unique_item_ids as $unique_id)
+                @foreach ($arrMicro as $micro)
                     @if ($micro->item_id == $unique_id->item_id)
                     <tr>
                         <td style="display:;">{{ $micro['item_id'] }}</td>
@@ -77,6 +78,7 @@
                         <td><input class="form-control" type="number" name="batch"></td>
                         <td><input class="form-control" type="number" name="adjustment"></td>
                     </tr>
+                    @break
                     @endif
                 @endforeach
                 @endforeach
@@ -96,8 +98,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                @foreach ($arrMedicine as $medicine)
                 @foreach ($unique_item_ids as $unique_id)
+                @foreach ($arrMedicine as $medicine)
                     @if ($medicine->item_id == $unique_id->item_id)
                     <tr>
                         <td style="display:;">{{ $medicine['item_id'] }}</td>
@@ -106,6 +108,7 @@
                         <td><input class="form-control" type="number" name="batch"></td>
                         <td><input class="form-control" type="number" name="adjustment"></td>
                     </tr>
+                    @break
                     @endif
                 @endforeach
                 @endforeach

@@ -19,6 +19,7 @@ use App\Http\Controllers\ItemDailyController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PivotController;
 use App\Http\Controllers\PremixesController;
+use App\Http\Controllers\ProductionDataController;
 use App\Http\Controllers\ProductionOrderController;
 use App\Http\Controllers\RawMaterialsController;
 use App\Utilities\GenericUtilities as GU;
@@ -72,6 +73,10 @@ Route::middleware('auth')->group(function () {
 
     //Production Management
     Route::get('/order', [ProductionOrderController::class, 'index'])->name('order');
+    Route::prefix('/production_data')->group(function () {
+        Route::get('/', [ProductionDataController::class, 'index'])->name('prod_data');
+        Route::get('/remove/{id?}', [ProductionDataController::class, 'remove'])->name('prod_data.remove');
+    });
     Route::get('/premixes', [PremixesController::class, 'index'])->name('premixes');
     Route::prefix('/item')->group(function () {
         Route::get('/', [ItemController::class, 'index'])->name('item');

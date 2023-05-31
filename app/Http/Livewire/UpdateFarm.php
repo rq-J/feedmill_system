@@ -88,7 +88,7 @@ class UpdateFarm extends Component
     public function update()
     {
         if (!$this->validate()) {
-            return redirect('/dashboard');
+            return redirect('/farm');
         }
 
         $Farm = new Farm();

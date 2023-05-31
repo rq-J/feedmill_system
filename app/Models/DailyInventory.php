@@ -15,4 +15,9 @@ class DailyInventory extends Model
     {
     	return $this->belongsTo('App\Models\ItemFormula');
     }
+
+    public function raw_material()
+    {
+    	return $this->belongsTo('App\Models\RawMaterial');
+    }
 }

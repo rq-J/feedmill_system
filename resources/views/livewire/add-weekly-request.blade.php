@@ -9,9 +9,11 @@
             <label for="selectedCategory" class="col-md-2 col-form-label text-md">{{ __('Location') }}</label>
 
             <div class="col-md-12">
+                {{-- #BUG: needs to be selected to actually register the value --}}
                 <select wire:model="selectedLocation" class="form-control">
                     @foreach ($locations as $key => $value)
-                        <option value="{{ $value->id }}">{{ $value->farm_location }}
+                        <option value="{{ $value->id }}" {{ $value->id == 1 ? 'selected' : '' }}>
+                            {{ $value->farm_location }}
                         </option>
                     @endforeach
                 </select>
@@ -37,6 +39,7 @@
                                 {{-- #NOTE: cannot ba added with wire:keyup --}}
                                 <td class="text-center">
                                     {{-- #[x]: sometimes works, sometimes not --}}
+                                    {{-- #BUG: needs to be selected to actually register the value --}}
                                     <select name="item_list[{{ $key }}][item_id]"
                                         wire:model="item_list.{{ $key }}.item_id" class="form-control">
                                         @foreach ($items as $item_key => $item_value)

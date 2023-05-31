@@ -9,6 +9,7 @@ use App\Http\Controllers\AuditController as AC;
 use App\Models\ItemDaily;
 use Carbon\Carbon;
 use Exception;
+use Mockery\Undefined;
 use PHPUnit\Event\Code\Test;
 
 class AddDailyInventory extends Component
@@ -69,6 +70,7 @@ class AddDailyInventory extends Component
                 $this->pushToDatabase($this->withComputations($micro));
                 $this->pushToDatabase($this->withComputations($medicine));
             } catch (Exception $exception) {
+                dd($exception);
             }
         }
     }
@@ -172,8 +174,7 @@ class AddDailyInventory extends Component
             $raw_material_id = $macro['raw_material_id'];
             $grand_total = $this->getGrandTotal($raw_material_id, $item_dailies);
             $multiple_data = $this->getMultipleData($raw_material_id, $daily_inventory);
-            // dd($multiple_data);
-
+            // dd(isset($multiple_data[0]['end_inv_kgs']) ? $multiple_data[0]['end_inv_kgs'] : 0);
 
             // dd($this->getGrandTotal($raw_material_id, $item_dailies));
 
@@ -182,13 +183,11 @@ class AddDailyInventory extends Component
             $price_per_kgs = $macro['price_per_kgs'];
             $inventory_cost = $macro['inventory_cost'];
             $kgs_per_bag = $macro['kgs_per_bag'];
-            $begin_inventory_kgs = floatval($multiple_data[0]['end_inv_kgs']); // end_inventory_kgs yesterday
+            $begin_inventory_kgs = floatval(isset($multiple_data[0]['end_inv_kgs']) ? $multiple_data[0]['end_inv_kgs'] : 0); // end_inventory_kgs yesterday
             $deliveries_today = $macro['deliveries_today'];
-            // dd($deliveries_today, floatval($multiple_data[0]['usage(todate)']));
-            $deliveries_todate = floatval($deliveries_today) + floatval($multiple_data[0]['usage(todate)']); // + todate yesterday
-            // dd('test');
+            $deliveries_todate = floatval($deliveries_today) + floatval(isset($multiple_data[0]['usage(todate)']) ? $multiple_data[0]['usage(todate)'] : 0); // + todate yesterday
             $usage_today = $grand_total[0];
-            $usage_todate = $usage_today + floatval($multiple_data[0]['usage(todate)']); //+ usage todate yesterday
+            $usage_todate = $usage_today + floatval(isset($multiple_data[0]['usage(todate)']) ? $multiple_data[0]['usage(todate)'] : 0); //+ usage todate yesterday
             $end_inventory_kgs = $begin_inventory_kgs + $usage_today;
             $end_inventory_bags = $end_inventory_kgs / $kgs_per_bag;
             $numbers_of_working = $macro['number_of_working_days'];
