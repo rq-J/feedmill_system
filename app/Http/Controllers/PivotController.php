@@ -86,8 +86,6 @@ class PivotController extends Controller
                         'kilowatt' => ($q['electric_cost'] / $q['total_tons']) / 1000,
                         'man_hour' => ($q['labor'] / $q['total_tons']) / 1000,
                         'overtime_cost' => ($q['overtime'] / $q['total_tons']) / 1000
-                        // 'action' => '<button id="update" data-id="' . Crypt::encryptString($q->id) . '" data-name="'  . $q->raw_material_name . '" class="btn btn-primary btn-sm">UPDATE</button>
-                        // <button id="remove" data-id="' . Crypt::encryptString($q->id) . '" data-name="'  . $q->raw_material_name . '" class="btn btn-danger btn-sm">REMOVE</button>'
                     ]);
                 }
             }

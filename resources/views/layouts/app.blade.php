@@ -72,12 +72,18 @@
     <script src="{{ asset('assets/js/fontawesome.js') }}"></script>
     {{-- <script src="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"></script> --}}
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
     @livewireScripts
     @yield('nav-scripts')
     @yield('scripts')
+
+    {{-- FOR BLADES THAT HAVE LIVEWIRE @section('scripts') --}}
     @yield('alt-scripts')
+
+    {{-- FOR DASHBOARD LIVEWIRE with multiple @section('scripts') --}}
+    @yield('monthly')
 </body>
 
 </html>
