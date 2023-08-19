@@ -1,6 +1,6 @@
 # feedmill_system
 a feedmill system for specific company
-paired with dashboard(another projecr, security)
+paired with dashboard(another project, for security)
 
 instructions:
 composer update/install
