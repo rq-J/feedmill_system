@@ -99,7 +99,6 @@ class UpdateDailyMonitoring extends Component
 
 
         if ($to_update->save()) {
-            // [x]: audit logs?
 
             $log_entry = [
                 'update',

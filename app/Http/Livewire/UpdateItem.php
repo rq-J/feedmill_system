@@ -70,7 +70,6 @@ class UpdateItem extends Component
         $to_remove = Item::findorfail($this->item_id);
         $to_remove->active_status = 0;
 
-        // [x]: audit logs too?
         if ($to_remove->save() && $updated_item->save()) {
             $log_entry = [
                 'update',

@@ -124,8 +124,6 @@ class AddItem extends Component
                 );
         }
 
-
-        //[x]: validate everything first, then insert item, get id of the item
         // dd($this->selectedFarm);
         $item = new Item;
         $item->item_name = strtoupper($this->item_name);
@@ -150,8 +148,6 @@ class AddItem extends Component
             return $d;
         }, $data);
 
-
-        //[x]: loop to everything insert item_id, created_at (like sir Adam)
         $this->tableData = $data;
         ItemFormula::insert($data);
 
@@ -179,7 +175,6 @@ class AddItem extends Component
             );
     }
 
-    //[x]: function, check the array for validations("", "letters", "scripts")
     public function validateArray(array $data)
     {
         $valid = true;

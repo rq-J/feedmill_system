@@ -17,7 +17,6 @@
             </a>
         </li>
         {{-- #FIXME: align this to left --}}
-        {{-- #[x]: should be disabled once used, once a day only --}}
         <button class="btn btn-primary d-block" id="saveButton">Save for today</button>
     </ul>
     <div class="tab-content">
@@ -122,7 +121,7 @@
   <script>
     $(document).ready(function() {
 
-      //[x]: get all the input(like formula.blade.php) then pass it onto the controller via .emit
+      //get all the input(like formula.blade.php) then pass it onto the controller via .emit
       $('#saveButton').on('click', function() {
       //   console.log(selectedOptions); // Array of selected option names
         // Extract text and input values from the table

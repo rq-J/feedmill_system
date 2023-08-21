@@ -64,8 +64,6 @@ class AddDailyInventory extends Component
         ) {
             try {
                 // dd($macro, $micro, $medicine);
-
-                // [x]: apply to micro and medicine
                 $this->pushToDatabase($this->withComputations($macro));
                 $this->pushToDatabase($this->withComputations($micro));
                 $this->pushToDatabase($this->withComputations($medicine));
@@ -156,7 +154,6 @@ class AddDailyInventory extends Component
             ->join('raw_materials', 'item_formulas.raw_material_id', '=', 'raw_materials.id')
             ->where('raw_materials.active_status', 1)
             ->get(); // get all usage of each raw_material = usage today in daily inventory
-        // [x]: filter the raw_material_id and get the total usage and return the grand_total
 
         //get data from yesterday
         // #BUG: if no available daily inventory yesterday, will not work
@@ -164,7 +161,6 @@ class AddDailyInventory extends Component
             ->whereDate('created_at', $yesterday)
             ->get();
 
-        // [x]: function to filter out the raw_material_id and return end_inv_kgs, delivery(todate), usage(todate),
         // dd($daily_inventory);
 
         // Loop through the first array

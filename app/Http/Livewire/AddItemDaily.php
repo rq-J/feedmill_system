@@ -150,7 +150,6 @@ class AddItemDaily extends Component
 
                 foreach ($micro_items as $item_key => $item) {
                     // Simplify code for setting $newBeginning
-                    // [x]: beginning, to be fixed
                     if ($beginning->count() == 0) {
                         $newBeginning = '0';
                     } else {
@@ -190,7 +189,6 @@ class AddItemDaily extends Component
                             'created_at' => now()
                         ]);
                         // dd($premix->toArray());
-                        // [x]: ?? no save in db?????
                         Premix::insert($premix->toArray());
                         // Loop through each item_daily
                         foreach ($premix as $mix) {
@@ -233,7 +231,6 @@ class AddItemDaily extends Component
         return $ending;
     }
 
-    //[x]: function, check the array for validations("", "letters", "scripts")
     public function validateArray(array $data)
     {
         $valid = true;
@@ -248,7 +245,7 @@ class AddItemDaily extends Component
         return $valid;
     }
 
-    //[x]: function, forloop the array to push every category-by-item and add the batch, total batch, adjustment and ending to the array
+    //function, forloop the array to push every category-by-item and add the batch, total batch, adjustment and ending to the array
     public function mergeArray($macroArray, array $inputArray)
     {
         // Initialize empty array to hold results
@@ -287,7 +284,7 @@ class AddItemDaily extends Component
                     $batch += $input['batch'];
 
                     // Add the batch to the total batch
-                    // [x]: batch yesterday should be included
+                    // batch yesterday should be included
                     // maybe find yesterday's record using "whereDate = yesterday"
                     $total_batch = intval($input['batch']) + intval($batch_yesterday_query->count() > 0 ? $batch_yesterday_query[0]['total_batch'] : 0); // +yesterday total batch
                     // dd('error');
@@ -318,7 +315,7 @@ class AddItemDaily extends Component
     }
 
 
-    //[x]: function, push the array to database
+    //function, push the array to database
     public function pushToDatabase(array $data)
     {
         $data = array_map(function ($item) {

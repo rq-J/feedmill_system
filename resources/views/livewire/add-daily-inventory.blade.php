@@ -187,7 +187,7 @@
 
         $(document).ready(function() {
 
-            //[x]: get all the input(like formula.blade.php) then pass it onto the controller via .emit
+            //get all the input(like formula.blade.php) then pass it onto the controller via .emit
             $('#saveButton').on('click', function() {
                 //   console.log(selectedOptions); // Array of selected option names
                 // Extract text and input values from the table

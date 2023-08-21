@@ -90,8 +90,6 @@ class UpdateWeeklyRequest extends Component
         $to_remove->active_status = 0;
 
         if ($to_remove->save() && $new_request->save()) {
-            // [x]: audit logs?
-
             $log_entry = [
                 'update',
                 'raw_materials',

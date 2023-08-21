@@ -28,7 +28,6 @@
         <label for="selectedFarm" class="col-md-2 col-form-label text-md">{{ __('Farm') }}</label>
 
         <div class="col-md-12">
-            {{-- #[x]: not saved --}}
             <select wire:model="selectedFarm" class="form-control">
                 @foreach ($farms as $key => $value)
                     <option value="{{ $value->id }}">{{ ucfirst($value->farm_name) }}</option>

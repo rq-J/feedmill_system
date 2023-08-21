@@ -113,7 +113,6 @@ class AddWeeklyRequest extends Component
             AC::logEntry($log_entry);
         }
 
-        //[x]: go to weekly request again
         return redirect('/request')->with('success_message', 'Weekly Request Has Been Succesfully Created!');
 
     }

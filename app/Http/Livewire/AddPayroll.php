@@ -168,7 +168,6 @@ class AddPayroll extends Component
             AC::logEntry($log_entry);
         }
 
-        //[x]: go to weekly request again
         return redirect('/payrolls')->with('success_message', 'Payroll Has Been Succesfully Created!');
     }
 }

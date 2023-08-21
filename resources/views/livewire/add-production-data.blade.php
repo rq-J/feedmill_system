@@ -116,7 +116,6 @@
                             <tr>
                                 {{-- #NOTE: cannot ba added with wire:keyup --}}
                                 <td class="text-center">
-                                    {{-- #[x]: sometimes works, sometimes not --}}
                                     <select name="data_list[{{ $key }}][item_id]"
                                         wire:model="data_list.{{ $key }}.item_id" class="form-control">
                                         {{-- #NOTE: switch the option --}}
@@ -130,7 +129,6 @@
                                     </select>
                                 </td>
                                 <td class="text-center">
-                                    {{-- #[x]: sometimes works, sometimes not --}}
                                     <select name="data_list[{{ $key }}][farm_id]"
                                         wire:model="data_list.{{ $key }}.farm_id" class="form-control">
                                         {{-- #NOTE: switch the option --}}
@@ -166,7 +164,6 @@
                                         wire:model="data_list.{{ $key }}.tons_per_hour" required>
                                 </td> --}}
                                 <td class="text-center">
-                                    {{-- #[x]: sometimes works, sometimes not --}}
                                     <select name="data_list[{{ $key }}][quality_assurance_id]"
                                         wire:model="data_list.{{ $key }}.quality_assurance_id"
                                         class="form-control">
@@ -180,7 +177,6 @@
                                     </select>
                                 </td>
                                 <td class="text-center">
-                                    {{-- #[x]: sometimes works, sometimes not --}}
                                     <select name="data_list[{{ $key }}][downtime_id]"
                                         wire:model="data_list.{{ $key }}.downtime_id" class="form-control">
                                         <option value="">--Please Select--</option>

@@ -22,7 +22,6 @@
             <table id="farms" class="table table-bordered table-hover text-nowrap" style="width: 100%;">
                 <thead>
                     <tr>
-                        {{-- #[x]: add the farm later --}}
                         <th class="text-center">Item Name</th>
                         <th class="text-center">Farm</th>
                         <th class="text-center">Action</th>

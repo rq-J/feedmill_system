@@ -43,7 +43,6 @@ class ItemController extends Controller
      * @param id
      * @return null
      */
-    // [x]: update the "remove", the function is only for item (missing - formula)
     public function remove($id = null)
     {
         try {

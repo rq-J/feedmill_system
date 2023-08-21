@@ -146,7 +146,6 @@ class ViewPayroll extends Component
     public function update()
     {
         try {
-            // [x]: foreach every record and active_status = 0
             foreach ($this->latest as $record) {
                 if ($record->active_status == 1) {
                     $to_remove = Payroll::findorfail($record->id);
@@ -200,7 +199,6 @@ class ViewPayroll extends Component
                 AC::logEntry($log_entry);
             }
 
-            //[x]: go to weekly request again
             return redirect('/payrolls')->with('success_message', 'Payroll Has Been Succesfully Updated!');
         } catch (Exception $exception) {
             DB::rollback();

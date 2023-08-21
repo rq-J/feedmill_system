@@ -38,7 +38,6 @@
                             <tr>
                                 {{-- #NOTE: cannot ba added with wire:keyup --}}
                                 <td class="text-center">
-                                    {{-- #[x]: sometimes works, sometimes not --}}
                                     {{-- #BUG: needs to be selected to actually register the value --}}
                                     <select name="item_list[{{ $key }}][item_id]"
                                         wire:model="item_list.{{ $key }}.item_id" class="form-control">

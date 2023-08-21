@@ -161,7 +161,6 @@ class UpdateRawMaterial extends Component
         $to_remove = RawMaterial::findorfail($this->mat_id);
         $to_remove->active_status = 0;
 
-        // [x]: audit logs??
         if ($to_remove->save() && $raw_Materials->save()) {
 
             $log_entry = [

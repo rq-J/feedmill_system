@@ -23,7 +23,6 @@ class WeeklyRequestController extends Controller
         $user_id = Auth::user()->id;
 
         // dd($last_week_start, $last_week_end);
-        // [x]: all user can see each other request? #fixed
         $weekly_request_last_week = WeeklyRequest::select('farm_locations.farm_location', 'items.item_name', 'weekly_requests.*')
             ->where('weekly_requests.active_status', 1)
             ->where('user_id', $user_id)

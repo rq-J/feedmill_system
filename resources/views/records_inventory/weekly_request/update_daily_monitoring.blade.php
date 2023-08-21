@@ -5,7 +5,6 @@
 @endsection
 
 @section('content')
-    {{-- #[x]: apply to all - bg-white shadow-lg rounded --}}
     <div class="bg-white shadow-lg rounded container">
         <h3 class="pt-4">Update Daily Monitoring</h3>
         @livewire('update-daily-monitoring', ['id' => $id])
